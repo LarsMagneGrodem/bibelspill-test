@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <!-- A test build, not a launch: ask search engines to leave it out. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Bibelspill</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/png" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+    <meta name="theme-color" content="#ecd7a8" />
+    <script>
+      // The start page needs the painted land before anything else; a board or a road gets its engine preloaded by the build.
+      if (!/[?&](kapittel|til|spill)=/.test(location.search)) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = 'assets/maps/landet.webp';
+        document.head.append(link);
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-DtziPKmM.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/game-CMyFfx-I.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-cZKdnVWN.css">
+    <script>if (location.search.includes('kapittel')) for (const f of ["assets/WorldScene-DDitJXjt.js","assets/phaser-9f6nPpLz.js"]) { const l = document.createElement('link'); l.rel = 'modulepreload'; l.href = f; document.head.append(l); }</script>
+  </head>
+  <body>
+    <div id="game">
+      <div id="loading" style="position: fixed; inset: 0; display: grid; place-items: center; background: #1b1a17; color: #ecd7a8; font: 18px Georgia, serif">
+        <div id="loading-card">
+          <div id="loading-text" data-ui="loading">Laster … / Loading …</div>
+          <div id="loading-bar"><div id="loading-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <header id="hud">
+      <div>
+        <strong id="chapter-title"></strong>
+        <span id="chapter-ref"></span>
+        <div id="objective"></div>
+        <div id="progress"><div id="progress-fill"></div></div>
+        <span id="gold-chip" hidden></span>
+        <div id="inventory"></div>
+      </div>
+      <div id="hud-buttons">
+        <span id="score"></span>
+        <button id="notebook-btn" type="button"></button>
+        <button id="zoom-out" data-ui-label="zoomOut" type="button">−</button>
+        <button id="zoom-in" data-ui-label="zoomIn" type="button">+</button>
+        <button id="settings-btn" data-ui-label="settings" type="button" aria-expanded="false">⚙</button>
+        <div id="settings-menu" hidden>
+          <button id="hints-btn" type="button"></button>
+          <button id="big-text-btn" type="button"></button>
+          <button id="reading-btn" type="button"></button>
+          <button id="guide-btn" type="button"></button>
+          <button id="diagnose-btn" data-ui="testReading" type="button"></button>
+          <button id="expert-btn" type="button"></button>
+          <button id="calm-btn" type="button"></button>
+          <button id="sound-btn" type="button"></button>
+          <button id="music-btn" type="button"></button>
+          <button id="lang-btn" data-ui="otherLang" type="button"></button>
+          <button id="restart-btn" data-ui="restart" type="button"></button>
+          <button id="home-btn" data-ui="journey" type="button"></button>
+          <button id="episodes-btn" type="button"></button>
+          <div id="episode-list" hidden></div>
+        </div>
+      </div>
+    </header>
+
+    <div id="vignette"></div>
+    <img id="memory" alt="" hidden />
+
+    <div id="dialog-layer" hidden>
+      <div id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-speaker" tabindex="-1">
+        <img id="dialog-portrait" alt="" hidden />
+        <div id="dialog-body">
+          <div id="dialog-speaker"></div>
+          <p id="dialog-text"></p>
+          <button id="dialog-replay" type="button">🔊 <span data-ui="readAgain"></span></button>
+          <div id="dialog-dots"></div>
+          <div id="dialog-hint"></div>
+        </div>
+      </div>
+      <p id="dialog-sr" class="sr-only" aria-live="polite"></p>
+    </div>
+
+    <div id="guide" data-panel hidden>
+      <div id="guide-hole" hidden></div>
+      <div id="guide-card">
+        <h3 id="guide-title"></h3>
+        <p id="guide-text"></p>
+        <label><input id="guide-never" type="checkbox" /> <span id="guide-never-label" data-ui="guideNever"></span></label>
+        <div id="guide-row">
+          <button id="guide-skip" data-ui="guideSkip" type="button"></button>
+          <span id="guide-count"></span>
+          <button id="guide-next" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="prologue" data-panel hidden>
+      <img id="prologue-image" alt="" />
+      <div id="prologue-card">
+        <h1 id="prologue-title"></h1>
+        <div id="prologue-reference"></div>
+        <p id="prologue-text"></p>
+        <div id="prologue-row">
+          <button id="prologue-skip" data-ui="guideSkip" type="button"></button>
+          <button id="prologue-next" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="diagnose" data-panel hidden>
+      <div id="diagnose-card">
+        <h3 id="diagnose-title"></h3>
+        <div id="diagnose-row">
+          <button id="diagnose-1" type="button"></button>
+          <button id="diagnose-2" type="button"></button>
+          <button id="diagnose-3" type="button"></button>
+          <button id="diagnose-4" type="button"></button>
+          <button id="diagnose-close" data-ui="close" type="button"></button>
+        </div>
+        <pre id="diagnose-log"></pre>
+      </div>
+    </div>
+
+    <div id="ending" data-panel hidden>
+      <div id="ending-card">
+        <h2 id="ending-title"></h2>
+        <div id="ending-medal" hidden></div>
+        <div id="ending-rank" hidden></div>
+        <h3 id="ending-learned" data-ui="learned"></h3>
+        <p id="ending-text"></p>
+        <div id="ending-tomorrow" hidden></div>
+        <div id="ending-row">
+          <button id="ending-stay" data-ui="stay" type="button"></button>
+          <button id="ending-next" type="button"></button>
+          <button id="ending-facts" type="button"></button>
+          <button id="ending-share" data-ui="share" type="button"></button>
+          <button id="ending-map" data-ui="journey" type="button"></button>
+        </div>
+        <textarea id="ending-copy" readonly rows="2" hidden></textarea>
+      </div>
+    </div>
+
+    <div id="confirm" data-panel hidden>
+      <div id="confirm-card">
+        <h2 id="confirm-title"></h2>
+        <p id="confirm-text" hidden></p>
+        <div id="confirm-row">
+          <button id="confirm-no" type="button"></button>
+          <button id="confirm-yes" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div id="atlas" data-panel hidden>
+      <!-- The brass of the needle heads and the wax of the seal, lit from the upper left (style.css fills with them). -->
+      <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+        <defs>
+          <radialGradient id="brass" cx="35%" cy="30%" r="70%">
+            <stop offset="0" stop-color="#fff1b8" /><stop offset="0.5" stop-color="#d9b25c" /><stop offset="1" stop-color="#7a5a1e" />
+          </radialGradient>
+          <radialGradient id="wax" cx="35%" cy="30%" r="70%">
+            <stop offset="0" stop-color="#c84e38" /><stop offset="0.55" stop-color="#8f2a1b" /><stop offset="1" stop-color="#5c1a10" />
+          </radialGradient>
+        </defs>
+      </svg>
+      <div id="atlas-card">
+        <h1 id="atlas-title" data-ui="gameTitle"></h1>
+        <div id="atlas-rank"></div>
+        <p id="atlas-lead"></p>
+        <div id="atlas-frame"></div>
+        <div id="atlas-chosen"></div>
+        <button id="atlas-go" type="button" hidden></button>
+        <p id="atlas-ask"></p>
+        <div id="atlas-score"></div>
+        <div id="atlas-travels"></div>
+        <button id="atlas-reset" data-ui="resetAll" type="button" class="plain"></button>
+      </div>
+    </div>
+
+    <div id="minigame" data-panel hidden>
+      <div id="minigame-card">
+        <h3 id="minigame-title"></h3>
+        <p id="minigame-info"></p>
+        <div id="minigame-stage" tabindex="-1"></div>
+        <div id="minigame-result" aria-live="polite"></div>
+        <button id="minigame-quit" data-ui="close" type="button"></button>
+      </div>
+    </div>
+
+    <button id="compass" type="button" hidden></button>
+    <div id="toasts" aria-live="polite"></div>
+    <button id="action-btn" type="button" hidden></button>
+
+    <div id="notebook-panel" data-panel hidden>
+      <div id="notebook-card">
+        <h2 id="notebook-heading" data-ui="notebook"></h2>
+        <div id="notebook-body" tabindex="-1"></div>
+        <p id="notebook-sr" class="sr-only" aria-live="polite"></p>
+        <button id="notebook-close" data-ui="close" type="button"></button>
+      </div>
+    </div>
+  </body>
+</html>
