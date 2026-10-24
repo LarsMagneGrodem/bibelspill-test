@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lederveiledning · Reisen med Lukas</title>
+  <meta name="description" content="Veiledning for trosopplærere, søndagsskoleledere og lærere som vil bruke adventsspillet Reisen med Lukas med barn fra 8 til 12 år.">
+  <style>
+    :root{color-scheme:light;--ink:#233c40;--teal:#137276;--rust:#a44622;--paper:#fffdf7;--line:#d9dfd6;--soft:#e7eee8;--muted:#506368}
+    *{box-sizing:border-box}
+    body{margin:0;background:#f2f0e5;color:var(--ink);font:17px/1.6 system-ui,sans-serif;overflow-wrap:anywhere}
+    a{color:inherit;text-underline-offset:4px}a:focus-visible{outline:3px solid var(--rust);outline-offset:4px}
+    nav,main,footer{width:min(900px,calc(100% - 32px));margin:auto}
+    nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding:20px 0;font-size:14px}
+    h1,h2,h3{font-family:Georgia,serif;line-height:1.2}
+    h1{font-size:clamp(34px,6vw,52px);letter-spacing:-.02em;margin:10px 0 14px}
+    h2{font-size:30px;margin:0 0 12px}
+    h3{font-size:21px;margin:22px 0 6px}
+    p,li{max-width:72ch}
+    .eyebrow{letter-spacing:.12em;font-size:12px;font-weight:800;color:var(--teal);margin:0}
+    .lead{font-size:19px}
+    .cover{display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:center;padding:12px 0 26px}
+    .cover img{width:100%;height:auto;border-radius:14px;display:block}
+    .cover figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+    .buttons{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+    .button{display:inline-block;border:1px solid var(--teal);border-radius:9px;text-decoration:none;padding:10px 16px;font-weight:700;background:var(--teal);color:#fff}
+    .button.secondary{background:transparent;color:var(--teal)}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin:0 0 24px}
+    .box{background:var(--soft);border-radius:10px;padding:14px 18px;margin:16px 0}
+    .box h3{margin-top:2px}
+    .four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;padding:0;list-style:none;margin:8px 0 0}
+    .four li{font-family:Georgia,serif;font-size:19px;font-weight:700}
+    .four li::before{content:"?";display:inline-grid;place-items:center;width:1.4em;height:1.4em;margin-right:.45em;border-radius:50%;background:var(--teal);color:#fff;font:700 14px/1 system-ui,sans-serif;vertical-align:.15em}
+    .days{list-style:none;padding:0;margin:14px 0 0;counter-reset:none}
+    .day{display:grid;grid-template-columns:3.2em 1fr;gap:0 14px;padding:12px 0;border-top:1px solid var(--line)}
+    .day .n{font:700 28px/1 Georgia,serif;color:var(--teal);text-align:right;padding-top:2px}
+    .day h3{margin:0;font-size:19px}
+    .day .meta{margin:2px 0 6px;font-size:14px;color:var(--muted)}
+    .day ul{margin:0;padding-left:1.1em}
+    .day li{margin:3px 0}
+    .note{font-size:15px;color:var(--muted)}
+    .print-only{display:none}
+    .letter{background:#fff;border:1px dashed #9fb4ad;border-radius:10px;padding:14px 18px;margin:12px 0}
+    .letter p{margin:6px 0}
+    footer{padding:10px 0 48px;font-size:14px;color:var(--muted)}
+    @media screen and (max-width:700px){
+      body{font-size:16px}
+      .cover{grid-template-columns:1fr}
+      section{padding:20px 16px}
+      .four{grid-template-columns:1fr}
+    }
+    @page{size:A4;margin:15mm 16mm 17mm}
+    @media print{
+      body{background:#fff;font-size:10pt;line-height:1.42}
+      nav,.buttons,.screen-only{display:none}
+      .print-only{display:inline}
+      p,li{max-width:none}
+      main{width:auto}
+      section{border:0;border-radius:0;padding:0;margin:0 0 6mm;background:none}
+      section.page{break-before:page}
+      h1{font-size:30pt;margin-top:0}
+      h2{font-size:19pt}
+      h3{font-size:13pt;margin:4mm 0 1mm}
+      .lead{font-size:12pt}
+      .cover{padding:0 0 4mm;gap:7mm;grid-template-columns:1fr 72mm}
+      .cover figcaption{font-size:8pt}
+      .box,.day,.letter{break-inside:avoid}
+      .four li{font-size:12.5pt}
+      .days{columns:2;column-gap:8mm;column-rule:1px solid var(--line)}
+      .day{padding:2mm 0;grid-template-columns:2.2em 1fr;gap:0 2.5mm;font-size:9.3pt}
+      .day .n{font-size:13pt;white-space:nowrap}
+      .box ul{columns:2;column-gap:8mm;margin:1mm 0;padding-left:1.1em}
+      .box li{break-inside:avoid}
+      .box{padding:3mm 5mm;margin:3mm 0}
+      .day h3{font-size:11.5pt}
+      .day .meta{font-size:8.8pt;margin:0 0 1mm}
+      .note{font-size:9pt}
+      footer{display:none}
+      a{text-decoration:none}
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Hovedvalg"><a href="../index.html">← Til spillet</a><a href="../aktiviteter/">Aktivitetsarkene</a></nav>
+  <main>
+    <div class="cover">
+      <div>
+        <p class="eyebrow">REISEN MED LUKAS · FOR LEDERE</p>
+        <h1>Lederveiledning</h1>
+        <p class="lead">For trosopplærere, søndagsskoleledere og lærere som vil gi familiene en adventsreise å spille hjemme.</p>
+        <div class="buttons"><a class="button" href="lederveiledning.pdf" download>Last ned som PDF</a><a class="button secondary" href="../aktiviteter/">Se aktivitetsarkene</a></div>
+      </div>
+      <figure style="margin:0">
+        <img src="../assets/art/intro-grandfather.webp" width="1672" height="941" alt="Bestefar sitter i lenestolen med en åpen bibel. Barnebarnet sitter på en krakk ved siden av og ser opp på ham.">
+        <figcaption>Slik begynner spillet: Gutten spør bestefar om det som står i Bibelen, er sant.</figcaption>
+      </figure>
+    </div>
+
+    <section aria-labelledby="hva">
+      <h2 id="hva">Hva er Reisen med Lukas?</h2>
+      <p>Reisen med Lukas er et adventsspill for barn fra 8 til 12 år. Barnet blir medhjelper for Lukas, som samler vitneutsagn om Jesus før han skriver evangeliet sitt (Luk 1,1–4). Hver dag fra 1. desember til julaften åpner en ny luke. Bak hver luke er et malt brett der barnet går rundt, snakker med folk, finner spor og fyller vitneboka.</p>
+      <p>Hovedoppdraget tar omtrent fem minutter. Med de valgfrie sakene og småspillene tar en luke 10–15 minutter. Første og siste luke er litt lengre. Fortellingen følger Lukas 1–2 og Matteus 2, fra presten Sakarja i templet til julenatten, Simeon og Anna, Johannes døperen og fram til påskemorgen. Julaften forsegler Lukas rullen og sender den til Teofilos.</p>
+
+      <h3>Den faglige linjen</h3>
+      <ul>
+        <li><strong>Bibelen er troverdig og Guds ord til mennesker.</strong> Spillet bygger på klassisk kristen tro, den troen kirkesamfunnene har felles. Der kirkesamfunnene er uenige, for eksempel om dåp, nattverd og kirkesyn, tar spillet ikke stilling.</li>
+        <li><strong>Barnet prøver vitnene selv.</strong> Vitner sammenlignes, spor samles, og barnet velger den forklaringen som passer best med sporene, slik en etterforsker gjør. Fagstoffet ligger i oppgavene, ikke i lange forklaringer.</li>
+        <li><strong>Ærlig om hva vi vet.</strong> Spillet bygger tillit til Bibelen og viser samtidig at det historiske grunnlaget er sterkere noen steder enn andre, og at noe er omstridt. Et spørsmål uten svar betyr ikke at noe er usant.</li>
+        <li><strong>Det som er diktet, holdes atskilt.</strong> Mange personer og samtaler er laget til spillet. Hver luke har et kort som heter «Hva er diktet i dag?», og bibeltekstene er gjenfortalt med henvisning til kapittel og vers. Hvert kort er merket 🎭 når det er diktet til spillet, og 📜 når det gjenforteller Bibelen, en annen gammel tekst eller et funn.</li>
+      </ul>
+
+      <div class="box">
+        <h3>Lukas’ fire spørsmål</h3>
+        <p>Dette er grepet barna øver på hele desember. Bruk spørsmålene i samtalene, så får barna et felles språk.</p>
+        <ul class="four">
+          <li>Så de det selv?</li>
+          <li>Sier flere det samme?</li>
+          <li>Ble det fortalt tidlig?</li>
+          <li>Passer det med alt?</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="bruk">
+      <h2 id="bruk">Slik bruker familiene spillet</h2>
+      <p>Hver familie får sin egen kode fra dere og spiller hjemme, én luke om dagen. Luke 1 er gratis hele året. De andre åpner på sin dag i desember, og taster familien inn koden midt i desember, er lukene fram til den dagen åpne med en gang. En åpnet luke blir stående åpen, og etter julaften er alle åpne. Send gjerne samtalespørsmålene under hjem. Aktivitetsark til utskrift, to A4-sider til hver dag, ligger på <a href="../aktiviteter/">[domene]/aktiviteter/</a>.</p>
+    </section>
+
+    <section class="page" aria-labelledby="dager">
+      <h2 id="dager">Samtalespørsmål for hver dag</h2>
+      <p>Spørsmålene passer etter at barnet har spilt dagens luke. De har ingen fasit. Det viktigste er at barnet får sette ord på det det har funnet. Svarer barnet noe dere ikke ventet, spør: «Hvordan fant du ut det?»</p>
+      <ol class="days">
+        <li class="day"><span class="n">1</span><div><h3>Uhellet på torget</h3><p class="meta">Luk 1,1–4 · Øyenvitne eller rykte · Aktivitetsark: Sporjakt på torget</p><ul><li>Hvem ville du helst spørre om hva som skjedde på torget: en som så det selv, eller en som bare hadde hørt om det? Hvorfor?</li><li>Lukas skriver at han undersøkte alt nøye. Hvordan kan du finne ut om noe en venn forteller, stemmer?</li></ul></div></li>
+        <li class="day"><span class="n">2</span><div><h3>Presten i templet</h3><p class="meta">Luk 1,5–25 · Hvem kunne se hva? · Aktivitetsark: Hva kan du se?</p><ul><li>Folket utenfor templet så at Sakarja ikke kunne snakke da han kom ut. Hva kunne de ikke vite om det som skjedde der inne?</li><li>Hvem kunne ha fortalt det videre?</li></ul></div></li>
+        <li class="day"><span class="n">3</span><div><h3>Den stumme presten</h3><p class="meta">Luk 1,57–80 · Det som er flaut å fortelle · Aktivitetsark: Navnet på tavlen</p><ul><li>Lukas forteller at presten Sakarja ikke trodde på engelen og ble stum. Hvorfor ville noen fortelle noe som gjør en kjent prest litt flau, hvis det ikke var sant?</li><li>Hvordan fikk barnet navnet Johannes?</li></ul></div></li>
+        <li class="day"><span class="n">4</span><div><h3>En by ingen regnet med</h3><p class="meta">Luk 1,26–38 · Det uventede · Aktivitetsark: På tur i den lille byen</p><ul><li>Nasaret var en liten by som ingen regnet med. Hvis du skulle dikte opp en fortelling om en konge, ville du latt ham vokse opp der?</li><li>Maria spurte engelen: «Hvordan skal dette skje?» Hva tenker du om at hun stilte spørsmål?</li></ul></div></li>
+        <li class="day"><span class="n">5</span><div><h3>Det Maria gjemte i hjertet</h3><p class="meta">Luk 1,26–56 · Hvordan en fortelling går videre · Aktivitetsark: Hvem fortalte det?</p><ul><li>Lukas skriver at Maria tok vare på alt hun opplevde, og tenkte på det. Hvem kunne hun ha fortalt det til, og hvordan kunne det nå fram til Lukas?</li><li>Vi vet ikke nøyaktig hvordan Lukas fikk vite det. Hva er forskjellen på at noe er mulig, og at det er sikkert?</li></ul></div></li>
+        <li class="day"><span class="n">6</span><div><h3>Marias sang</h3><p class="meta">Luk 1,39–56 · En sang er en sang · Aktivitetsark: Ord som synger</p><ul><li>Marias sang ligner Hannas sang i Det gamle testamentet. Hvem er det Gud hjelper i begge sangene?</li><li>En sang leses ikke på samme måte som en nyhetsmelding. Hva er forskjellen?</li></ul></div></li>
+        <li class="day"><span class="n">7</span><div><h3>Keiserens befaling</h3><p class="meta">Luk 2,1–7 · Navn som kan sjekkes · Aktivitetsark: Beskjeden fra byen</p><ul><li>Lukas nevner keiser Augustus og Kvirinius. Hvorfor er det nyttig at en forfatter nevner navn som kan sjekkes i andre kilder?</li><li>Forskerne er ikke enige om nøyaktig når innskrivingen var. Betyr et åpent spørsmål at fortellingen er feil?</li></ul></div></li>
+        <li class="day"><span class="n">8</span><div><h3>Veien til Betlehem</h3><p class="meta">Luk 2,4–5 · Kartet som kontroll · Aktivitetsark: Hvilken vei gikk Lea?</p><ul><li>Teksten sier at Josef og Maria dro fra Nasaret til Betlehem, men ikke hvilken vei de gikk. Hva gjør vi når en tekst ikke forteller alt?</li><li>I Bibelen går man «opp» til Jerusalem og «ned» til Jeriko. Hvordan kan et kart hjelpe oss å sjekke en gammel tekst?</li></ul></div></li>
+        <li class="day"><span class="n">9</span><div><h3>Natten i Betlehem</h3><p class="meta">Luk 2,1–20 · Flere vitner · Aktivitetsark: Samme rom, ulike spor</p><ul><li>To vitner forteller om samme krybbe, men sier ulikt om hvor mange gjetere det var. Betyr det at en av dem lyver? Hva er de enige om?</li><li>Hvorfor husker folk ofte litt ulikt, selv når de har sett det samme?</li></ul></div></li>
+        <li class="day"><span class="n">10</span><div><h3>Gjesterommet og krybben</h3><p class="meta">Luk 2,6–7 · Les ordene nøye · Aktivitetsark: Fra lapp til hus</p><ul><li>Hva står det faktisk i teksten om krybben og rommet, og hva har vi lagt til selv i krybbespill og på julekort?</li><li>Hvorfor er det lurt å lese ordene nøye før vi tegner hvordan det så ut?</li></ul></div></li>
+        <li class="day"><span class="n">11</span><div><h3>Gjeterne og englene</h3><p class="meta">Luk 2,8–20 · Hvem fikk høre det først? · Aktivitetsark: Gjeterens sporjakt</p><ul><li>Englene kom til noen gjetere ute på marka om natten, ikke til folk i et palass. Hva tenker du om det?</li><li>Hva gjorde gjeterne etter at de hadde funnet barnet?</li></ul></div></li>
+        <li class="day"><span class="n">12</span><div><h3>Tre titler</h3><p class="meta">Luk 2,11 · Ord i sin tid · Aktivitetsark: Navn og roller</p><ul><li>Engelen kalte barnet Frelser, Messias og Herre. Hva betyr de tre ordene?</li><li>Folk ventet ulike ting av Messias. Hva tror du de håpet på?</li></ul></div></li>
+        <li class="day"><span class="n">13</span><div><h3>To fortellinger</h3><p class="meta">Matt 2,1–12 · Motsigelse eller utfylling? · Aktivitetsark: To blikk på en piknik</p><ul><li>Matteus forteller om vismennene, Lukas om gjeterne. Er det en motsigelse, eller kan begge deler ha skjedd?</li><li>Hvorfor kan to som skriver om det samme, velge å fortelle ulike ting?</li></ul></div></li>
+        <li class="day"><span class="n">14</span><div><h3>Simeon i templet</h3><p class="meta">Luk 2,21–35 · En liten detalj som passer · Aktivitetsark: Et hus – og et håp</p><ul><li>Josef og Maria ofret to duer. Ifølge loven var det offeret for dem som ikke hadde råd til et lam (3&nbsp;Mos 12,8). Hva forteller den lille detaljen om familien?</li><li>Simeon hadde ventet lenge. Hva sa han da han fikk se barnet?</li></ul></div></li>
+        <li class="day"><span class="n">15</span><div><h3>Anna og kvinnene</h3><p class="meta">Luk 2,36–40 · Kvinner som vitner · Aktivitetsark: Et spor på vandring</p><ul><li>På den tiden ble kvinner ofte ikke regnet som like gode vitner som menn. Likevel forteller Lukas om Anna, som fortalte om barnet til alle som ventet. Hva tenker du om det?</li><li>Lukas forteller ofte om en mann og en kvinne side om side, som Simeon og Anna. Hvorfor tror du han gjør det?</li></ul></div></li>
+        <li class="day"><span class="n">16</span><div><h3>Tolv år i templet</h3><p class="meta">Luk 2,41–52 · Når teksten er kort · Aktivitetsark: Finn vennen i byen</p><ul><li>Lukas forteller bare én historie fra Jesu barndom. Senere skrev noen fantastiske fortellinger om gutten Jesus. Hvorfor kan det være et godt tegn at Lukas sier så lite?</li><li>Hva gjorde Jesus da foreldrene fant ham i templet?</li></ul></div></li>
+        <li class="day"><span class="n">17</span><div><h3>Johannes ved Jordan</h3><p class="meta">Luk 3,1–22 · Kilder utenfor Bibelen · Aktivitetsark: Se og lytt ved elva</p><ul><li>Lukas forteller hvem som styrte da Johannes begynte å preke, med sju navn. Hvorfor gjør en historiker det?</li><li>Josefus, en jødisk historiker som ikke var kristen, skrev også om Johannes døperen. Hva betyr det at en kilde utenfor Bibelen nevner den samme personen?</li></ul></div></li>
+        <li class="day"><span class="n">18</span><div><h3>Hva folk ventet seg</h3><p class="meta">Luk 4,16–30; 7,18–23 · Jesu egne ord · Aktivitetsark: Håp og spor i hagen</p><ul><li>I synagogen i Nasaret leste Jesus fra profeten Jesaja om godt nytt for fattige, frihet for fanger og syn for blinde. Hva håpet folk at Messias skulle gjøre?</li><li>Hvorfor tror du det var vanskelig for folk i hjembyen å tro på ham?</li></ul></div></li>
+        <li class="day"><span class="n">19</span><div><h3>Uenige i templet</h3><p class="meta">Luk 20,27–40; Apg 23,6–8 · To kilder, én detalj · Aktivitetsark: To blikk på torget</p><ul><li>Både Lukas og historikeren Josefus forteller at saddukeerne ikke trodde at de døde skal stå opp. Hvorfor er det nyttig når to kilder sier det samme?</li><li>Er det det samme at én detalj stemmer, og at hele fortellingen er bevist? Hvorfor ikke?</li></ul></div></li>
+        <li class="day"><span class="n">20</span><div><h3>Lukas og Matteus side om side</h3><p class="meta">Luk 1–2; Matt 1–2 · Samme kjerne, ulikt utvalg · Aktivitetsark: Kurvene på brygga</p><ul><li>Hva er likt i Lukas’ og Matteus’ fortellinger om Jesu fødsel?</li><li>Hvis to venner skrev om den samme klasseturen, ville de skrevet helt likt? Hva ville gjort deg mest mistenksom: at de skrev ord for ord likt, eller litt ulikt?</li></ul></div></li>
+        <li class="day"><span class="n">21</span><div><h3>Avskriftene</h3><p class="meta">Luk 1,1–4 · Hvordan vi har teksten · Aktivitetsark: Kopiverkstedet</p><ul><li>Prøv å skrive av en setning for hånd. Hvilke feil er lette å gjøre?</li><li>Hvis tre kopier har den samme feilen, kan de være kopiert fra hverandre. Hvorfor er det ikke nok å telle kopiene?</li></ul></div></li>
+        <li class="day"><span class="n">22</span><div><h3>Lys for flere folk</h3><p class="meta">Luk 2,32; Apg 10 · Lukas som historiker · Aktivitetsark: Lys rundt samme bord</p><ul><li>Kornelius var romersk offiser og ikke jøde. Hva skjedde da Peter besøkte ham?</li><li>Simeon kalte Jesus et lys for folkene. Hvordan ser vi det i fortellingen om Kornelius?</li></ul></div></li>
+        <li class="day"><span class="n">23</span><div><h3>En Messias som dør?</h3><p class="meta">Luk 23,50–24,35; 1&nbsp;Kor 15,3–8 · Det ingen ventet · Aktivitetsark: Et løfte og en ny start</p><ul><li>Ingen ventet at Messias skulle dø. Hvorfor ville vennene til Jesus fortelle noe som var så vanskelig å forklare, hvis det ikke hadde skjedd?</li><li>Paulus skrev at han ga videre det han selv hadde fått: at Jesus døde, ble begravet og sto opp igjen. Hvorfor er det viktig at dette ble fortalt mens øyenvitnene levde?</li></ul></div></li>
+        <li class="day"><span class="n">24</span><div><h3>Rullen forsegles</h3><p class="meta">Luk 1,1–4; 2,39–40 · Sjekklista samlet · Aktivitetsark: Ditt eget sporverksted</p><ul><li>Gå gjennom Lukas’ fire spørsmål sammen. Hvilken luke husker du best, og hvilket spørsmål hjalp deg der?</li><li>Lukas skrev for at Teofilos skulle vite at det han hadde lært, var til å stole på. Hva tenker du selv nå?</li></ul></div></li>
+      </ol>
+    </section>
+
+    <section class="page" aria-labelledby="praktisk">
+      <h2 id="praktisk">Praktisk</h2>
+      <h3>Kodene</h3>
+      <p>Hver familie får en egen kode på en klippelapp. Koden ser slik ut: XXXX-XXXX. Den låser opp hele reisen, alle 24 lukene, på enheten der den tastes inn. Slik gjør en voksen hjemme:</p>
+      <ol>
+        <li>Åpne spillet på [domene] og trykk «For voksne» på startsiden.</li>
+        <li>Hold knappen inne i tre sekunder, skriv koden og trykk «Lås opp».</li>
+      </ol>
+      <p>Det trengs nett når koden tastes inn. Del ut lappene i en konvolutt merket «Til en voksen hjemme», eller gi dem til foreldrene når barna hentes. Dere kan gjerne dele dem ut før desember: luke 1 kan spilles med en gang, og de andre åpner på sin dag. Ta vare på kodearket med lappene som er igjen til etter jul. Da kan dere gi en ny lapp hvis noen mister sin.</p>
+
+      <h3>Framgangen lagres på barnets enhet</h3>
+      <p>Spillet kjører i nettleseren på telefon, nettbrett og PC, og ingenting må installeres. Framgangen lagres på enheten barnet spiller på. Søsken som deler enhet, deler også framgangen. Det fungerer fint når de spiller sammen. Slettes nettleserdataene, forsvinner framgangen og opplåsingen. Da kan koden tastes inn på nytt. Etter første gang kan spillet brukes uten nett på samme enhet.</p>
+
+      <h3>Personvern</h3>
+      <p>Spillet har ingen konto, ingen innlogging, ingen reklame, ingen sporing og ingen analyseverktøy. Det eneste spillet sender, er koden når den tastes inn. Kontrolltjenesten svarer om koden er gyldig, og lagrer verken koden eller hvem som brukte den. Dere trenger ikke samle inn opplysninger om barna for å dele ut kodene. Les mer i <a href="../personvern.html">personvernerklæringen</a><span class="print-only"> på [domene]/personvern.html</span>.</p>
+
+      <h3>Melding dere kan sende foreldrene</h3>
+      <div class="letter">
+        <p>Hei! I advent gir vi barna adventsspillet Reisen med Lukas. Barnet hjelper Lukas med å samle vitneutsagn om Jesus, én luke om dagen fra 1. desember til julaften, 5–15 minutter om dagen.</p>
+        <p>På lappen barnet har med hjem, står en kode som låser opp alle 24 lukene. Åpne [domene], trykk «For voksne», hold inne i tre sekunder, skriv koden og trykk «Lås opp». Luke 1 kan spilles med en gang, og de andre lukene åpner på sin dag i desember fram til julaften.</p>
+        <p>Spillet har ingen reklame og ingen konto, og framgangen lagres bare på enheten. Aktivitetsark til utskrift finner dere på [domene]/aktiviteter/.</p>
+        <p>Hilsen [navn]</p>
+      </div>
+
+      <h3>Kontakt</h3>
+      <p>Har dere spørsmål, eller trenger dere flere koder? Ta kontakt: <strong>[kontakt]</strong></p>
+    </section>
+  </main>
+  <footer>Reisen med Lukas · Lederveiledning · <a href="../personvern.html">Personvern</a></footer>
+</body>
+</html>
