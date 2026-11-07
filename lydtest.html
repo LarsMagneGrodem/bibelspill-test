@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lydtest</title>
+<style>
+  body { margin: 0; padding: 16px; font: 17px/1.5 Georgia, serif; background: #f6ecd5; color: #2e2216; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  p { margin: 0 0 12px; }
+  button { display: block; width: 100%; min-height: 52px; margin: 0 0 10px; font: 18px Georgia, serif; border: 2px solid #3a2a1c; border-radius: 10px; background: #5a3d22; color: #fbf4e2; }
+  #log { background: #fffaf0; border: 1px solid #cdb990; border-radius: 8px; padding: 10px; font: 14px/1.4 monospace; white-space: pre-wrap; word-break: break-word; }
+</style>
+</head>
+<body>
+<h1>Lydtest</h1>
+<p>Trykk på knappene én etter én, og ta et skjermbilde av lista nederst når du er ferdig.</p>
+<button id="b1">1 · Start lydmotoren</button>
+<button id="b2">2 · Spill en tone</button>
+<button id="b3">3 · Spill en lyd fra spillet</button>
+<button id="b4">4 · Spill lyden på den enkle måten</button>
+<button id="b5">5 · Les opp en setning</button>
+<div id="log"></div>
+<script>
+  const log = (text) => { document.getElementById('log').textContent += text + '\n'; };
+  log('Nettleser: ' + navigator.userAgent);
+  let ctx = null;
+  const state = () => (ctx ? ctx.state : 'ingen');
+  document.getElementById('b1').onclick = () => {
+    try {
+      const Engine = window.AudioContext || window.webkitAudioContext;
+      if (!Engine) return log('1: Nettleseren har ingen lydmotor.');
+      ctx = ctx || new Engine();
+      log('1: Laget. Tilstand: ' + state() + ', ' + ctx.sampleRate + ' Hz');
+      ctx.resume().then(() => log('1: Etter vekking: ' + state()), (e) => log('1: Vekking feilet: ' + e));
+    } catch (e) { log('1: Feil: ' + e); }
+  };
+  document.getElementById('b2').onclick = () => {
+    if (!ctx) return log('2: Trykk på 1 først.');
+    ctx.resume().catch(() => {});
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.frequency.value = 440; gain.gain.value = 0.2;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.6);
+    log('2: Tone sendt. Tilstand: ' + state() + '. Hørte du en pipetone?');
+  };
+  document.getElementById('b3').onclick = async () => {
+    if (!ctx) return log('3: Trykk på 1 først.');
+    try {
+      const res = await fetch('assets/audio/fx/bookFlip1.mp3');
+      log('3: Hentet fila: ' + res.status);
+      const buf = await ctx.decodeAudioData(await res.arrayBuffer());
+      const src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination); src.start();
+      log('3: Spiller (' + buf.duration.toFixed(2) + ' s). Tilstand: ' + state() + '. Hørte du en side som blas?');
+    } catch (e) { log('3: Feil: ' + e); }
+  };
+  document.getElementById('b4').onclick = () => {
+    const audio = new Audio('assets/audio/fx/bookFlip2.mp3');
+    audio.play().then(() => log('4: Spiller. Hørte du en side som blas?'), (e) => log('4: Feil: ' + e));
+  };
+  document.getElementById('b5').onclick = () => {
+    if (!window.speechSynthesis) return log('5: Nettleseren kan ikke lese opp tekst.');
+    const voices = speechSynthesis.getVoices().filter((v) => /^(nb|no|nn)/i.test(v.lang));
+    const u = new SpeechSynthesisUtterance('Hei, dette er en test av opplesing.');
+    u.lang = 'nb-NO'; if (voices[0]) u.voice = voices[0];
+    u.onend = () => log('5: Ferdig.'); u.onerror = (e) => log('5: Feil: ' + e.error);
+    speechSynthesis.speak(u);
+    log('5: Sendt. Norske stemmer: ' + voices.length);
+  };
+</script>
+</body>
+</html>
