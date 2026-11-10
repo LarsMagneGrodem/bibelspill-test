@@ -24,7 +24,7 @@
       <h2>1. Selger</h2>
       <p>Reisen med Lukas selges av Rygard Holding AS, organisasjonsnummer 938 118 132, Vestre Fognavegen 126, 4164 Fogn, Norge.</p>
       <p>Selskapet er ikke merverdiavgiftsregistrert. Prisen nedenfor er den prisen du betaler.</p>
-      <p>Spørsmål om kjøp og spillet: <a href="mailto:lars.magne@outlook.com">lars.magne@outlook.com</a></p>
+      <p>Spørsmål om kjøp og spillet: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
       <h2>2. Produktet</h2>
       <p>Reisen med Lukas er et adventsspill i nettleseren, basert på Lukasevangeliet. Det er laget for barn på 3.–7. trinn, omtrent 8–12 år, og kjøpes av en voksen.</p>
       <p>Luke 1 er gratis å prøve. Kjøpet gir en kode som låser opp resten av julekalenderen, luke 2 til 24. Lukene åpner etter datoen i desember. Kjøper du senere i desember, kan du også spille de lukene som allerede har åpnet.</p>
@@ -49,10 +49,10 @@
         <li>Du har fått en bekreftelse på dette, vanligvis på e-post.</li>
       </ol>
       <p>I kassen bekrefter du dette aktivt med en avkrysning før koden vises.</p>
-      <p>Hvis ett av vilkårene over mangler, har du angreretten i behold og kan melde fra innen fristen uten å oppgi grunn. Send e-post til <a href="mailto:lars.magne@outlook.com">lars.magne@outlook.com</a> med ordrenummeret. Ikke send kortnummer, CVC eller BankID-opplysninger.</p>
+      <p>Hvis ett av vilkårene over mangler, har du angreretten i behold og kan melde fra innen fristen uten å oppgi grunn. Send e-post til <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span> med ordrenummeret. Ikke send kortnummer, CVC eller BankID-opplysninger.</p>
       <p>Hvis angreretten gjelder og du bruker den, skal du slutte å bruke tilgangen. Vi betaler da tilbake det du har betalt, etter reglene som gjelder for slikt salg.</p>
       <h2>6. Reklamasjon</h2>
-      <p>Har produktet en mangel, kan du reklamere etter forbrukerkjøpsloven. Ta kontakt på <a href="mailto:lars.magne@outlook.com">lars.magne@outlook.com</a> med ordrenummer og en kort beskrivelse av feilen.</p>
+      <p>Har produktet en mangel, kan du reklamere etter forbrukerkjøpsloven. Ta kontakt på <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span> med ordrenummer og en kort beskrivelse av feilen.</p>
       <p>Har du betalt uten å få tilgang, skal du ikke betale på nytt. Skriv til oss med ordrenummeret, så undersøker vi betalingen og leveringen.</p>
       <h2>7. Forbehold om feil, referanser og påstander</h2>
       <p>Reisen med Lukas er et spill og en fortelling for barn. Det er ikke et oppslagsverk, en bibelkommentar eller et lærebokverk.</p>
@@ -65,12 +65,12 @@
         <li><strong>Lenker og eksterne kilder.</strong> Vi har ikke ansvar for innhold på nettsider eller i kilder som ligger utenfor spillet.</li>
       </ul>
       <p>Forbeholdet begrenser ikke rettighetene du har som forbruker etter norsk lov, for eksempel retten til å reklamere over en mangel.</p>
-      <p>Ser du en feil, blir vi glade for å høre om den på <a href="mailto:lars.magne@outlook.com">lars.magne@outlook.com.</a></p>
+      <p>Ser du en feil, blir vi glade for å høre om den på <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span>.</p>
       <h2>8. Personopplysninger</h2>
       <p>Rygard Holding AS er behandlingsansvarlig. For å gjennomføre kjøpet og gi deg tilgang behandler vi bare de opplysningene som trengs for betaling, kvittering og kundeservice. Det er for eksempel navn, e-post og ordrenummer. Vipps behandler betalingsopplysninger etter sine egne vilkår.</p>
       <p>Koden sjekkes uten at vi lagrer opplysninger om deg. Spillet har ikke sporing eller reklame.</p>
       <p>Vi ber deg ikke om barns navn eller kontaktinformasjon.</p>
-      <p>Spørsmål om personvern: <a href="mailto:lars.magne@outlook.com">lars.magne@outlook.com</a></p>
+      <p>Spørsmål om personvern: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
       <h2>9. Gavekort</h2>
       <p>Et gavekort gir mottakeren den samme tilgangen som et nettkjøp når koden tastes inn i spillet. Koden på gavekortet er personlig for mottakeren, på samme måte som ved et nettkjøp.</p>
       <h2>10. Lov og klage</h2>
@@ -78,5 +78,14 @@
       <p>Disse vilkårene gjelder sammen med opplysningene som vises i kassen før du betaler. Hvis de motsier hverandre, gjelder de opplysningene som er mest gunstige for deg som forbruker.</p>
       <p><a href="/bibelspill-test/">Til spillet</a> · <a href="/bibelspill-test/personvern.html">Personvern</a></p>
     </main>
+    <script>
+      document.querySelectorAll('.epost').forEach(function (s) {
+        var e = s.dataset.u + '\u0040' + s.dataset.d;
+        var a = document.createElement('a');
+        a.href = 'mail' + 'to:' + e;
+        a.textContent = e;
+        s.replaceWith(a);
+      });
+    </script>
   </body>
 </html>
