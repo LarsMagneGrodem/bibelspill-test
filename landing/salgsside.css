@@ -1,0 +1,75 @@
+/* Sales page additions on top of styles.css. Mobile first. */
+.btn.stor { min-height: 54px; padding: 12px 24px; font-size: 1.08rem; font-weight: 700; }
+.btn.gull { background: linear-gradient(#f3d58a, #d9b25e); color: #2b1d0c; border-color: #a8823a; }
+.btn.gull:hover { background: linear-gradient(#f7df9f, #e2bd6c); }
+
+.hero2 { display: grid; gap: 16px; padding: 8px 0 32px; border-top: 0;
+  grid-template-areas: "tittel" "film" "tekst"; }
+.hero2-tittel { grid-area: tittel; }
+.hero2-film { grid-area: film; }
+.hero2-tekst { grid-area: tekst; }
+.hero2 h1 { font-size: clamp(1.7rem, 6.4vw, 2.9rem); margin: 0; }
+.hero2 .eyebrow { margin-bottom: 6px; }
+.hero2 .cta-row .btn { flex: 1 1 220px; }
+.cta-under { color: var(--soft); font-size: 15px; margin: -6px 0 14px; }
+@media (min-width: 880px) {
+  .hero2 { grid-template-columns: 1.15fr .85fr; grid-template-areas: "tittel film" "tekst film";
+    column-gap: 40px; row-gap: 18px; padding-top: 32px; align-items: start; }
+  .hero2-tittel { align-self: end; }
+}
+
+/* Film frames: poster with one big play button; the button goes away while the film plays with sound. */
+.film { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid #89734f;
+  background: #000; box-shadow: 0 18px 50px #0008; }
+.film--staaende { aspect-ratio: 9 / 16; width: min(100%, calc(72svh * 9 / 16)); margin: 0 auto; }
+.film--bred { aspect-ratio: 16 / 9; width: 100%; }
+@media (min-width: 880px) { .film--staaende { width: min(100%, 380px, calc(80svh * 9 / 16)); } }
+.film-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+a.film-knapp { text-decoration: none; }
+.film-knapp { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 22px 10px 12px;
+  border-radius: 999px; border: 1px solid #f3d58a; background: #1b1a17e6; color: #f6efdf;
+  font: inherit; font-size: 1.05rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.film--bred .film-knapp { top: 50%; bottom: auto; transform: translate(-50%, -50%); }
+.film-knapp small { display: block; font-weight: 400; font-size: 13px; color: var(--muted); }
+.film-knapp > span:last-child { text-align: left; line-height: 1.2; }
+.film-ikon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gold); color: #2b1d0c; font-size: 18px; padding-left: 3px; }
+.film-knapp:hover .film-ikon { background: #fff1c4; }
+.film.spiller .film-knapp { display: none; }
+.hero2-film figcaption, #introfilm figcaption { text-align: center; }
+
+.trygt-rad { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.trygt-rad li { padding: 6px 12px 6px 30px; border-radius: 999px; border: 1px solid var(--line);
+  background: #ffffff0d; color: var(--soft); font-size: 15px; position: relative; }
+.trygt-rad li::before { content: "✓"; position: absolute; left: 11px; color: var(--gold); font-weight: 700; }
+
+.ingress { color: var(--soft); font-size: 1.06rem; max-width: 62ch; }
+.tre { display: grid; gap: 14px; margin: 16px 0 8px; }
+@media (min-width: 760px) { .tre { grid-template-columns: repeat(3, 1fr); } }
+.kort-bilde, .kort-tekst { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 0 0 16px; overflow: hidden; display: flex; flex-direction: column; }
+.kort-tekst { padding: 18px; gap: 4px; }
+.kort-tekst .btn { margin-top: auto; align-self: start; }
+.kort-bilde img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: 1px solid var(--line); }
+.kort-bilde img.beskaar { object-position: 50% 30%; }
+.kort-bilde img.midt { object-position: 50% 62%; }
+.kort-bilde h3, .kort-tekst h3 { margin: 14px 16px 6px; color: var(--gold); }
+.kort-tekst h3 { margin: 0 0 6px; }
+.kort-bilde p { margin: 0 16px; color: var(--soft); }
+.kort-tekst p { color: var(--soft); }
+.steg2 { margin-top: 20px; }
+
+.trygt-boks { background: linear-gradient(135deg, #3a2a18, #241c15); border: 1px solid #89734f;
+  border-radius: 16px; padding: 22px 20px; }
+.trygt-boks h2 { color: var(--paper); }
+.trygt-boks p { color: var(--soft); margin: 0; max-width: 66ch; }
+
+.betaling { margin-top: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+.betaling h3 { margin-top: 0; }
+.betaling p { color: var(--soft); }
+.betaling .small { margin: 0; }
+#menighet p { color: var(--soft); max-width: 70ch; }
+.slutt-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.slutt-cta .btn { flex: 1 1 220px; }
+.credit { font-size: 14px; }

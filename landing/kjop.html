@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The buy page talks to the sale's worker alone. No tracking, no third-party script. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'" />
+  <title>Kjøp Reisen med Lukas</title>
+  <meta name="robots" content="noindex" />
+  <!-- The worker's address (https://reisen-med-lukas-unlock.<konto>.workers.dev/order). Empty: the page says the sale is not open. -->
+  <meta name="kasse-api" content="https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev" />
+  <!-- Salget åpner først når denne står til «ja». -->
+  <meta name="kasse-apen" content="nei" />
+  <!-- The QR code on a gift card with a code: kode (the site with ?kode=, which the game fills in) or nettside (the site alone). -->
+  <meta name="theme-color" content="#1b1a17" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kjop.css" />
+</head>
+<body>
+  <main id="innhold" class="kasse">
+    <p><a href="./">Til forsiden</a></p>
+
+    <section id="bestill" aria-labelledby="bestill-tittel">
+      <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
+      <p>Du får koden med en gang. Betal med bankoverføring innen 7 dager. Vipps kommer snart.</p>
+      <p id="stengt" class="melding" hidden>Vi gjør klart for advent. Salget er ikke åpnet ennå.</p>
+      <form id="skjema" novalidate>
+        <fieldset class="valg">
+          <legend>Velg kode</legend>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode – 250 kr</strong><br />For én person.</span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode – 500 kr</strong><br />For hele husstanden: alle som bor i samme hus.</span></label>
+        </fieldset>
+        <label for="epost">E-postadressen din</label>
+        <input id="epost" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="epost-hint" />
+        <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
+        <!-- Left empty by people; a robot that fills every field is turned away. -->
+        <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
+        <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk.</span></label>
+        <button id="kjop" class="btn primary" type="submit">Kjøp og få koden</button>
+        <p id="feil" class="melding" role="alert"></p>
+      </form>
+      <p class="small">Les <a href="../vilkar.html">kjøpsvilkårene</a> og <a href="../personvern.html">personvernerklæringen</a>.</p>
+    </section>
+
+    <section id="kvittering" aria-labelledby="takk" hidden tabindex="-1">
+      <h1 id="takk">Takk! Her er koden din: <span id="kode" class="kode"></span></h1>
+      <p><button class="btn kopier" type="button" data-kopier="kode">Kopier koden</button></p>
+      <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>. Luke 1 er alltid gratis.</p>
+      <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Hold «Mer» inne i tre sekunder, skriv inn koden og trykk «Lås opp».</p>
+      <p id="husstand" hidden>Familiekoden kan tastes inn på alle enhetene i husstanden.</p>
+      <h2>Betal <span id="belop"></span> kr innen <span id="frist"></span>:</h2>
+      <ul class="betaling">
+        <li>Kontonummer: <strong id="konto"></strong> <button class="btn kopier" type="button" data-kopier="konto">Kopier</button></li>
+        <li>Beløp: <strong><span id="belop2"></span> kr</strong> <button class="btn kopier" type="button" data-kopier="belop2">Kopier</button></li>
+        <li>Melding: <strong id="ordre"></strong> <button class="btn kopier" type="button" data-kopier="ordre">Kopier</button><br />Skriv bare dette, så finner vi betalingen.</li>
+      </ul>
+      <p id="kopiert" class="small" role="status"></p>
+      <p id="sendt" hidden>Koden, betalingsinformasjonen og gavekortet er også sendt til e-posten din.</p>
+      <p id="sender" hidden>Koden, betalingsinformasjonen og gavekortet sendes også til e-posten din. Kommer ikke e-posten med en gang, sender vi den innen en dag.</p>
+      <p id="senere" hidden>Kvitteringen med koden og betalingsinformasjonen kommer på e-post innen en dag. Gavekortet kan du laste ned her.</p>
+      <p class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame. Koden står også her på siden.</p>
+      <h2>Gavekort</h2>
+      <p>Gavekortet har koden ferdig påtrykt. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Gir du koden som gave, gi bort selve kortet, ikke et bilde av det.</p>
+      <label for="navn">Til (kan stå tomt)</label>
+      <input id="navn" type="text" maxlength="40" autocomplete="off" />
+      <p><button id="gavekort" class="btn primary" type="button">Last ned gavekortet (PDF)</button></p>
+      <p id="kortfeil" role="status"></p>
+    </section>
+
+    <p><button id="tomt" class="btn" type="button">Last ned tomt gavekort (PDF)</button></p>
+    <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
+  </main>
+  <script type="module" src="kjop.js"></script>
+</body>
+</html>

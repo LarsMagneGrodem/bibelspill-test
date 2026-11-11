@@ -1,0 +1,16 @@
+.kasse { max-width: 40rem; margin: 0 auto; padding: 20px 16px 48px; }
+.kasse h1 { font-size: 1.6rem; line-height: 1.25; }
+.kasse label { display: block; margin-top: 14px; font-weight: 600; }
+.kasse input[type='email'], .kasse input[type='text'] { width: 100%; box-sizing: border-box; font: inherit; font-size: 1.125rem; padding: 10px 12px; margin-top: 6px; border-radius: 8px; border: 1px solid #89734f; }
+.kasse .valg { border: 1px solid #89734f; border-radius: 8px; margin: 16px 0 0; padding: 8px 14px 14px; }
+.kasse .valg label { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+.kasse .valg input { width: 24px; height: 24px; flex: none; margin-top: 2px; }
+.kasse .samtykke { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+.kasse .samtykke input { width: 24px; height: 24px; flex: none; margin-top: 2px; }
+.kasse .btn { margin-top: 16px; min-height: 52px; font-size: 1.125rem; font-weight: 700; }
+.kasse .kode { display: inline-block; font-family: 'Courier New', monospace; letter-spacing: 0.08em; color: var(--gold); white-space: nowrap; }
+.kasse .melding { color: var(--gold); min-height: 1.5em; }
+.kasse .skjult { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.kasse .betaling li { margin-bottom: 10px; }
+.kasse .btn.kopier { margin: 4px 0 0 4px; min-height: 44px; padding: 6px 14px; font-size: 1rem; vertical-align: middle; }
+.kasse .nowrap { white-space: nowrap; }
