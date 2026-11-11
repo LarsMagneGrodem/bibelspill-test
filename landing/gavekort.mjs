@@ -65,7 +65,7 @@ export const CARD = {
   steps: [
     '1. Skann QR-koden, eller gå til reisenmedlukas.no.',
     '2. Start en luke, trykk på tannhjulet, åpne «Mer» og trykk «Jeg har en kode».',
-    '3. Hold «Mer» inne i tre sekunder, skriv inn koden og trykk «Lås opp».',
+    '3. Skriv inn koden og trykk «Lås opp».',
   ],
   doors: 'Luke 1 er gratis. Koden låser opp luke 2–24 på enheten der den tastes inn.',
   whole: 'Hele spillet følger med. Ingen kjøp i appen.',

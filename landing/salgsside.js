@@ -32,6 +32,19 @@
     });
   });
 
+  // Lars 11.11: «Se introfilmen» at the top goes down to the film and starts it with sound in the same tap (the tap is
+  // the visitor's own gesture, which the browser asks for before sound). Without the script the link still scrolls.
+  document.querySelectorAll('[data-spill-intro]').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      var section = document.getElementById('introfilm');
+      var play = section && section.querySelector('[data-film] [data-play-sound]');
+      if (!play) return;
+      event.preventDefault();
+      play.click();
+      section.scrollIntoView({ behavior: lessMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
   // Silent preview of the trailer, only while it is visible.
   var trailer = document.getElementById('trailer');
   if (!trailer || lessMotion || saveData || !('IntersectionObserver' in window)) return;

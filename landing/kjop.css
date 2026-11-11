@@ -14,3 +14,9 @@
 .kasse .betaling li { margin-bottom: 10px; }
 .kasse .btn.kopier { margin: 4px 0 0 4px; min-height: 44px; padding: 6px 14px; font-size: 1rem; vertical-align: middle; }
 .kasse .nowrap { white-space: nowrap; }
+/* Lars 11.11: before buying, what the gift card is (a picture of its outside only); no download before the purchase. */
+.kasse .gave-info { border: 1px solid #89734f; border-radius: 8px; margin: 16px 0 0; padding: 4px 14px 14px; }
+.kasse .gave-info h2 { font-size: 1.25rem; margin: 10px 0 6px; }
+.kasse .gave-info figure { margin: 12px 0 0; }
+.kasse .gave-info img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.kasse .gave-info figcaption { font-size: 1rem; margin-top: 6px; opacity: .85; }

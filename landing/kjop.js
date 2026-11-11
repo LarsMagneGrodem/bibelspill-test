@@ -1,6 +1,6 @@
 // The buy page: an e-mail and the consent go to the sale's worker, which answers with the code and how to pay.
-// The gift card is drawn here in the browser (gavekort.mjs); the name on it never leaves the page.
-import { giftCardPdf } from './gavekort.mjs';
+// The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
+// Lars 11.11: no card to download before buying, so no blank card here.
 import { PAGES, cardPdf } from './gavekort-nett.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -90,8 +90,6 @@ if (new URLSearchParams(location.search).get('valg') === 'familie') {
   const fam = document.querySelector('input[name="product"][value="family"]');
   if (fam) fam.checked = true;
 }
-
-$('tomt').addEventListener('click', () => download(giftCardPdf({}), 'gavekort-reisen-med-lukas.pdf'));
 
 // The last order stays for this tab only, so a reload does not lose the code.
 try {

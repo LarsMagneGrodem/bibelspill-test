@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
     <title>Tilgjengelighet – Reisen med Lukas</title>
     <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
     <meta name="theme-color" content="#1b1a17" />
@@ -47,10 +46,19 @@
 
       <h2>Si fra</h2>
       <p>Står du fast, eller virker noe annerledes enn det som står her? Si fra, så retter vi det.</p>
-      <p>Kontakt: <a href="mailto:lihai260@hotmail.com">lihai260@hotmail.com</a></p>
+      <p>Kontakt: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
       <p>Sist oppdatert: 7. november 2026</p>
 
       <p><a href="./">Til spillet</a> · <a href="personvern.html">Personvern</a></p>
     </main>
+    <script>
+      document.querySelectorAll('.epost').forEach(function (s) {
+        var e = s.dataset.u + '\u0040' + s.dataset.d;
+        var a = document.createElement('a');
+        a.href = 'mail' + 'to:' + e;
+        a.textContent = e;
+        s.replaceWith(a);
+      });
+    </script>
   </body>
 </html>
