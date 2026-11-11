@@ -1,15 +1,15 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="nb">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- The buy page talks to the sale's worker alone. No tracking, no third-party script. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'" />
-  <title>KjÃ¸p Reisen med Lukas</title>
+  <title>Kjøp Reisen med Lukas</title>
   <meta name="robots" content="noindex" />
   <!-- The worker's address (https://reisen-med-lukas-unlock.<konto>.workers.dev/order). Empty: the page says the sale is not open. -->
   <meta name="kasse-api" content="https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev" />
-  <!-- Salget Ã¥pner fÃ¸rst nÃ¥r denne stÃ¥r til Â«jaÂ». -->
+  <!-- Salget åpner først når denne står til «ja». -->
   <meta name="kasse-apen" content="ja" />
   <!-- The QR code on a gift card with a code: kode (the site with ?kode=, which the game fills in) or nettside (the site alone). -->
   <meta name="theme-color" content="#1b1a17" />
@@ -22,54 +22,54 @@
     <p><a href="./">Til forsiden</a></p>
 
     <section id="bestill" aria-labelledby="bestill-tittel">
-      <h1 id="bestill-tittel">KjÃ¸p Reisen med Lukas</h1>
-      <p>Du fÃ¥r koden med en gang. Betal med bankoverfÃ¸ring innen 7 dager. Vipps kommer snart.</p>
-      <p id="stengt" class="melding" hidden>Vi gjÃ¸r klart for advent. Salget er ikke Ã¥pnet ennÃ¥.</p>
+      <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
+      <p>Du får koden med en gang. Betal med bankoverføring innen 7 dager. Vipps kommer snart.</p>
+      <p id="stengt" class="melding" hidden>Vi gjør klart for advent. Salget er ikke åpnet ennå.</p>
       <form id="skjema" novalidate>
         <fieldset class="valg">
           <legend>Velg kode</legend>
-          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode â€“ 250 kr</strong><br />For Ã©n person.</span></label>
-          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode â€“ 500 kr</strong><br />For hele husstanden: alle som bor i samme hus.</span></label>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode – 250 kr</strong><br />For én person.</span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode – 500 kr</strong><br />For hele husstanden: alle som bor i samme hus.</span></label>
         </fieldset>
         <label for="epost">E-postadressen din</label>
         <input id="epost" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="epost-hint" />
-        <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, sÃ¥ sjekk sÃ¸ppelpost eller reklame.</p>
+        <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
         <!-- Left empty by people; a robot that fills every field is turned away. -->
         <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
-        <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg Ã¸nsker Ã¥ fÃ¥ koden med en gang, og vet at angreretten da gÃ¥r tapt nÃ¥r koden er tatt i bruk.</span></label>
-        <button id="kjop" class="btn primary" type="submit">KjÃ¸p og fÃ¥ koden</button>
+        <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk.</span></label>
+        <button id="kjop" class="btn primary" type="submit">Kjøp og få koden</button>
         <p id="feil" class="melding" role="alert"></p>
       </form>
-      <p class="small">Les <a href="../vilkar.html">kjÃ¸psvilkÃ¥rene</a> og <a href="../personvern.html">personvernerklÃ¦ringen</a>.</p>
+      <p class="small">Les <a href="../vilkar.html">kjøpsvilkårene</a> og <a href="../personvern.html">personvernerklæringen</a>.</p>
     </section>
 
     <section id="kvittering" aria-labelledby="takk" hidden tabindex="-1">
       <h1 id="takk">Takk! Her er koden din: <span id="kode" class="kode"></span></h1>
       <p><button class="btn kopier" type="button" data-kopier="kode">Kopier koden</button></p>
-      <p><span id="produkt"></span> Den lÃ¥ser opp <span class="nowrap">luke 2â€“24</span>. Luke 1 er alltid gratis.</p>
-      <p>Start en luke og trykk pÃ¥ tannhjulet âš™. Ã…pne Â«MerÂ» og trykk Â«Jeg har en kodeÂ». Hold Â«MerÂ» inne i tre sekunder, skriv inn koden og trykk Â«LÃ¥s oppÂ».</p>
-      <p id="husstand" hidden>Familiekoden kan tastes inn pÃ¥ alle enhetene i husstanden.</p>
+      <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>. Luke 1 er alltid gratis.</p>
+      <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Hold «Mer» inne i tre sekunder, skriv inn koden og trykk «Lås opp».</p>
+      <p id="husstand" hidden>Familiekoden kan tastes inn på alle enhetene i husstanden.</p>
       <h2>Betal <span id="belop"></span> kr innen <span id="frist"></span>:</h2>
       <ul class="betaling">
         <li>Kontonummer: <strong id="konto"></strong> <button class="btn kopier" type="button" data-kopier="konto">Kopier</button></li>
-        <li>BelÃ¸p: <strong><span id="belop2"></span> kr</strong> <button class="btn kopier" type="button" data-kopier="belop2">Kopier</button></li>
-        <li>Melding: <strong id="ordre"></strong> <button class="btn kopier" type="button" data-kopier="ordre">Kopier</button><br />Skriv bare dette, sÃ¥ finner vi betalingen.</li>
+        <li>Beløp: <strong><span id="belop2"></span> kr</strong> <button class="btn kopier" type="button" data-kopier="belop2">Kopier</button></li>
+        <li>Melding: <strong id="ordre"></strong> <button class="btn kopier" type="button" data-kopier="ordre">Kopier</button><br />Skriv bare dette, så finner vi betalingen.</li>
       </ul>
       <p id="kopiert" class="small" role="status"></p>
-      <p id="sendt" hidden>Koden, betalingsinformasjonen og gavekortet er ogsÃ¥ sendt til e-posten din.</p>
-      <p id="sender" hidden>Koden, betalingsinformasjonen og gavekortet sendes ogsÃ¥ til e-posten din. Kommer ikke e-posten med en gang, sender vi den innen en dag.</p>
-      <p id="senere" hidden>Kvitteringen med koden og betalingsinformasjonen kommer pÃ¥ e-post innen en dag. Gavekortet kan du laste ned her.</p>
-      <p class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, sÃ¥ sjekk sÃ¸ppelpost eller reklame. Koden stÃ¥r ogsÃ¥ her pÃ¥ siden.</p>
+      <p id="sendt" hidden>Koden, betalingsinformasjonen og gavekortet er også sendt til e-posten din.</p>
+      <p id="sender" hidden>Koden, betalingsinformasjonen og gavekortet sendes også til e-posten din. Kommer ikke e-posten med en gang, sender vi den innen en dag.</p>
+      <p id="senere" hidden>Kvitteringen med koden og betalingsinformasjonen kommer på e-post innen en dag. Gavekortet kan du laste ned her.</p>
+      <p class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame. Koden står også her på siden.</p>
       <h2>Gavekort</h2>
-      <p>Gavekortet har koden ferdig pÃ¥trykt. Skriv det ut pÃ¥ begge sider av arket (vend pÃ¥ langsiden) og brett det i tre. QR-koden pÃ¥ kortet lÃ¥ser opp spillet pÃ¥ den enheten som skanner den. Gir du koden som gave, gi bort selve kortet, ikke et bilde av det.</p>
-      <label for="navn">Til (kan stÃ¥ tomt)</label>
+      <p>Gavekortet har koden ferdig påtrykt. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Gir du koden som gave, gi bort selve kortet, ikke et bilde av det.</p>
+      <label for="navn">Til (kan stå tomt)</label>
       <input id="navn" type="text" maxlength="40" autocomplete="off" />
       <p><button id="gavekort" class="btn primary" type="button">Last ned gavekortet (PDF)</button></p>
       <p id="kortfeil" role="status"></p>
     </section>
 
     <p><button id="tomt" class="btn" type="button">Last ned tomt gavekort (PDF)</button></p>
-    <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krÃ¸llalfa) hotmail.com</span></p>
+    <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
   </main>
   <script type="module" src="kjop.js"></script>
 </body>
