@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Fant ikke siden – Reisen med Lukas</title>
+  <script>
+    // The game moved to spill/ on 11 Nov 2026. An old address under the game (aktiviteter/Dag-03.html, filmer.html,
+    // index.html?kapittel=…) goes on to the same place under spill/. Nothing is sent anywhere.
+    (function () {
+      var p = location.pathname;
+      var base = p.indexOf('/bibelspill-test/') === 0 ? '/bibelspill-test/' : '/';
+      var rest = p.slice(base.length);
+      if (rest && rest.indexOf('spill/') !== 0) location.replace(base + 'spill/' + rest + location.search + location.hash);
+    })();
+  </script>
+  <style>body { margin: 0; padding: 24px 16px; background: #1b1a17; color: #ecd7a8; font: 1.125rem/1.5 Georgia, serif; } a { color: #f3d58a; }</style>
+</head>
+<body>
+  <main>
+    <h1>Fant ikke siden</h1>
+    <p><a href="/">Til forsiden</a></p>
+  </main>
+</body>
+</html>

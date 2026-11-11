@@ -1,416 +1,283 @@
 <!doctype html>
 <html lang="nb">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qMXzA6n5LEzlgpcSeRbzhG+w73qM4XcoUw/uuBFAX3c=' 'sha256-JC1dyes6sJzLaS3gmO0EPZAMsPfyeNFX3QANhofgV8g='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <!-- A link out of the game tells the other site nothing about where it came from. -->
-    <meta name="referrer" content="no-referrer" />
-    <!-- A test build, not a launch: ask search engines to leave it out. A launch build drops it (VITE_INDEXABLE). -->
-    <title>Reisen med Lukas</title>
-    <meta name="description" content="En julekalender for barn 8–12 år: Hjelp Lukas å samle vitneutsagn om Jesus, og sjekk selv mot gamle kilder og funn om det holder. 24 luker, én om dagen." />
-    <!-- Link previews in Messenger, SMS and the like. The build puts the game's public address (VITE_SITE_URL) in place of the
-         SITE_URL marks, or leaves those lines out when there is none (scripts/vite-plugins.mjs). -->
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="nb_NO" />
-    <meta property="og:site_name" content="Reisen med Lukas" />
-    <meta property="og:title" content="Reisen med Lukas – en julekalender for 8–12 år" />
-    <meta property="og:description" content="Barnet hjelper Lukas å samle vitneutsagn om Jesus og sjekker selv om det holder. 24 luker, én om dagen. Luke 1 er gratis." />
-    <meta property="og:url" content="https://reisenmedlukas.no/" />
-    <meta property="og:image" content="https://reisenmedlukas.no/deling.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Lukas med skrivetavla foran det malte kartet over landet. Tekst: Reisen med Lukas, julekalender for 8–12 år." />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="apple-mobile-web-app-title" content="Lukas" />
-    <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-    <link rel="apple-touch-icon" href="icon-192.png" />
-    <!-- The dark of the page, so the status bar of the installed app blends with the start page. -->
-    <meta name="theme-color" content="#1b1a17" />
-    <link rel="privacy-policy" href="personvern.html" />
-    <script>
-      // The start page needs the painted land before anything else; a board or a road gets its engine preloaded by the build.
-      // A phone gets the land 960 px wide (145 kB, not 392); the same choice as `landImage` in src/app/land.ts.
-      if (!/[?&](kapittel|til|spill)=/.test(location.search)) {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = matchMedia('(max-width: 600px), (max-height: 500px)').matches ? 'assets/maps/landet-960.webp' : 'assets/maps/landet.webp';
-        document.head.append(link);
-      }
-    </script>
-    <script type="module" crossorigin src="./assets/index-BV3ukXc2.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-XKyaHtl9.js">
-    <link rel="modulepreload" crossorigin href="./assets/game-B1nniyld.js">
-    <link rel="modulepreload" crossorigin href="./assets/ui-Dy7J-i4l.js">
-    <link rel="modulepreload" crossorigin href="./assets/schema-CcGpFnNw.js">
-    <link rel="preload" as="style" crossorigin href="./assets/ui-c4GL54vK.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/ui-c4GL54vK.css"></noscript>
-    <link rel="preload" as="style" crossorigin href="./assets/index-D8sBML4k.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/index-D8sBML4k.css"></noscript>
-  </head>
-  <body>
-    <div id="game">
-      <div id="loading" style="position: fixed; inset: 0; display: grid; place-items: center; background: #1b1a17; color: #ecd7a8; font: 18px Georgia, serif">
-        <div id="loading-card">
-          <div id="loading-text" data-ui="loading">Laster … / Loading …</div>
-          <div id="loading-bar"><div id="loading-fill"></div></div>
-        </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Our own files only: no tracking, no third-party script or film. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
+  <script src="videre.js"></script>
+  <title>Reisen med Lukas – julekalender på nett med fortellingene om Jesus</title>
+  <meta name="description" content="En julekalender på nett der barnet blir lærlingen til legen Lukas og samler fortellingene om Jesus. 24 luker fram til julaften, laget for barn på 8–12 år. Luke 1 er gratis. Ingen kjøp i appen, ingen reklame, ingen sporing." />
+  <meta name="theme-color" content="#1b1a17" />
+  <!-- Share preview: the build puts the game's address (VITE_SITE_URL) in place of https://reisenmedlukas.no/ (scripts/vite-plugins.mjs). Scrapers need absolute URLs for og:image. -->
+  <link rel="canonical" href="https://reisenmedlukas.no/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:site_name" content="Reisen med Lukas" />
+  <meta property="og:title" content="Reisen med Lukas – én luke om dagen fram til julaften" />
+  <meta property="og:description" content="Barnet blir lærlingen til legen Lukas, møter folk som var der, og samler fortellingene om Jesus. 24 luker i desember. Luke 1 er gratis." />
+  <meta property="og:url" content="https://reisenmedlukas.no/" />
+  <meta property="og:image" content="https://reisenmedlukas.no/landing/assets/deling.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Bestefar i lenestolen med en åpen bibel og barnebarnet på en krakk ved siden av. Tekst: Reisen med Lukas." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" sizes="32x32" href="landing/assets/icon-32.png" />
+  <link rel="privacy-policy" href="personvern.html" />
+  <link rel="preload" as="image" href="landing/assets/film/trailer-plakat.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="landing/styles.css" />
+  <link rel="stylesheet" href="landing/salgsside.css" />
+</head>
+<body>
+  <a class="skip" href="#innhold">Hopp til innhold</a>
+  <header class="top">
+    <p class="brand">Reisen med Lukas</p>
+    <nav aria-label="Hovedmeny">
+      <a href="#opplevelse">Hva barna gjør</a>
+      <a href="#introfilm">Introfilmen</a>
+      <a href="#gave">Gavekort</a>
+      <a href="#pris">Pris</a>
+      <a href="#faq">Spørsmål</a>
+    </nav>
+  </header>
+
+  <main id="innhold">
+    <!-- HERO: the poster from the trailer. The trailer itself comes back here when its final round is approved. -->
+    <section class="hero2" aria-labelledby="hovedtittel">
+      <div class="hero2-tittel">
+        <p class="eyebrow">Julekalender på nett · 1.–24. desember</p>
+        <h1 id="hovedtittel">Én luke om dagen med Lukas – helt fram til julaften</h1>
       </div>
-    </div>
 
-    <header id="hud">
-      <div>
-        <strong id="chapter-title"></strong>
-        <span id="chapter-ref"></span>
-        <div id="mission-question" hidden></div>
-        <button id="objective" type="button" aria-haspopup="dialog"></button>
-        <p id="objective-sr" aria-live="polite"></p>
-        <div id="mission-progress" hidden>
-          <span id="progress-label"></span>
-          <div id="progress" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0"><div id="progress-fill"></div></div>
-          <button id="progress-stars" type="button"></button>
+      <figure class="hero2-film">
+        <div class="film film--staaende">
+          <img class="film-video" src="landing/assets/film/trailer-plakat.webp" width="720" height="1280" fetchpriority="high"
+            alt="Lukas og lærlingen går sammen på en vei i landet der Jesus levde." />
+          <a class="film-knapp" href="#introfilm" data-spill-intro>
+            <span class="film-ikon" aria-hidden="true">▶</span>
+            <span>Se introfilmen <small>1 min 25 sek</small></span>
+          </a>
         </div>
-        <div id="inventory"></div>
+      </figure>
+
+      <div class="hero2-tekst">
+        <p class="lead">Barnet blir lærlingen til legen Lukas, går rundt i landet der Jesus levde, snakker med folk som var der og samler fortellingene i vitneboka. Det passer for barn på 8–12 år, og er godt å spille sammen med foreldre eller besteforeldre.</p>
+        <div class="cta-row">
+          <a class="btn primary stor" href="spill/?kapittel=lukas-oppdrag">Prøv luke 1 gratis</a>
+          <a class="btn gull stor" href="landing/kjop.html">Kjøp kode – 250 kr</a>
+        </div>
+        <p class="cta-under">Familiekode for hele husstanden: <a href="landing/kjop.html?valg=familie">500 kr</a>. Engangskjøp, ingen abonnement.</p>
+        <ul class="trygt-rad" aria-label="Trygt for barn">
+          <li>Ingen kjøp i appen</li>
+          <li>Ingen reklame</li>
+          <li>Ingen sporing</li>
+          <li>Ingen konto</li>
+        </ul>
       </div>
-      <div id="hud-buttons">
-        <button id="score" type="button"></button>
-        <button id="notebook-btn" type="button"><span data-ui="notebook"></span> <span id="notebook-dot" hidden></span></button>
-        <button id="level-chip" type="button" aria-haspopup="dialog"><small data-ui="level"></small> <span id="level-chip-name"></span></button>
-        <button id="intro-replay-btn" data-ui-label="openingReplay" type="button" hidden>Intro ▸</button>
-        <button id="zoom-out" data-ui-label="zoomOut" type="button">−</button>
-        <button id="zoom-in" data-ui-label="zoomIn" type="button">+</button>
-        <button id="hud-fold" data-ui-label="hudAll" type="button" aria-expanded="true" hidden>▴</button>
-        <button id="settings-btn" data-ui-label="settings" type="button" aria-expanded="false">⚙</button>
-        <div id="settings-menu" hidden>
-          <button id="hints-btn" type="button"></button>
-          <button id="big-text-btn" type="button"></button>
-          <button id="reading-btn" type="button"></button>
-          <button id="guide-btn" type="button"></button>
-          <button id="diagnose-btn" data-ui="testReading" type="button"></button>
-          <button id="expert-btn" type="button"></button>
-          <button id="level-btn" type="button" aria-haspopup="dialog"></button>
-          <button id="sound-btn" type="button"></button>
-          <button id="music-btn" type="button"></button>
-          <button id="lang-btn" type="button" aria-expanded="false" aria-controls="lang-list"></button>
-          <div id="lang-list" class="lang-choices" hidden></div>
-          <button id="restart-btn" data-ui="restartBoard" type="button"></button>
-          <button id="reset-all-btn" data-ui="resetAll" type="button"></button>
-          <button id="unlock-btn" type="button" hidden></button>
-          <a id="activities-link" href="aktiviteter/" target="_blank" rel="noopener"></a>
-          <a id="privacy-link" href="personvern.html" target="_blank" rel="noopener"></a>
-          <button id="home-btn" data-ui="journey" type="button"></button>
-          <button id="playroom-btn" data-ui="playroom" type="button"></button>
-          <button id="episodes-btn" type="button" aria-expanded="false" aria-controls="episode-list"></button>
-          <div id="episode-list" hidden></div>
-        </div>
+    </section>
+
+    <section id="opplevelse" aria-labelledby="opplevelse-tittel">
+      <h2 id="opplevelse-tittel">Dette får barna oppleve</h2>
+      <p class="ingress">Hver luke er en liten sak å løse. Dagens oppdrag tar vanligvis 5–15 minutter, og den som vil mer, kan bli lenger.</p>
+      <div class="tre">
+        <article class="kort-bilde">
+          <img src="landing/assets/brett-desk-folk.webp" width="1280" height="800" loading="lazy" decoding="async"
+            alt="Et malt spillbrett sett ovenfra: et verksted med hyller, krukker og folk, og en snakkeboble fra en av dem." />
+          <h3>Spillbrett å gå rundt på</h3>
+          <p>Malte steder fra Nasaret til Betlehem. Barnet går rundt, snakker med folk og samler spor sammen med Lukas.</p>
+        </article>
+        <article class="kort-bilde">
+          <img src="landing/assets/smaaspill-puslespill.webp" width="390" height="844" loading="lazy" decoding="async" class="midt"
+            alt="Et småspill der bitene i et malt bilde skal settes tilbake på plass." />
+          <h3>Småspill underveis</h3>
+          <p>Puslespill og små oppgaver gir pauser i fortellingen og belønner dem som følger med.</p>
+        </article>
+        <article class="kort-bilde">
+          <img src="landing/assets/dag-01.webp" width="596" height="842" loading="lazy" decoding="async" class="beskaar"
+            alt="Et aktivitetsark for dag 1 med tittelen Sporjakt på torget, et bilde av et esel ved en veltet kjerre og små oppgaver." />
+          <h3>Aktiviteter for hele familien</h3>
+          <p>Ark til utskrift for hver dag: let etter ord, løs koder, finn forskjeller og snakk sammen om dagens fortelling.</p>
+        </article>
       </div>
-    </header>
 
-    <div id="vignette"></div>
-    <img id="memory" alt="" hidden />
+      <ol class="steps steg2">
+        <li><strong>Åpne dagens luke</strong> på kartet over landet.</li>
+        <li><strong>Snakk med folk og samle spor.</strong> Den første saken begynner på torget i Cæsarea, der en kjerre har veltet.</li>
+        <li><strong>Fyll vitneboka.</strong> Barnet ser kildene selv og bestemmer hva sporene peker på.</li>
+        <li><strong>Samle dagskortene.</strong> På julaften kan en voksen lage et diplom med barnets navn.</li>
+      </ol>
 
-    <div id="dialog-layer" data-panel hidden>
-      <div id="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-speaker" tabindex="-1">
-        <img id="dialog-portrait" alt="" hidden />
-        <div id="dialog-body">
-          <div id="dialog-speaker"></div>
-          <p id="dialog-text"></p>
-          <div id="dialog-foot">
-            <button id="dialog-replay" type="button" data-ui-label="readAgain">🔊</button>
-            <div id="dialog-dots"></div>
-            <button id="dialog-next" type="button"></button>
-          </div>
-        </div>
+      <h3>Slik ser det ut på telefonen</h3>
+      <ul class="phones" aria-label="Bilder fra spillet på telefon">
+        <li><figure><img src="landing/assets/spill-samtale.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et malt landsbytorg i Nasaret sett ovenfra. Nederst sier Lukas: Hva spurte Maria om da engelen kom?" /><figcaption>Lukas gir dagens spørsmål, og barnet går rundt og snakker med folk.</figcaption></figure></li>
+        <li><figure><img src="landing/assets/spill-sak.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et saksark med spørsmålet Hva spurte Maria om? Over står det en kilde kan fortelle, og under velger barnet hva som passer i Lukas' notat." /><figcaption>I saken velger barnet selv hva kildene faktisk sier.</figcaption></figure></li>
+        <li><figure><img src="landing/assets/spill-pastand.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Kortet Dagens påstand: Jesus vokste opp i Nasaret. Barnet har svart Troverdig, og under står hvorfor historikerne sier det samme." /><figcaption>Dagens påstand: barnet gjetter hva historikerne sier, og får se hvorfor.</figcaption></figure></li>
+        <li><figure><img src="landing/assets/spill-dagskort.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Sluttkortet for luke 4 med dagskortet, morgendagens spørsmål på en forseglet lapp og knappen Neste luke." /><figcaption>Sluttkortet med dagskortet og en forseglet lapp om neste luke.</figcaption></figure></li>
+      </ul>
+    </section>
+
+    <section id="trygt" aria-labelledby="trygt-tittel">
+      <div class="trygt-boks">
+        <h2 id="trygt-tittel">Ingen kjøp i appen. Ingen reklame. Ingen sporing.</h2>
+        <p>Dere betaler én gang for koden, og så er det ferdig. Inne i spillet finnes det ingen butikk, ingen mynter å kjøpe og ingen tilbud som dukker opp. Det er ingen konto og ingen innlogging, og framgangen lagres bare på enheten dere spiller på.</p>
       </div>
-    </div>
-    <!-- Outside the talk's layer, so it is in place before the layer opens and the first line is read too (ui.ts). -->
-    <p id="dialog-sr" class="sr-only" aria-live="polite"></p>
+    </section>
 
-    <div id="guide" data-panel hidden>
-      <div id="guide-hole" hidden></div>
-      <div id="guide-card" role="dialog" aria-modal="true" aria-labelledby="guide-title">
-        <h3 id="guide-title"></h3>
-        <p id="guide-text"></p>
-        <label><input id="guide-never" type="checkbox" /> <span id="guide-never-label" data-ui="guideNever"></span></label>
-        <div id="guide-row">
-          <button id="guide-skip" data-ui="guideSkip" type="button"></button>
-          <span id="guide-count"></span>
-          <button id="guide-next" type="button"></button>
+    <section id="introfilm" aria-labelledby="introfilm-tittel">
+      <h2 id="introfilm-tittel">Se introfilmen</h2>
+      <p class="ingress">«Bestefar, er det som står i Bibelen sant?» Introfilmen viser hvordan reisen begynner: Gutten spør, bestefar svarer, og så får barnet bli med Lukas og undersøke selv. Filmen er frivillig og passer fint å se sammen før luke 1.</p>
+      <figure>
+        <div class="film film--bred" data-film>
+          <video id="intro" class="film-video" playsinline preload="none"
+            poster="landing/assets/film/intro-plakat.webp" width="1024" height="576"
+            aria-label="Introfilmen for Reisen med Lukas, 1 minutt og 25 sekunder">
+            <source src="landing/assets/film/intro.mp4" type="video/mp4" />
+          </video>
+          <button class="film-knapp" type="button" data-play-sound>
+            <span class="film-ikon" aria-hidden="true">▶</span>
+            <span>Se introfilmen <small>1 min 25 sek</small></span>
+          </button>
         </div>
+        <figcaption>Introfilmen. Den starter bare når du trykker.</figcaption>
+      </figure>
+    </section>
+
+    <section id="gave" aria-labelledby="gave-tittel">
+      <h2 id="gave-tittel">Gi reisen som gave</h2>
+      <p class="ingress">En fin adventsgave til barnebarn, gudbarn eller nabobarnet. Koden står på gavekortet, og QR-koden på kortet fører til reisenmedlukas.no.</p>
+      <div class="tre">
+        <article class="kort-tekst">
+          <h3>Gavekort med koden</h3>
+          <p>Etter kjøpet kan du laste ned et gavekort som PDF med koden ferdig påtrykt. Du kan skrive navnet til den som skal få det.</p>
+          <a class="btn ghost" href="landing/kjop.html">Kjøp og last ned</a>
+        </article>
+        <article class="kort-tekst">
+          <h3>Kjøp i butikk</h3>
+          <p>Gavekort med personlig kode til 250 kr kan også kjøpes i butikken hos Ordet è Ditt. Familiekoden kjøpes bare her på nettsiden.</p>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <div id="opening-movie" data-panel hidden>
-      <section role="dialog" aria-modal="true" aria-label="Introfilm">
-        <video id="opening-movie-video" playsinline preload="none" tabindex="0"></video>
-        <p id="opening-movie-caption" aria-live="polite"></p>
-        <div id="opening-movie-controls">
-          <button id="opening-movie-play" type="button"></button>
-          <button id="opening-movie-subtitles" type="button" aria-pressed="false" hidden></button>
-          <button id="opening-movie-restart" type="button" data-ui="openingRestart" hidden></button>
-          <button id="opening-movie-skip" type="button" data-ui="guideSkip"></button>
-          <button id="opening-movie-read" type="button" data-ui="openingRead"></button>
-          <button id="opening-movie-finish" type="button" data-ui="openingJoin" hidden></button>
-        </div>
-      </section>
-    </div>
-
-    <div id="prologue" data-panel hidden>
-      <img id="prologue-image" alt="" />
-      <video id="prologue-video" muted playsinline preload="none" aria-hidden="true" hidden></video>
-      <div id="prologue-card" role="dialog" aria-modal="true" aria-labelledby="prologue-title">
-        <h1 id="prologue-title"></h1>
-        <div id="prologue-reference"></div>
-        <div id="prologue-meta"><span id="prologue-speaker" hidden></span><span id="prologue-count" hidden></span><button id="prologue-pause" type="button" hidden></button></div>
-        <p id="prologue-text" aria-live="polite"></p>
-        <ol id="prologue-method" hidden></ol>
-        <div id="prologue-stamps" hidden></div>
-        <div id="prologue-row">
-          <button id="prologue-skip" data-ui="guideSkip" type="button"></button>
-          <button id="prologue-back" data-ui="back" type="button" hidden></button>
-          <button id="prologue-replay" data-ui="openingRestart" type="button" hidden></button>
-          <button id="prologue-next" type="button"></button>
-        </div>
-        <details id="prologue-background" hidden>
-          <summary data-ui="openingBackgroundTitle"></summary>
-          <div id="prologue-background-text"></div>
-        </details>
+    <section id="pris" aria-labelledby="pris-tittel">
+      <h2 id="pris-tittel">Velg hvordan dere vil være med</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>Prøv luke 1</h3>
+          <p class="price">Gratis</p>
+          <ul>
+            <li>Den første saken, på torget i Cæsarea</li>
+            <li>Ingen konto, ingen e-post</li>
+          </ul>
+          <a class="btn primary" href="spill/?kapittel=lukas-oppdrag">Prøv luke 1 gratis</a>
+        </article>
+        <article class="card">
+          <h3>Personlig kode</h3>
+          <p class="price">250 kr</p>
+          <ul>
+            <li>Låser opp luke 2–24 for én person</li>
+            <li><a href="spill/aktiviteter/">Aktivitetsark</a> til utskrift for hver dag</li>
+            <li>Gavekort som PDF</li>
+          </ul>
+          <a class="btn primary" href="landing/kjop.html">Kjøp kode – 250 kr</a>
+        </article>
+        <article class="card featured">
+          <h3>Familiekode</h3>
+          <p class="price">500 kr</p>
+          <ul>
+            <li>Låser opp luke 2–24 for hele husstanden</li>
+            <li><a href="spill/aktiviteter/">Aktivitetsark</a> til utskrift for hver dag</li>
+            <li>Gavekort som PDF</li>
+          </ul>
+          <a class="btn primary" href="landing/kjop.html?valg=familie">Kjøp familiekode – 500 kr</a>
+        </article>
       </div>
-    </div>
 
-    <div id="diagnose" data-panel hidden>
-      <div id="diagnose-card" role="dialog" aria-modal="true" aria-labelledby="diagnose-title">
-        <h3 id="diagnose-title"></h3>
-        <div id="diagnose-row">
-          <button id="diagnose-1" type="button"></button>
-          <button id="diagnose-2" type="button"></button>
-          <button id="diagnose-3" type="button"></button>
-          <button id="diagnose-4" type="button"></button>
-          <button id="diagnose-close" data-ui="close" type="button"></button>
-        </div>
-        <pre id="diagnose-log"></pre>
+      <div class="betaling">
+        <h3>Slik betaler dere</h3>
+        <p>Dere får koden med en gang i kassen, og på e-post. Betal med bankoverføring innen 7 dager. Kontonummer og ordrenummer står i kassen. <strong>Vipps kommer snart.</strong></p>
+        <p class="small">Lukene åpner på sin dag i desember, og etter julaften er alle åpne. Angrerett og refusjon: se <a href="vilkar.html">kjøpsvilkårene</a>. Hva vi lagrer ved kjøp, står i <a href="personvern.html">personvernerklæringen</a>.</p>
       </div>
-    </div>
+    </section>
 
-    <div id="ending" data-panel hidden>
-      <div id="ending-card" role="dialog" aria-modal="true" aria-labelledby="ending-title">
-        <h2 id="ending-title"></h2>
-        <div id="ending-rank" hidden></div>
-        <h3 id="ending-learned" data-ui="missionComplete"></h3>
-        <button id="ending-keepsake" type="button" hidden><img id="ending-keepsake-img" alt="" /></button>
-        <p id="ending-text"></p>
-        <p id="ending-more" hidden></p>
-        <details id="ending-bonus" hidden>
-          <summary data-ui="exploration" tabindex="0"></summary>
-          <p data-ui="explorationHelp"></p><div id="ending-medal" hidden></div>
-        </details>
-        <div id="ending-epilogue" hidden><strong id="ending-tally" hidden></strong><p data-ui="epilogue"></p><p id="ending-closing" hidden></p></div>
-        <div id="ending-tomorrow" hidden></div>
-        <div id="ending-row">
-          <button id="ending-stay" data-ui="stayShort" type="button"></button>
-          <button id="ending-next" type="button"></button>
-          <button id="ending-facts" type="button"></button>
-          <button id="ending-map" data-ui="journey" type="button"></button>
-          <button id="ending-film" data-ui="openingWatch" type="button" hidden></button>
-        </div>
-        <div id="ending-gate"></div>
-        <section id="ending-share-preview" aria-labelledby="grown-ups-title" hidden>
-          <h3 id="grown-ups-title" data-ui="forAdults"></h3>
-          <details id="diploma" name="grown-ups" hidden>
-            <summary data-ui="diplomaTitle"></summary>
-            <label for="diploma-name" data-ui="diplomaName"></label>
-            <input id="diploma-name" type="text" maxlength="40" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-describedby="diploma-note" />
-            <p id="diploma-note" data-ui="diplomaNameNote"></p>
-            <button id="diploma-make" data-ui="diplomaMake" type="button"></button>
-            <img id="diploma-image" alt="" hidden />
-            <div class="button-row"><button id="diploma-share" data-ui="diplomaShare" type="button" hidden></button><button id="diploma-save" data-ui="diplomaSave" type="button" hidden></button></div>
-          </details>
-          <details id="poster" name="grown-ups" hidden>
-            <summary data-ui="posterTitle"></summary>
-            <p data-ui="posterNote"></p>
-            <p id="poster-wait" class="picture-wait" data-ui="pictureDrawing"></p>
-            <img id="poster-image" class="tall" alt="" hidden />
-            <div class="button-row"><button id="poster-share" data-ui="share" type="button" hidden></button><button id="poster-save" data-ui="saveImage" type="button" hidden></button></div>
-          </details>
-          <details id="talk" name="grown-ups" hidden>
-            <summary data-ui="talkTitle"></summary>
-            <ol id="talk-list"></ol>
-            <p data-ui="talkNote"></p>
-          </details>
-          <details id="share-day" name="grown-ups">
-            <summary data-ui="shareToday"></summary>
-            <p id="ending-share-note" data-ui="shareTodayNote"></p>
-            <img id="ending-share-image" alt="" hidden />
-            <textarea id="ending-copy" data-ui-label="shareToday" readonly rows="5"></textarea>
-            <div class="button-row">
-              <button id="ending-share-send" data-ui="share" type="button"></button>
-              <button id="ending-share-save" data-ui="saveImage" type="button" hidden></button>
-              <button id="ending-share-copy" data-ui="shareCopy" type="button"></button>
-            </div>
-            <p id="ending-share-status" role="status"></p>
-          </details>
-          <details id="story" name="grown-ups">
-            <summary data-ui="storyTitle"></summary>
-            <p data-ui="storyNote"></p>
-            <p id="story-wait" class="picture-wait" data-ui="pictureDrawing"></p>
-            <img id="story-image" class="tall" alt="" hidden />
-            <div class="button-row"><button id="story-share" data-ui="share" type="button" hidden></button><button id="story-save" data-ui="saveImage" type="button" hidden></button></div>
-          </details>
-          <details id="riddle" name="grown-ups" hidden>
-            <summary data-ui="riddleTitle"></summary>
-            <p data-ui="riddleNote"></p>
-            <textarea id="riddle-copy" data-ui-label="riddleTitle" readonly rows="5"></textarea>
-            <div class="button-row"><button id="riddle-send" data-ui="share" type="button"></button><button id="riddle-copy-button" data-ui="shareCopy" type="button"></button></div>
-            <p id="riddle-status" role="status"></p>
-          </details>
-          <div class="button-row"><button id="ending-share-cancel" data-ui="close" type="button"></button></div>
-          <button id="ending-whole" data-ui="unlockTitle" type="button" hidden></button>
-        </section>
+    <section id="tro" aria-labelledby="tro-tittel">
+      <h2 id="tro-tittel">Hva bygger spillet på?</h2>
+      <ul class="list">
+        <li><strong>Gjenfortalt fra Lukasevangeliet</strong> med egne ord og med henvisning til kapittel og vers. Lukas skriver selv at han undersøkte alt nøye og bygde på dem som var øyenvitner (Luk 1,1–4).</li>
+        <li><strong>Klassisk kristen tro.</strong> Bibelen behandles som troverdig og som Guds ord til mennesker. Spillet tar ikke stilling der kirkesamfunnene er uenige, som dåp, nattverd og kirkesyn.</li>
+        <li><strong>Vitnene prøves ærlig.</strong> Barnet øver på å spørre: Så de det selv? Sier flere det samme? Ble det fortalt tidlig? Passer det med alt det andre vi vet?</li>
+        <li><strong>Det som er diktet, holdes atskilt.</strong> Mange personer og samtalene med Lukas er diktet til spillet, og det står hva som er hentet fra Bibelen og andre kilder.</li>
+      </ul>
+    </section>
+
+    <section class="faq" id="faq" aria-labelledby="faq-tittel">
+      <h2 id="faq-tittel">Spørsmål og svar</h2>
+      <details>
+        <summary>Er luke 1 virkelig gratis?</summary>
+        <p>Ja. Luke 1 er åpen for alle, uten konto og uten e-post. Da kan dere prøve spillet før dere bestemmer dere.</p>
+      </details>
+      <details>
+        <summary>Hva låser koden opp?</summary>
+        <p>Koden låser opp luke 2–24. Lukene åpner på sin dag i desember, og etter julaften er alle åpne. Det er et engangskjøp: ingen abonnement og ingen kjøp inne i spillet.</p>
+      </details>
+      <details>
+        <summary>Hva er forskjellen på personlig kode og familiekode?</summary>
+        <p>En personlig kode (250 kr) er for én person. En familiekode (500 kr) er for hele husstanden, altså alle som bor i samme hus, og kan tastes inn på alle enhetene dere har hjemme. Spillet teller ikke enheter.</p>
+      </details>
+      <details>
+        <summary>Hvordan låser jeg opp med koden?</summary>
+        <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Skriv inn koden og trykk «Lås opp».</p>
+      </details>
+      <details>
+        <summary>Hvordan betaler vi?</summary>
+        <p>Dere får koden med en gang i kassen. Betal med bankoverføring innen 7 dager, med ordrenummeret i meldingsfeltet. Vipps kommer snart.</p>
+      </details>
+      <details>
+        <summary>Hvilken alder passer det for?</summary>
+        <p>Spillet er laget for barn på 8–12 år. Yngre barn kan være med sammen med en voksen eller et eldre søsken, og alle kort kan leses høyt.</p>
+      </details>
+      <details>
+        <summary>Virker det på telefon, nettbrett og PC?</summary>
+        <p>Ja. Spillet kjører i nettleseren på telefon, nettbrett og PC, uten at noe må installeres. Første gang trenger dere nett. Etter det kan dere spille videre uten nett på samme enhet.</p>
+      </details>
+      <details>
+        <summary>Hva skjer om vi kjøper midt i desember?</summary>
+        <p>Da er lukene fram til og med dagens dato åpne med en gang, og så åpner en ny luke hver dag fram til julaften. Barnet kan ta igjen dagene når det passer.</p>
+      </details>
+      <details>
+        <summary>Kan flere barn bruke samme enhet?</summary>
+        <p>Ja, men spillet har ingen profiler, så søsken som deler enhet, deler også framgangen. Vil hvert barn ha sin egen reise, kan de bruke hver sin enhet eller nettleser.</p>
+      </details>
+      <details>
+        <summary>Kan vi angre kjøpet?</summary>
+        <p>Se <a href="vilkar.html">kjøpsvilkårene</a>.</p>
+      </details>
+      <details>
+        <summary>Er det bare for kristne familier?</summary>
+        <p>Spillet er laget på kristent grunnlag og tar Bibelen på alvor. Samtidig øver det på noe alle har nytte av: å stille gode spørsmål og prøve det man hører. Alle er velkomne til å være med.</p>
+      </details>
+      <details>
+        <summary>Hvor kommer filmene i vitneboka fra?</summary>
+        <p>Noen kort i vitneboka viser til korte filmer fra BibleProject. Filmene er laget av og tilhører <a href="https://bibleproject.com/">BibleProject</a>. Alle sammen ligger gratis på siden <a href="spill/filmer.html">Filmer fra BibleProject</a>.</p>
+      </details>
+    </section>
+
+    <section id="kontakt" aria-labelledby="kontakt-tittel">
+      <div class="contact">
+        <h2 id="kontakt-tittel">Spørsmål? Skriv til oss</h2>
+        <p>E-post: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
+        <p>Vi svarer så fort vi kan. Ikke send kortnummer eller BankID-opplysninger på e-post.</p>
       </div>
-    </div>
-
-    <div id="confirm" data-panel hidden>
-      <div id="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
-        <img id="confirm-face" src="assets/portraits/lukas.webp" alt="" />
-        <h2 id="confirm-title"></h2>
-        <p id="confirm-text" hidden></p>
-        <div id="confirm-row">
-          <button id="confirm-no" type="button"></button>
-          <button id="confirm-yes" type="button"></button>
-        </div>
+      <div class="slutt-cta">
+        <a class="btn primary stor" href="spill/?kapittel=lukas-oppdrag">Prøv luke 1 gratis</a>
+        <a class="btn gull stor" href="landing/kjop.html">Kjøp kode – 250 kr</a>
       </div>
-    </div>
+    </section>
+  </main>
 
-    <!-- The two levels, asked once before the first board and opened again from the level shown on the start page, in
-         the top bar and in the menu (level-card.ts). -->
-    <div id="level" data-panel hidden>
-      <div id="level-card" role="dialog" aria-modal="true" aria-labelledby="level-title" aria-describedby="level-later">
-        <p id="level-lead" hidden></p>
-        <h2 id="level-title" data-ui="levelChoose"></h2>
-        <div id="level-options"></div>
-        <p id="level-later" data-ui="levelAnyTime"></p>
-      </div>
-    </div>
-
-    <div id="atlas" data-panel hidden>
-      <!-- The brass of the needle heads and the wax of the seal, lit from the upper left (style.css fills with them). -->
-      <svg width="0" height="0" style="position: absolute" aria-hidden="true">
-        <defs>
-          <radialGradient id="brass" cx="35%" cy="30%" r="70%">
-            <stop offset="0" stop-color="#fff1b8" /><stop offset="0.5" stop-color="#d9b25c" /><stop offset="1" stop-color="#7a5a1e" />
-          </radialGradient>
-          <radialGradient id="wax" cx="35%" cy="30%" r="70%">
-            <stop offset="0" stop-color="#c84e38" /><stop offset="0.55" stop-color="#8f2a1b" /><stop offset="1" stop-color="#5c1a10" />
-          </radialGradient>
-        </defs>
-      </svg>
-      <main id="atlas-card">
-        <h1 id="atlas-title" data-ui="gameTitle"></h1>
-        <div id="atlas-rank"></div>
-        <p id="atlas-lead"></p>
-        <!-- Before the modes and the 24 doors, so the keyboard and a screen reader meet the way on first. -->
-        <button id="atlas-go" type="button" hidden></button>
-        <div id="atlas-also">
-          <button id="atlas-level" type="button" aria-haspopup="dialog"></button>
-          <button id="atlas-film" data-ui="openingWatch" type="button" hidden></button>
-        </div>
-        <div id="atlas-modes" role="group" data-ui-label="playMode"></div>
-        <div id="atlas-teaser" hidden>
-          <p data-ui="teaserLead"></p>
-          <p><span data-ui="teaserCountdown"></span> <strong data-teaser-count>—</strong></p>
-          </div>
-        <!-- r207: «Dagens spørsmål» nearer Start (above the map) so 200% is packed, not top-heavy. -->
-        <p id="atlas-ask"></p>
-        <div id="atlas-frame"></div>
-        <div id="atlas-chosen"></div>
-        <div id="atlas-score"></div>
-        <div id="atlas-travels"></div>
-        <div id="atlas-lang" class="lang-choices" role="group" data-ui-label="language"></div>
-        <button id="atlas-reset" data-ui="resetAll" type="button" class="plain"></button>
-      </main>
-    </div>
-
-    <div id="minigame" data-panel hidden>
-      <div id="minigame-card" role="dialog" aria-modal="true" aria-labelledby="minigame-title">
-        <h3 id="minigame-title"></h3>
-        <p id="minigame-info"></p>
-        <div id="minigame-stage" tabindex="-1"></div>
-        <div id="minigame-result" aria-live="polite"></div>
-        <button id="minigame-quit" data-ui="close" type="button"></button>
-      </div>
-    </div>
-
-    <button id="compass" type="button" hidden></button>
-    <div id="curiosity-die" hidden aria-hidden="true"></div>
-    <div id="toasts" aria-live="polite"></div>
-    <button id="action-btn" type="button" hidden></button>
-
-    <div id="notebook-panel" data-panel hidden>
-      <div id="notebook-card" role="dialog" aria-modal="true" aria-labelledby="notebook-heading">
-        <h2 id="notebook-heading" data-ui="notebook"></h2>
-        <div id="notebook-body" tabindex="-1"></div>
-        <p id="notebook-sr" class="sr-only" aria-live="polite"></p>
-        <button id="notebook-close" data-ui="close" type="button"></button>
-      </div>
-    </div>
-    <div id="report" data-panel hidden>
-      <div id="report-card" role="dialog" aria-modal="true" aria-labelledby="report-q">
-        <div id="report-top">
-          <button id="report-back" data-ui-label="back" type="button">←</button>
-          <h2 id="report-q" tabindex="-1"></h2>
-          <button id="report-say" data-ui-label="readAloud" type="button">🔊</button>
-        </div>
-        <div id="report-task">
-          <details id="report-history" hidden></details>
-          <section id="report-source" aria-labelledby="report-sources-heading">
-            <h3 id="report-sources-heading" data-ui="reportSources"></h3>
-            <div id="report-source-list"></div>
-          </section>
-          <div id="report-sheet"><small data-ui="lukeWrites"></small><div id="report-units"></div></div>
-          <div id="report-foot"></div>
-        </div>
-        <!-- Below the case, however long it is: Luke's line with the hint, and what to press next (check, file it). -->
-        <div id="report-dock">
-          <div id="report-luke">
-            <img src="assets/portraits/lukas.webp" alt="" />
-            <span id="report-line" aria-live="polite"></span>
-            <button id="report-hint" data-ui="requestHint" aria-controls="report-line" type="button" hidden></button>
-          </div>
-          <div id="report-act"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- A locked door: one sentence for the child, and behind «Mer» (a plain tap, unlock-card.ts) the part for grown-ups. -->
-    <div id="unlock-panel" data-panel hidden>
-      <div role="dialog" aria-modal="true" aria-labelledby="unlock-title">
-        <h2 id="unlock-title" data-ui="unlockTitle"></h2>
-        <p id="unlock-child"></p>
-        <div id="unlock-gate"></div>
-        <section id="unlock-adult" aria-labelledby="unlock-adult-title" hidden>
-          <h3 id="unlock-adult-title" data-ui="forAdults"></h3>
-          <p data-ui="unlockAbout"></p>
-          <div id="unlock-form">
-            <label for="unlock-input" data-ui="unlockEnter"></label>
-            <p id="unlock-hint" data-ui="unlockHint"></p>
-            <div class="row">
-              <input id="unlock-input" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="9" placeholder="XXXX-XXXX" />
-              <button id="unlock-submit" type="button" data-ui="unlockSubmit"></button>
-            </div>
-          </div>
-          <p id="unlock-status" role="status"></p>
-          <a id="unlock-buy" target="_blank" rel="noopener" data-ui="buyLink" hidden></a>
-          <p id="unlock-soon" data-ui="buySoon" hidden></p>
-          <button id="unlock-clear" type="button" data-ui="unlockClear" class="plain" hidden></button>
-        </section>
-        <div class="row">
-          <button id="unlock-close" type="button" data-ui="close"></button>
-        </div>
-      </div>
-    </div>
+  <footer class="foot">
+    <p><a href="landing/kontakt.html">Kontakt</a> · <a href="vilkar.html">Kjøpsvilkår</a> · <a href="personvern.html">Personvern</a> · <a href="tilgjengelighet.html">Tilgjengelighet</a> · <a href="spill/filmer.html">Filmer fra BibleProject</a> · Ingen sporingsverktøy på denne siden.</p>
+    <p class="credit">Musikk i introfilmen: «Helios» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/helios/">scottbuckley.com.au</a>.</p>
+  </footer>
+  <script src="landing/salgsside.js" defer></script>
 </body>
 </html>
