@@ -1,8 +1,9 @@
-/* global URLSearchParams, location, window, performance */
+/* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File */
 // The buy page: an e-mail and the consent go to the sale's worker, which answers with the code and how to pay.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
 import { PAGES, cardPdf } from './gavekort-nett.mjs';
+import { qrCode } from './qr.mjs';
 
 const $ = (id) => document.getElementById(id);
 const meta = (name) => document.querySelector(`meta[name="${name}"]`)?.content.trim() ?? '';
@@ -23,7 +24,28 @@ const ERRORS = {
   body: 'Noe gikk galt med skjemaet. Last siden på nytt og prøv igjen.',
   server: 'Kassen svarte ikke som den skulle. Prøv igjen om litt, eller skriv til oss.',
   network: 'Fikk ikke kontakt. Sjekk at du er på nett, og prøv igjen.',
+  // G12: the worker took more than 15 s. The order may have been made all the same, so: do not buy twice.
+  timeout: 'Kassen svarer ikke nå. Har du fått en e-post med kode, ikke kjøp på nytt. Prøv igjen om litt, eller skriv til oss.',
 };
+const ORDER_TIMEOUT_MS = 15000;
+
+// G12: an abort signal after `ms`; AbortSignal.timeout where there is one, else a timer.
+function timeoutSignal(ms) {
+  try {
+    if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') return AbortSignal.timeout(ms);
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(new DOMException('timeout', 'TimeoutError')), ms);
+    return controller.signal;
+  } catch {
+    return undefined;
+  }
+}
+
+// G6: Safari before iOS 16.4 cannot run the game (a lookbehind in its code), though this page works. Say so before buying.
+function oldSafari() {
+  try { new RegExp('(?<=a)b'); return false; } catch { return true; }
+}
+const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
 function download(bytes, name) {
   const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
@@ -37,23 +59,73 @@ function download(bytes, name) {
 }
 
 // The web card (gavekort-nett.mjs): its two pictures come from this site; the name stays in the browser.
+// G13: the pictures are fetched as soon as the receipt shows, so the tap can build the PDF at once and hand it to the
+// share sheet while the tap still counts (iPhone: «Skriv ut», «Arkiver i Filer», Mail, AirDrop). Elsewhere it downloads.
+let pictures = null;
+function fetchPictures(order) {
+  const get = async (path) => {
+    const res = await fetch(path);
+    if (!res.ok) throw new Error(String(res.status));
+    return new Uint8Array(await res.arrayBuffer());
+  };
+  pictures = Promise.all([get(PAGES.utside), get(PAGES[order.product])]);
+  pictures.catch(() => { pictures = null; });
+  return pictures;
+}
+
 async function webCard(order) {
   $('kortfeil').textContent = '';
   $('gavekort').disabled = true;
   try {
-    const get = async (path) => {
-      const res = await fetch(path);
-      if (!res.ok) throw new Error(String(res.status));
-      return new Uint8Array(await res.arrayBuffer());
-    };
-    const [utside, innside] = await Promise.all([get(PAGES.utside), get(PAGES[order.product])]);
+    const [utside, innside] = await (pictures ?? fetchPictures(order));
     const pdf = cardPdf({ code: order.code, product: order.product, name: $('navn').value }, { utside, [order.product]: innside });
-    download(pdf, `gavekort-${order.code}.pdf`);
+    const name = `gavekort-${order.code}.pdf`;
+    let file = null;
+    try { file = new File([pdf], name, { type: 'application/pdf' }); } catch { /* old browser */ }
+    if (IOS && file && navigator.canShare?.({ files: [file] })) {
+      navigator.share({ files: [file], title: 'Gavekort – Reisen med Lukas' }).catch(() => {});
+    } else {
+      download(pdf, name);
+      if (IOS) $('filer').hidden = false;
+    }
   } catch {
+    pictures = null;
     $('kortfeil').textContent = 'Fikk ikke laget gavekortet. Sjekk at du er på nett, og prøv igjen.';
   } finally {
     $('gavekort').disabled = false;
   }
+}
+
+// G3: a QR code with the code, for the child's iPad: the camera opens the link in the default browser, which unlocks there.
+function drawQr(code) {
+  const box = $('qr-boks');
+  const holder = $('qr');
+  holder.replaceChildren();
+  const symbol = qrCode(`https://reisenmedlukas.no/spill/?kode=${encodeURIComponent(code)}`);
+  if (!symbol) { box.hidden = true; return; }
+  const n = symbol.dark.length;
+  const quiet = 4;
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${n + quiet * 2} ${n + quiet * 2}`);
+  svg.setAttribute('width', '180');
+  svg.setAttribute('height', '180');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', `QR-kode som låser opp spillet med koden ${code}`);
+  svg.setAttribute('shape-rendering', 'crispEdges');
+  const bg = document.createElementNS(ns, 'rect');
+  bg.setAttribute('width', String(n + quiet * 2));
+  bg.setAttribute('height', String(n + quiet * 2));
+  bg.setAttribute('fill', '#ffffff');
+  svg.append(bg);
+  let d = '';
+  symbol.dark.forEach((row, y) => row.forEach((on, x) => { if (on) d += `M${x + quiet} ${y + quiet}h1v1h-1z`; }));
+  const path = document.createElementNS(ns, 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('fill', '#000000');
+  svg.append(path);
+  holder.append(svg);
+  box.hidden = false;
 }
 
 function show(order) {
@@ -76,6 +148,10 @@ function show(order) {
   $('til').hidden = !order.email;
   $('til-epost').textContent = order.email ?? '';
   $('spill').href = `../spill/?kode=${encodeURIComponent(order.code)}`;
+  $('filer').hidden = true;
+  drawQr(order.code);
+  pictures = null;
+  void fetchPictures(order).catch(() => {});
   $('kvittering').focus();
 }
 
@@ -150,6 +226,7 @@ if (!api) {
   $('stengt').hidden = false;
   $('skjema').hidden = true;
 }
+if (oldSafari()) $('gammel-ios').hidden = false;
 
 $('skjema').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -166,14 +243,15 @@ $('skjema').addEventListener('submit', async (event) => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ email, product, consent: true, website: $('nettsted').value }),
+      signal: timeoutSignal(ORDER_TIMEOUT_MS),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.ok) return say(Object.hasOwn(ERRORS, data.error ?? '') ? data.error : 'server');
     const bought = { ...data, email };
     try { sessionStorage.setItem(KEPT, JSON.stringify(bought)); } catch { /* private mode */ }
     show(bought);
-  } catch {
-    say('network');
+  } catch (error) {
+    say(error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network');
   } finally {
     $('kjop').disabled = false;
   }

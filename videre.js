@@ -7,7 +7,7 @@
   var q = location.search;
   var h = location.hash;
   var installed = typeof matchMedia === 'function' && matchMedia('(display-mode: standalone)').matches;
-  if (/[?&](kode|kapittel|alle)(=|&|$)/.test(q) || h === '#unlock' || installed) {
+  if (/[?&](kode|kapittel|alle|lang)(=|&|$)/.test(q) || h === '#unlock' || installed) {
     location.replace('spill/' + q + h);
     return;
   }

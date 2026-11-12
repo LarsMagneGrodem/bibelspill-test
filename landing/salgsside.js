@@ -70,3 +70,11 @@ document.querySelectorAll('.epost').forEach(function (s) {
   a.textContent = e;
   s.replaceWith(a);
 });
+
+// G6: Safari before iOS 16.4 cannot run the game (a lookbehind in its code), though this page works. Say so before buying.
+(function () {
+  var old = false;
+  try { new RegExp('(?<=a)b'); } catch { old = true; }
+  if (!old) return;
+  document.querySelectorAll('[data-gammel-ios]').forEach(function (p) { p.hidden = false; });
+})();

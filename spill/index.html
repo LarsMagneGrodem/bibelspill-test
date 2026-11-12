@@ -2,7 +2,7 @@
 <html lang="nb">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qMXzA6n5LEzlgpcSeRbzhG+w73qM4XcoUw/uuBFAX3c=' 'sha256-JC1dyes6sJzLaS3gmO0EPZAMsPfyeNFX3QANhofgV8g='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qMXzA6n5LEzlgpcSeRbzhG+w73qM4XcoUw/uuBFAX3c=' 'sha256-JC1dyes6sJzLaS3gmO0EPZAMsPfyeNFX3QANhofgV8g=' 'sha256-t+OXahuNvaXBD/wawGtBipx+mWA/r8AAMXU3crl7BOw='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -44,10 +44,10 @@
         document.head.append(link);
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-BfMHwJgG.js"></script>
+    <script type="module" crossorigin src="./assets/index-eQQ321_X.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-XKyaHtl9.js">
     <link rel="modulepreload" crossorigin href="./assets/game-B1nniyld.js">
-    <link rel="modulepreload" crossorigin href="./assets/ui-Dy1mVE6-.js">
+    <link rel="modulepreload" crossorigin href="./assets/ui-DTNmtvHE.js">
     <link rel="modulepreload" crossorigin href="./assets/schema-CcGpFnNw.js">
     <link rel="preload" as="style" crossorigin href="./assets/ui-BvE8cVWw.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/ui-BvE8cVWw.css"></noscript>
     <link rel="preload" as="style" crossorigin href="./assets/index-laiLwNaY.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/index-laiLwNaY.css"></noscript>
@@ -61,6 +61,22 @@
         </div>
       </div>
     </div>
+    <script>
+      // G6: a classic script runs even when the game's modules cannot. Safari before iOS 16.4 cannot read the game's code
+      // (a lookbehind in a regular expression), so it would say «Laster …» for ever: tell the family why instead. And if
+      // nothing has started after a while, a way to try again (main.ts makes its own at 20 s when the game is alive).
+      (function () {
+        var ok = true; try { new RegExp('(?<=a)b'); } catch (e) { ok = false; }
+        var text = document.getElementById('loading-text');
+        if (!ok && text) { text.textContent = 'Denne enheten har for gammel programvare for spillet. Reisen med Lukas trenger iOS eller iPadOS 16.4 eller nyere (Innstillinger › Generelt › Om). Prøv på en annen enhet.'; return; }
+        setTimeout(function () {
+          var card = document.getElementById('loading-card');
+          if (!document.getElementById('loading') || !card || card.querySelector('button')) return;
+          var b = document.createElement('button'); b.type = 'button'; b.className = 'plain'; b.textContent = 'Last på nytt';
+          b.onclick = function () { location.reload(); }; card.appendChild(b);
+        }, 22000);
+      })();
+    </script>
 
     <header id="hud">
       <div>
@@ -394,6 +410,7 @@
         <section id="unlock-adult" aria-labelledby="unlock-adult-title" hidden>
           <h3 id="unlock-adult-title" data-ui="forAdults"></h3>
           <p data-ui="unlockAbout"></p>
+          <p id="unlock-again" data-ui="unlockAgain"></p>
           <div id="unlock-form">
             <label for="unlock-input" data-ui="unlockEnter"></label>
             <p id="unlock-hint" data-ui="unlockHint"></p>

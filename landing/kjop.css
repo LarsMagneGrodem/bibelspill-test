@@ -20,3 +20,7 @@
 .kasse .gave-info figure { margin: 12px 0 0; }
 .kasse .gave-info img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .kasse .gave-info figcaption { font-size: 1rem; margin-top: 6px; opacity: .85; }
+/* G3: the QR code on the receipt, for the child's iPad. */
+.kasse .qr-boks { margin: 12px 0; }
+.kasse .qr-boks svg { display: block; background: #fff; border-radius: 6px; max-width: 60vw; height: auto; }
+.kasse .qr-boks figcaption { margin-top: 6px; }

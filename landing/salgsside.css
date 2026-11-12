@@ -73,3 +73,6 @@ a.film-knapp { text-decoration: none; }
 .slutt-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .slutt-cta .btn { flex: 1 1 220px; }
 .credit { font-size: 14px; }
+/* G6: the note for an iPad or iPhone too old for the game (salgsside.js shows it). */
+.gammel-ios { color: #ffd98a; font-weight: 600; margin: 10px 0; }
+.gammel-ios[hidden] { display: none; }

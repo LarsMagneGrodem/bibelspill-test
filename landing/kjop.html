@@ -25,6 +25,7 @@
       <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
       <p>Du får koden med en gang. Betal med bankoverføring innen 7 dager. Vipps kommer snart.</p>
       <p id="siste" hidden><button id="vis-siste" class="btn" type="button"><span>Vis siste kjøp (kode <span id="siste-kode" class="kode"></span>)</span></button></p>
+      <p id="gammel-ios" class="melding" hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
       <p id="stengt" class="melding" hidden>Vi gjør klart for advent. Salget er ikke åpnet ennå.</p>
       <form id="skjema" novalidate>
         <fieldset class="valg">
@@ -58,6 +59,11 @@
       <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>. Luke 1 er alltid gratis.</p>
       <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Skriv inn koden og trykk «Lås opp».</p>
       <p><a id="spill" class="btn primary" href="../spill/">Åpne spillet og lås opp på denne enheten</a><br />Er koden en gave? Bruk gavekortet i stedet.</p>
+      <p>Skriv inn koden på barnets enhet den dagen dere begynner, ikke lenge før.</p>
+      <figure id="qr-boks" class="qr-boks" hidden>
+        <div id="qr"></div>
+        <figcaption>Skann med kameraet på barnets iPad. Da låses spillet opp der.</figcaption>
+      </figure>
       <p id="husstand" hidden>Familiekoden kan tastes inn på alle enhetene i husstanden.</p>
       <h2>Betal <span id="belop"></span> kr innen <span id="frist"></span>:</h2>
       <ul class="betaling">
@@ -77,6 +83,7 @@
       <input id="navn" type="text" maxlength="40" autocomplete="off" />
       <p>Skal koden være en gave? Last ned gavekortet, skriv det ut på begge sider av arket og brett det i tre.</p>
       <p><button id="gavekort" class="btn primary" type="button">Last ned gavekortet (PDF)</button></p>
+      <p id="filer" class="small" hidden>Finner du ikke kortet? Se i Filer-appen under Nedlastinger.</p>
       <p id="kortfeil" role="status"></p>
       <h2>Flere koder</h2>
       <p>Vil du kjøpe en kode til, for eksempel som en gave?</p>
