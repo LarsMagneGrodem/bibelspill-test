@@ -1,3 +1,4 @@
+/* global window, document, navigator */
 (function () {
   function feedback(btn, ok) {
     if (!btn) return;
@@ -27,7 +28,7 @@
     area.style.left = "-9999px";
     document.body.appendChild(area);
     area.select();
-    var ok = false;
+    var ok;
     try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
     document.body.removeChild(area);
     feedback(btn, ok);

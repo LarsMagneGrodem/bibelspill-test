@@ -1,3 +1,4 @@
+/* global window, matchMedia, IntersectionObserver */
 // Films on the sales page. Nothing is sent anywhere; no tracking.
 // The trailer may play muted in a loop when it is on screen, unless the visitor asks for less motion
 // or to save data. Sound only ever starts from a tap on the button, and then the film starts from the top.
