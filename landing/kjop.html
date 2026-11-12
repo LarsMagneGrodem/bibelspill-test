@@ -23,7 +23,7 @@
 
     <section id="bestill" aria-labelledby="bestill-tittel">
       <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
-      <p>Du får koden med en gang. Betal med bankoverføring innen 7 dager. Vipps kommer snart.</p>
+      <p>Du betaler med bankoverføring og får koden med en gang. Vipps kommer snart.</p>
       <p id="siste" hidden><button id="vis-siste" class="btn" type="button"><span>Vis siste kjøp (kode <span id="siste-kode" class="kode"></span>)</span></button></p>
       <p id="gammel-ios" class="melding" hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
       <p id="stengt" class="melding" hidden>Vi gjør klart for advent. Salget er ikke åpnet ennå.</p>
@@ -46,11 +46,30 @@
         <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
         <!-- Left empty by people; a robot that fills every field is turned away. -->
         <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
-        <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
-        <button id="kjop" class="btn primary" type="submit">Kjøp og få koden</button>
+        <button id="kjop" class="btn primary" type="submit">Gå til betaling</button>
         <p id="feil" class="melding" role="alert"></p>
       </form>
       <p class="small">Les <a href="../vilkar.html">kjøpsvilkårene</a> og <a href="../personvern.html">personvernerklæringen</a>.</p>
+    </section>
+
+    <!-- Bankoverføring på tillit (Lars 12.11 16:24): betalingsinformasjonen først, så «Jeg har betalt» og samtykket, så koden.
+         Én boks for seg (betalingsmate), så Vipps kan stå først og banken under, mindre synlig. -->
+    <section id="betal" aria-labelledby="betal-tittel" hidden tabindex="-1">
+      <div id="bank" class="betalingsmate">
+        <h1 id="betal-tittel">Betal <span id="belop"></span> kr med bankoverføring</h1>
+        <p>Betal i nettbanken eller bankappen. Kryss av når du har betalt, så får du koden med en gang.</p>
+        <ul class="betaling">
+          <li>Kontonummer: <strong id="konto"></strong> <button class="btn kopier" type="button" data-kopier="konto">Kopier</button></li>
+          <li>Beløp: <strong><span id="belop2"></span> kr</strong> <button class="btn kopier" type="button" data-kopier="belop2">Kopier</button></li>
+          <li>Melding: <strong id="ordre"></strong> <button class="btn kopier" type="button" data-kopier="ordre">Kopier</button><br />Skriv bare dette, så finner vi betalingen.</li>
+        </ul>
+        <p id="kopiert-betal" class="small" role="status"></p>
+        <label class="samtykke betalt"><input id="betalt" type="checkbox" required /> <span>Jeg har betalt.</span></label>
+        <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
+        <button id="fa-kode" class="btn primary" type="button">Få koden</button>
+        <p id="feil-betal" class="melding" role="alert"></p>
+        <p><button id="tilbake" class="btn" type="button">Tilbake</button></p>
+      </div>
     </section>
 
     <section id="kvittering" aria-labelledby="takk" hidden tabindex="-1">
@@ -65,12 +84,6 @@
         <figcaption>Skann med kameraet på barnets iPad. Da låses spillet opp der.</figcaption>
       </figure>
       <p id="husstand" hidden>Familiekoden kan tastes inn på alle enhetene i husstanden.</p>
-      <h2>Betal <span id="belop"></span> kr innen <span id="frist"></span>:</h2>
-      <ul class="betaling">
-        <li>Kontonummer: <strong id="konto"></strong> <button class="btn kopier" type="button" data-kopier="konto">Kopier</button></li>
-        <li>Beløp: <strong><span id="belop2"></span> kr</strong> <button class="btn kopier" type="button" data-kopier="belop2">Kopier</button></li>
-        <li>Melding: <strong id="ordre"></strong> <button class="btn kopier" type="button" data-kopier="ordre">Kopier</button><br />Skriv bare dette, så finner vi betalingen.</li>
-      </ul>
       <p id="kopiert" class="small" role="status"></p>
       <p id="til" hidden>Vi sender kvitteringen til <strong id="til-epost"></strong>. Er adressen feil? Skriv koden ned nå.</p>
       <p id="sendt" hidden>Koden, betalingsinformasjonen og gavekortet er også sendt til e-posten din.</p>
@@ -92,6 +105,7 @@
 
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
   </main>
-  <script type="module" src="kjop.js"></script>
+  <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
+  <script type="module" src="kjop.js?v=tillit1"></script>
 </body>
 </html>

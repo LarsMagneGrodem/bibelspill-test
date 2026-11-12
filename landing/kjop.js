@@ -1,5 +1,8 @@
 /* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File */
-// The buy page: an e-mail and the consent go to the sale's worker, which answers with the code and how to pay.
+// The buy page. Bank transfer on trust (Lars 12.11 16:24): the product and the e-mail go to the sale's worker
+// (/order/start), which answers with how to pay; the buyer pays, ticks «Jeg har betalt» and the consent, and the worker
+// (/order/confirm) answers with the code. No deadline. The bank step is one block (#bank) with its own functions here,
+// so Vipps can go first later and the bank stay below it.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
 import { PAGES, cardPdf } from './gavekort-nett.mjs';
@@ -11,10 +14,14 @@ const meta = (name) => document.querySelector(`meta[name="${name}"]`)?.content.t
 const base = meta('kasse-api').replace(/\/+$/, '');
 const api = meta('kasse-apen') === 'ja' && base ? (base.endsWith('/order') ? base : `${base}/order`) : '';
 const KEPT = 'kasse:siste';
+// The order waiting for «Jeg har betalt», so a reload on the pay step keeps its order number.
+const PENDING = 'kasse:betal';
 const PRODUCT_LINE = { personal: 'Personlig kode, for én person.', family: 'Familiekode, for hele husstanden.' };
 const ERRORS = {
   email: 'Sjekk e-postadressen.',
   consent: 'Kryss av i boksen før du kjøper.',
+  paid: 'Kryss av for at du har betalt.',
+  order: 'Fant ikke bestillingen. Trykk «Tilbake» og prøv igjen, eller skriv til oss.',
   product: 'Velg personlig kode eller familiekode.',
   'slow-down': 'Vent et minutt og prøv igjen.',
   // Sikkerhet 12.11 (B3): the worker takes at most three orders to one address a day.
@@ -132,15 +139,11 @@ function drawQr(code) {
 
 function show(order) {
   $('bestill').hidden = true;
+  $('betal').hidden = true;
   $('kvittering').hidden = false;
   $('kode').textContent = order.code;
   $('produkt').textContent = PRODUCT_LINE[order.product] ?? '';
   $('husstand').hidden = order.product !== 'family';
-  $('belop').textContent = String(order.amount);
-  $('belop2').textContent = String(order.amount);
-  $('frist').textContent = order.dueText;
-  $('konto').textContent = order.account;
-  $('ordre').textContent = order.orderNo;
   // 'sending': the worker sends the mail after answering (ctx.waitUntil); 'sent' comes from Vipps' status check.
   $('sendt').hidden = order.receipt !== 'sent';
   $('sender').hidden = order.receipt !== 'sending';
@@ -158,6 +161,56 @@ function show(order) {
   $('kvittering').focus();
 }
 
+// The bank step: what goes into the bank app, then the two tick boxes.
+function showPay(pending) {
+  $('bestill').hidden = true;
+  $('kvittering').hidden = true;
+  $('betal').hidden = false;
+  $('belop').textContent = String(pending.amount);
+  $('belop2').textContent = String(pending.amount);
+  $('konto').textContent = pending.account;
+  $('ordre').textContent = pending.orderNo;
+  $('betalt').checked = false;
+  $('samtykke').checked = false;
+  $('feil-betal').textContent = '';
+  $('kopiert-betal').textContent = '';
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  $('betal').focus({ preventScroll: true });
+}
+
+const keep = (key, value) => {
+  try {
+    if (value) sessionStorage.setItem(key, JSON.stringify(value));
+    else sessionStorage.removeItem(key);
+  } catch { /* private mode */ }
+};
+const readPending = () => {
+  try {
+    const pending = JSON.parse(sessionStorage.getItem(PENDING) ?? 'null');
+    return pending?.orderNo && pending?.key ? pending : null;
+  } catch {
+    return null;
+  }
+};
+
+// One call to the worker: resolves its answer, or throws the key of the words to show.
+async function ask(path, body) {
+  let res;
+  try {
+    res = await fetch(`${api}${path}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: timeoutSignal(ORDER_TIMEOUT_MS),
+    });
+  } catch (error) {
+    throw new Error(error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network', { cause: error });
+  }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.ok) throw new Error(Object.hasOwn(ERRORS, data.error ?? '') ? data.error : 'server');
+  return data;
+}
+
 // Copy buttons for what goes into the bank app: the code, the account number (digits only, which every bank takes),
 // the amount and the order number. Without a clipboard (old browser, no https) the button says nothing has happened.
 for (const button of document.querySelectorAll('[data-kopier]')) {
@@ -165,11 +218,12 @@ for (const button of document.querySelectorAll('[data-kopier]')) {
     const id = button.dataset.kopier;
     const text = $(id).textContent.trim();
     const value = id === 'konto' ? text.replace(/\D/g, '') : text;
+    const status = button.closest('#betal') ? 'kopiert-betal' : 'kopiert';
     try {
       await navigator.clipboard.writeText(value);
-      $('kopiert').textContent = 'Kopiert!';
+      $(status).textContent = 'Kopiert!';
     } catch {
-      $('kopiert').textContent = 'Fikk ikke kopiert. Merk teksten og kopier den selv.';
+      $(status).textContent = 'Fikk ikke kopiert. Merk teksten og kopier den selv.';
     }
   });
 }
@@ -195,6 +249,7 @@ function readKept() {
 // The form again, for one more code (feilliste H1). The e-mail stays; the tick box and the name on the card do not.
 function showForm(kept) {
   $('kvittering').hidden = true;
+  $('betal').hidden = true;
   $('bestill').hidden = false;
   $('feil').textContent = '';
   $('kopiert').textContent = '';
@@ -211,6 +266,7 @@ function showForm(kept) {
 }
 
 $('ny').addEventListener('click', () => {
+  keep(PENDING, null);
   showForm(readKept());
   window.scrollTo({ top: 0, behavior: 'instant' });
   document.querySelector('input[name="product"]:checked')?.focus({ preventScroll: true });
@@ -219,9 +275,12 @@ $('ny').addEventListener('click', () => {
 // The last order stays for this tab, so a reload (or the back button) does not lose the code. A fresh visit from a
 // link, such as «Kjøp familiekode» on the sales page, opens the form, with a button back to the last purchase.
 const kept = readKept();
-if (kept) {
-  const nav = performance.getEntriesByType?.('navigation')[0]?.type;
-  if ((nav === 'reload' || nav === 'back_forward') && !choice) show(kept);
+const pending = readPending();
+const nav = performance.getEntriesByType?.('navigation')[0]?.type;
+const again = (nav === 'reload' || nav === 'back_forward') && !choice;
+if (pending && again) showPay(pending);
+else if (kept) {
+  if (again) show(kept);
   else showForm(kept);
 }
 
@@ -231,6 +290,7 @@ if (!api) {
 }
 if (oldSafari()) $('gammel-ios').hidden = false;
 
+// Step 1: the product and the e-mail; the worker books the order and answers with how to pay.
 $('skjema').addEventListener('submit', async (event) => {
   event.preventDefault();
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
@@ -238,26 +298,46 @@ $('skjema').addEventListener('submit', async (event) => {
   if (!$('epost').checkValidity() || !email) return say('email');
   const product = document.querySelector('input[name="product"]:checked')?.value;
   if (!product) return say('product');
-  if (!$('samtykke').checked) return say('consent');
   $('feil').textContent = '';
   $('kjop').disabled = true;
   try {
-    const res = await fetch(api, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email, product, consent: true, website: $('nettsted').value }),
-      signal: timeoutSignal(ORDER_TIMEOUT_MS),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.ok) return say(Object.hasOwn(ERRORS, data.error ?? '') ? data.error : 'server');
-    const bought = { ...data, email };
-    try { sessionStorage.setItem(KEPT, JSON.stringify(bought)); } catch { /* private mode */ }
-    show(bought);
+    const data = await ask('/start', { email, product, website: $('nettsted').value });
+    const next = { orderNo: data.orderNo, key: data.key, amount: data.amount, account: data.account, product: data.product, email };
+    keep(PENDING, next);
+    showPay(next);
   } catch (error) {
-    say(error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network');
+    say(error.message);
   } finally {
     $('kjop').disabled = false;
   }
+});
+
+// Step 2: «Jeg har betalt» and the consent; the worker answers with the code.
+$('fa-kode').addEventListener('click', async () => {
+  const say = (key) => { $('feil-betal').textContent = ERRORS[key] ?? ERRORS.network; };
+  const order = readPending();
+  if (!order) return say('order');
+  if (!$('betalt').checked) return say('paid');
+  if (!$('samtykke').checked) return say('consent');
+  $('feil-betal').textContent = '';
+  $('fa-kode').disabled = true;
+  try {
+    const data = await ask('/confirm', { orderNo: order.orderNo, key: order.key, paid: true, consent: true });
+    const bought = { ...data, email: order.email };
+    keep(KEPT, bought);
+    keep(PENDING, null);
+    show(bought);
+  } catch (error) {
+    say(error.message);
+  } finally {
+    $('fa-kode').disabled = false;
+  }
+});
+
+$('tilbake').addEventListener('click', () => {
+  keep(PENDING, null);
+  showForm(readKept());
+  window.scrollTo({ top: 0, behavior: 'instant' });
 });
 
 // The e-mail address is put together here, so robots that read the HTML do not find it.
