@@ -42,7 +42,7 @@
   </header>
 
   <main id="innhold">
-    <!-- HERO: the poster from the trailer. The trailer itself comes back here when its final round is approved. -->
+    <!-- HERO: the trailer. Swap the film by replacing landing/assets/film/trailer.mp4 and trailer-plakat.webp (same names). -->
     <section class="hero2" aria-labelledby="hovedtittel">
       <div class="hero2-tittel">
         <p class="eyebrow">Julekalender på nett · 1.–24. desember</p>
@@ -50,14 +50,18 @@
       </div>
 
       <figure class="hero2-film">
-        <div class="film film--staaende">
-          <img class="film-video" src="landing/assets/film/trailer-plakat.webp" width="720" height="1280" fetchpriority="high"
-            alt="Lukas og lærlingen går sammen på en vei i landet der Jesus levde." />
-          <a class="film-knapp" href="#introfilm" data-spill-intro>
+        <div class="film film--staaende" data-film>
+          <video id="trailer" class="film-video" playsinline muted loop preload="metadata"
+            poster="landing/assets/film/trailer-plakat.webp" width="720" height="1280"
+            aria-label="Traileren for Reisen med Lukas, 46 sekunder">
+            <source src="landing/assets/film/trailer.mp4?v=999dd868" type="video/mp4" />
+          </video>
+          <button class="film-knapp" type="button" data-play-sound>
             <span class="film-ikon" aria-hidden="true">▶</span>
-            <span>Se introfilmen <small>1 min 25 sek</small></span>
-          </a>
+            <span>Se traileren med lyd <small>46 sek</small></span>
+          </button>
         </div>
+        <figcaption>Traileren. Lyden starter først når du trykker.</figcaption>
       </figure>
 
       <div class="hero2-tekst">
@@ -276,7 +280,7 @@
 
   <footer class="foot">
     <p><a href="landing/kontakt.html">Kontakt</a> · <a href="vilkar.html">Kjøpsvilkår</a> · <a href="personvern.html">Personvern</a> · <a href="tilgjengelighet.html">Tilgjengelighet</a> · <a href="spill/filmer.html">Filmer fra BibleProject</a> · Ingen sporingsverktøy på denne siden.</p>
-    <p class="credit">Musikk i introfilmen: «Helios» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/helios/">scottbuckley.com.au</a>.</p>
+    <p class="credit">Musikk i traileren: «Born Of The Sky» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/born-of-the-sky/">scottbuckley.com.au</a>. Musikk i introfilmen: «Helios» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/helios/">scottbuckley.com.au</a>.</p>
   </footer>
   <script src="landing/salgsside.js" defer></script>
 </body>
