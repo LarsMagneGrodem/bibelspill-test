@@ -86,16 +86,55 @@ for (const button of document.querySelectorAll('[data-kopier]')) {
 }
 
 // A link from the sales page with ?valg=familie picks the family code.
-if (new URLSearchParams(location.search).get('valg') === 'familie') {
-  const fam = document.querySelector('input[name="product"][value="family"]');
-  if (fam) fam.checked = true;
+const choice = new URLSearchParams(location.search).get('valg');
+function pickProduct() {
+  const value = choice === 'familie' ? 'family' : 'personal';
+  const input = document.querySelector(`input[name="product"][value="${value}"]`);
+  if (input) input.checked = true;
+}
+pickProduct();
+
+function readKept() {
+  try {
+    const kept = JSON.parse(sessionStorage.getItem(KEPT) ?? 'null');
+    return kept?.code ? kept : null;
+  } catch {
+    return null;
+  }
 }
 
-// The last order stays for this tab only, so a reload does not lose the code.
-try {
-  const kept = JSON.parse(sessionStorage.getItem(KEPT) ?? 'null');
-  if (kept?.code) show(kept);
-} catch { /* nothing kept */ }
+// The form again, for one more code (feilliste H1). The e-mail stays; the tick box and the name on the card do not.
+function showForm(kept) {
+  $('kvittering').hidden = true;
+  $('bestill').hidden = false;
+  $('feil').textContent = '';
+  $('kopiert').textContent = '';
+  $('kortfeil').textContent = '';
+  $('samtykke').checked = false;
+  $('navn').value = '';
+  pickProduct();
+  $('siste').hidden = !kept;
+  if (kept?.email && !$('epost').value) $('epost').value = kept.email;
+  if (kept) {
+    $('siste-kode').textContent = kept.code;
+    $('vis-siste').onclick = () => show(kept);
+  }
+}
+
+$('ny').addEventListener('click', () => {
+  showForm(readKept());
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  document.querySelector('input[name="product"]:checked')?.focus({ preventScroll: true });
+});
+
+// The last order stays for this tab, so a reload (or the back button) does not lose the code. A fresh visit from a
+// link, such as «Kjøp familiekode» on the sales page, opens the form, with a button back to the last purchase.
+const kept = readKept();
+if (kept) {
+  const nav = performance.getEntriesByType?.('navigation')[0]?.type;
+  if ((nav === 'reload' || nav === 'back_forward') && !choice) show(kept);
+  else showForm(kept);
+}
 
 if (!api) {
   $('stengt').hidden = false;
@@ -120,7 +159,7 @@ $('skjema').addEventListener('submit', async (event) => {
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.ok) return say(data.error);
-    try { sessionStorage.setItem(KEPT, JSON.stringify(data)); } catch { /* private mode */ }
+    try { sessionStorage.setItem(KEPT, JSON.stringify({ ...data, email })); } catch { /* private mode */ }
     show(data);
   } catch {
     say('network');
