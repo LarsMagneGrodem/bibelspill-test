@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://reisenmedlukas.no; script-src 'self'; style-src 'self' https://reisenmedlukas.no; img-src 'self' https://reisenmedlukas.no data:; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
+  <title>Buy The Journey with Luke</title>
+  <meta name="theme-color" content="#1b1a17" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://reisenmedlukas.no/landing/assets/icon-32.png" />
+  <link rel="stylesheet" href="https://reisenmedlukas.no/landing/styles.css" />
+  <link rel="stylesheet" href="https://reisenmedlukas.no/landing/kjop.css" />
+</head>
+<body>
+  <main id="innhold" class="kasse">
+    <p><a href="./">Back to the front page</a></p>
+
+    <section id="bestill" aria-labelledby="bestill-tittel">
+      <h1 id="bestill-tittel">Buy The Journey with Luke</h1>
+      <p>An Advent calendar, ages 8 and up, to be bought by an adult. Door 1 is free. A code unlocks doors 2–24.</p>
+      <p>There are no in-app purchases, no ads and no tracking.</p>
+      <p>Payment on this English site is sold by Stripe (“Sold through Link”). Stripe sends the payment receipt. We send the code by email and show it on the page after payment. Customers in Norway can still pay on the <a href="https://reisenmedlukas.no/landing/kjop.html">Norwegian checkout</a>.</p>
+
+      <form id="skjema" novalidate>
+        <fieldset class="valg">
+          <legend>Choose a code</legend>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personal code – €24,99 / £19,99 / $24,99</strong><br />For one person.</span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Family code – €49,99 / £39,99 / $49,99</strong><br />For the whole household: everyone who lives in the same home.</span></label>
+        </fieldset>
+        <p class="small">Prices in euro and pounds include VAT. The price in dollars does not include US sales tax, which Stripe adds where it applies. The checkout will show the amount you pay.</p>
+        <p class="small">A printable gift card, already filled in with the code, is attached to the email with the code. If you would rather write the code yourself, you can <a href="/en/gift-card.pdf">download a blank gift card (PDF)</a>.</p>
+
+        <h2>How you pay</h2>
+        <p>You pay in Stripe Checkout with a card, or with Apple Pay or Google Pay where those are offered. The purchase is shown as “Sold through Link”. You receive the code when the payment has gone through, by email and on the page after payment. We never see your card number. Stripe sends the payment receipt in a separate email.</p>
+        <p class="small">If you cannot find the email with the code from kvittering@reisenmedlukas.no, check the junk or promotions folder. Stripe sends the payment receipt from Link.</p>
+        <p>
+          <a id="betal" class="btn primary stor" href="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-personal="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-family="https://buy.stripe.com/cNi7sNeH7aFb7KS0MngnK01">Continue to payment</a>
+        </p>
+        <p class="small">By continuing you agree to the <a href="vilkar.html">terms of sale</a>. Refunds and payment questions are explained there. Read the <a href="personvern.html">privacy policy</a> too.</p>
+      </form>
+    </section>
+
+    <p class="small"><a href="kontakt.html">Contact</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (at) hotmail.com</span>, phone <a href="tel:+4795145892">+47 951 45 892</a>. Do not send a card number, CVC or BankID details.</p>
+  </main>
+  <script src="kjop.js"></script>
+</body>
+</html>
