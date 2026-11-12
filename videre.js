@@ -8,6 +8,9 @@
   var h = location.hash;
   var installed = typeof matchMedia === 'function' && matchMedia('(display-mode: standalone)').matches;
   if (/[?&](kode|kapittel|alle|lang)(=|&|$)/.test(q) || h === '#unlock' || installed) {
+    // The front page is Norwegian: a link through it opens the game in Norwegian unless it names a language itself
+    // (?lang=en from an English page), also on a phone set to English.
+    if (!/[?&]lang=/.test(q)) q += (q ? '&' : '?') + 'lang=nb';
     location.replace('spill/' + q + h);
     return;
   }

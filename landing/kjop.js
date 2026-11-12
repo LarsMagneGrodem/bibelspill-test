@@ -101,7 +101,7 @@ function drawQr(code) {
   const box = $('qr-boks');
   const holder = $('qr');
   holder.replaceChildren();
-  const symbol = qrCode(`https://reisenmedlukas.no/spill/?kode=${encodeURIComponent(code)}`);
+  const symbol = qrCode(`https://reisenmedlukas.no/spill/?kode=${encodeURIComponent(code)}&lang=nb`);
   if (!symbol) { box.hidden = true; return; }
   const n = symbol.dark.length;
   const quiet = 4;
@@ -147,7 +147,8 @@ function show(order) {
   // feilliste M3: the address the receipt goes to, so a typo shows now. feilliste M4: one tap into the game, unlocked.
   $('til').hidden = !order.email;
   $('til-epost').textContent = order.email ?? '';
-  $('spill').href = `../spill/?kode=${encodeURIComponent(order.code)}`;
+  // The buy page is Norwegian: the game opens in Norwegian, also on a phone set to English (?lang=en is for English pages).
+  $('spill').href = `../spill/?kode=${encodeURIComponent(order.code)}&lang=nb`;
   $('filer').hidden = true;
   drawQr(order.code);
   pictures = null;

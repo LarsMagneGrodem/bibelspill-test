@@ -32,7 +32,8 @@ export function webCode(code) {
 export function webCardQr(code) {
   const c = webCode(code);
   if (!c) throw new Error('not a web code');
-  return `${SITE}/?kode=${c}`;
+  // The web card comes from the Norwegian buy page, so the game opens in Norwegian even on a phone set to English.
+  return `${SITE}/?kode=${c}&lang=nb`;
 }
 
 const f2 = (v) => Number(v.toFixed(2));
