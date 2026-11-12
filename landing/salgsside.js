@@ -1,6 +1,6 @@
 /* global window, matchMedia, IntersectionObserver */
 // Films on the sales page. Nothing is sent anywhere; no tracking.
-// The trailer may play muted in a loop when it is on screen, unless the visitor asks for less motion
+// The trailer may play muted in a loop when it is on screen on a fast network, unless the visitor asks for less motion
 // or to save data. Sound only ever starts from a tap on the button, and then the film starts from the top.
 (function () {
   var lessMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -46,9 +46,11 @@
     });
   });
 
-  // Silent preview of the trailer, only while it is visible.
+  // Silent preview of the trailer, only while it is visible, and only where the browser says the network is fast (del 13
+  // M7): the whole film is 5-6 MB. Without that signal (Safari on iPhone and iPad has none) the poster stays until a tap.
   var trailer = document.getElementById('trailer');
-  if (!trailer || lessMotion || saveData || !('IntersectionObserver' in window)) return;
+  var fast = conn.effectiveType === '4g';
+  if (!trailer || lessMotion || saveData || !fast || !('IntersectionObserver' in window)) return;
   new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!trailer.muted) return; // the visitor has turned on sound; leave it alone
