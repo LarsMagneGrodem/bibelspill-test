@@ -178,19 +178,27 @@ function showPay(pending) {
   $('betal').focus({ preventScroll: true });
 }
 
+// Live-sjekk 12.11 (del 13 H2): the order is also kept in this variable, so «Få koden» works when sessionStorage is
+// blocked (private mode, settings) and throws or forgets. sessionStorage is still what brings it back after a reload.
+const held = new Map();
 const keep = (key, value) => {
+  if (value) held.set(key, value);
+  else held.delete(key);
   try {
     if (value) sessionStorage.setItem(key, JSON.stringify(value));
     else sessionStorage.removeItem(key);
   } catch { /* private mode */ }
 };
-const readPending = () => {
+const stored = (key) => {
   try {
-    const pending = JSON.parse(sessionStorage.getItem(PENDING) ?? 'null');
-    return pending?.orderNo && pending?.key ? pending : null;
+    return JSON.parse(sessionStorage.getItem(key) ?? 'null') ?? held.get(key) ?? null;
   } catch {
-    return null;
+    return held.get(key) ?? null;
   }
+};
+const readPending = () => {
+  const pending = stored(PENDING);
+  return pending?.orderNo && pending?.key ? pending : null;
 };
 
 // One call to the worker: resolves its answer, or throws the key of the words to show.
@@ -238,12 +246,8 @@ function pickProduct() {
 pickProduct();
 
 function readKept() {
-  try {
-    const kept = JSON.parse(sessionStorage.getItem(KEPT) ?? 'null');
-    return kept?.code ? kept : null;
-  } catch {
-    return null;
-  }
+  const kept = stored(KEPT);
+  return kept?.code ? kept : null;
 }
 
 // The form again, for one more code (feilliste H1). The e-mail stays; the tick box and the name on the card do not.
@@ -277,8 +281,13 @@ $('ny').addEventListener('click', () => {
 const kept = readKept();
 const pending = readPending();
 const nav = performance.getEntriesByType?.('navigation')[0]?.type;
-const again = (nav === 'reload' || nav === 'back_forward') && !choice;
-if (pending && again) showPay(pending);
+const reloaded = nav === 'reload' || nav === 'back_forward';
+const again = reloaded && !choice;
+// Live-sjekk 12.11: an order waiting for «Jeg har betalt» comes back after a reload whatever the address says (the
+// family link has ?valg=familie, and a phone reloads the tab while the buyer is in the bank app), and on a new visit in
+// the same tab unless the link asks for the other product. «Tilbake» still starts over.
+const wanted = choice === 'familie' ? 'family' : null;
+if (pending && (reloaded || !wanted || pending.product === wanted)) showPay(pending);
 else if (kept) {
   if (again) show(kept);
   else showForm(kept);
