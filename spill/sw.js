@@ -1,4 +1,4 @@
-/* global self, caches, fetch, Request, Response, URL */
+/* global self, caches, fetch, Request, Response, URL, setTimeout */
 // Offline play. Pictures and sounds never change once published, so they live in one cache that
 // outlives builds and are served from it first. The page and the code are fetched fresh, with
 // the cache as the fallback when there is no network; that cache is named after the build, taken
@@ -19,10 +19,15 @@ const STILL = ['/assets/maps/', '/assets/card/', '/assets/figures/', '/assets/po
 // The list of recorded lines grows with every recording, so it is the one file under voice/ fetched fresh.
 const isStill = (pathname) => STILL.some((part) => pathname.includes(part)) && !pathname.endsWith('/manifest.json');
 const isVideo = (pathname) => /\.(mp4|webm|m4v|mov)$/i.test(pathname);
+// G5: a script or style with the build's hash in its name never changes, so the stored copy is as good as the network's.
+const isHashed = (pathname) => /\/assets\/[^/]+-[A-Za-z0-9_-]{8}\.(js|css)$/.test(pathname);
+// G9: a network that takes the page but never answers (weak mobile data, a hotel's login wifi) must not keep the child
+// in front of a dark screen for a minute: after this long the stored page is used, and the network fills the store behind.
+const NAVIGATE_WAIT_MS = 3500;
 
 // Filled in by the build (scripts/vite-plugins.mjs): the page, the code and the still pictures that every
 // visit needs, so the start page and a first board work without the network.
-const PRECACHE = ["./","assets/index-C4I0o7VS.js","assets/WorldScene-BWWbZR-E.js","assets/chapter-0W-8v4h6.js","assets/companion-B4qZAcST.js","assets/diagnose-Cklrzg_J.js","assets/discovery-BHTwQNVl.js","assets/effects-DZ8O-ryy.js","assets/game-B1nniyld.js","assets/phaser-D8At0iQG.js","assets/playroom-s7tyIGwj.js","assets/road-schema-t9Rfb6pr.js","assets/rolldown-runtime-XKyaHtl9.js","assets/schema-CcGpFnNw.js","assets/ui-DdR3GebW.js","assets/index-laiLwNaY.css","assets/playroom-CejZnrfb.css","assets/ui-BvE8cVWw.css","assets/maps/cesarea-torg.webp","assets/maps/skrivestue.webp","assets/maps/verksted.webp","assets/maps/stue.webp","assets/art/intro-grandfather-arrival.webp","assets/art/intro-grandfather-nature.webp","assets/art/intro-grandfather.webp","assets/art/intro-luke-apprentice.jpg","assets/films/grandfather-intro-nb-readable-r138.vtt","assets/films/grandfather-intro-en-readable-r140.vtt","assets/voice/nb/ab3c675e65f62df9.mp3","assets/voice/en/edbdb09715454007.mp3","assets/voice/nb/3b082339ed18080a.mp3","assets/voice/en/615b56ab0a53bb41.mp3","assets/voice/nb/3ae4ee7c01301cce.mp3","assets/voice/en/c3f00f6ecced99ef.mp3","assets/voice/nb/0abede796b06af78.mp3","assets/voice/en/f4b1f77a26ef24ac.mp3","assets/voice/nb/715b3c98b066825c.mp3","assets/voice/en/4450aa4b707dab0a.mp3","assets/voice/nb/75fb455f2adaade1.mp3","assets/voice/en/58e929f668729457.mp3","assets/voice/nb/2552db08128d82a9.mp3","assets/voice/en/0ae4eb5e8e1bf67b.mp3","assets/voice/nb/74905554e1be4c01.mp3","assets/voice/en/9a343fc71b33413f.mp3","assets/voice/nb/2f3866d77bc83107.mp3","assets/voice/en/c9b353514b37bfc0.mp3","assets/voice/nb/ba4e4e1911d6412b.mp3","assets/voice/en/752ac4fc814cfee9.mp3","assets/voice/nb/083aa6a669f393e4.mp3","assets/voice/en/12d03b2139f4d80e.mp3","assets/voice/nb/85bdc0fb8c1b0ec0.mp3","assets/voice/en/47e40c77ad3ed4f2.mp3","assets/portraits/lukas.webp","assets/portraits/fisher.webp","assets/portraits/potter.webp","assets/portraits/driver.webp","assets/portraits/cart-donkey.webp","assets/portraits/shards.webp","assets/portraits/oldwoman.webp","assets/portraits/well.webp","assets/portraits/scribe.webp","assets/portraits/girl.webp","assets/portraits/boy.webp","assets/portraits/trader.webp","assets/portraits/soldier.webp","assets/portraits/courier.webp","assets/figures/apprentice.webp","assets/figures/luke.webp","assets/figures/fisher.webp","assets/figures/potter.webp","assets/figures/driver.webp","assets/things/cart-donkey-map.webp","assets/things/shard.png","assets/figures/oldwoman.webp","assets/figures/scribe.webp","assets/figures/girl.webp","assets/figures/boy.webp","assets/figures/trader.webp","assets/figures/soldier.webp","assets/figures/courier.webp","assets/things/dog-sleeping.webp","assets/figures/player-inspect.webp","assets/figures/player-inspect-away-r77.webp","assets/figures/player-inspect-sequence-r87.webp","assets/audio/fx/footstep00.mp3","assets/audio/fx/footstep01.mp3","assets/audio/fx/footstep02.mp3","assets/audio/fx/footstep03.mp3","assets/audio/fx/footstep04.mp3","assets/audio/fx/bookFlip1.mp3","assets/audio/fx/bookFlip2.mp3","assets/audio/fx/bookFlip3.mp3","assets/audio/fx/bookOpen.mp3","assets/audio/fx/cloth1.mp3","assets/audio/fx/cloth2.mp3","assets/audio/fx/handleCoins.mp3","assets/audio/fx/handleCoins2.mp3","assets/audio/fx/bookClose.mp3","assets/audio/fx/doorOpen_1.mp3","assets/audio/fx/dropLeather.mp3","assets/audio/fx/metalPot2.mp3","assets/audio/fx/creak1.mp3","assets/audio/fx/creak2.mp3","assets/audio/fx/metalPot1.mp3","assets/audio/fx/metalPot3.mp3","assets/audio/fx/handleSmallLeather.mp3","assets/things/cart-scene-parts.webp","assets/maps/landet.webp","assets/maps/landet-960.webp","assets/voice/manifest.json","manifest.webmanifest"];
+const PRECACHE = ["./","assets/index-BmUevs8O.js","assets/WorldScene-BOEmdmeP.js","assets/chapter-0W-8v4h6.js","assets/companion-BJoGFfE8.js","assets/diagnose-BGg6WfdZ.js","assets/discovery-83kd81VP.js","assets/effects-CmI8WtWv.js","assets/game-B1nniyld.js","assets/phaser-D8At0iQG.js","assets/playroom-BRDDn3UU.js","assets/road-schema-t9Rfb6pr.js","assets/rolldown-runtime-XKyaHtl9.js","assets/schema-CcGpFnNw.js","assets/ui-DsiaFyKl.js","assets/index-laiLwNaY.css","assets/playroom-CejZnrfb.css","assets/ui-BvE8cVWw.css","assets/maps/cesarea-torg.webp","assets/maps/skrivestue.webp","assets/maps/verksted.webp","assets/maps/stue.webp","assets/art/intro-grandfather-arrival.webp","assets/art/intro-grandfather-nature.webp","assets/art/intro-grandfather.webp","assets/art/intro-luke-apprentice.jpg","assets/films/grandfather-intro-nb-readable-r138.vtt","assets/films/grandfather-intro-en-readable-r140.vtt","assets/voice/nb/ab3c675e65f62df9.mp3","assets/voice/en/edbdb09715454007.mp3","assets/voice/nb/3b082339ed18080a.mp3","assets/voice/en/615b56ab0a53bb41.mp3","assets/voice/nb/3ae4ee7c01301cce.mp3","assets/voice/en/c3f00f6ecced99ef.mp3","assets/voice/nb/0abede796b06af78.mp3","assets/voice/en/f4b1f77a26ef24ac.mp3","assets/voice/nb/715b3c98b066825c.mp3","assets/voice/en/4450aa4b707dab0a.mp3","assets/voice/nb/75fb455f2adaade1.mp3","assets/voice/en/58e929f668729457.mp3","assets/voice/nb/2552db08128d82a9.mp3","assets/voice/en/0ae4eb5e8e1bf67b.mp3","assets/voice/nb/74905554e1be4c01.mp3","assets/voice/en/9a343fc71b33413f.mp3","assets/voice/nb/2f3866d77bc83107.mp3","assets/voice/en/c9b353514b37bfc0.mp3","assets/voice/nb/ba4e4e1911d6412b.mp3","assets/voice/en/752ac4fc814cfee9.mp3","assets/voice/nb/083aa6a669f393e4.mp3","assets/voice/en/12d03b2139f4d80e.mp3","assets/voice/nb/85bdc0fb8c1b0ec0.mp3","assets/voice/en/47e40c77ad3ed4f2.mp3","assets/portraits/lukas.webp","assets/portraits/fisher.webp","assets/portraits/potter.webp","assets/portraits/driver.webp","assets/portraits/cart-donkey.webp","assets/portraits/shards.webp","assets/portraits/oldwoman.webp","assets/portraits/well.webp","assets/portraits/scribe.webp","assets/portraits/girl.webp","assets/portraits/boy.webp","assets/portraits/trader.webp","assets/portraits/soldier.webp","assets/portraits/courier.webp","assets/figures/apprentice.webp","assets/figures/luke.webp","assets/figures/fisher.webp","assets/figures/potter.webp","assets/figures/driver.webp","assets/things/cart-donkey-map.webp","assets/things/shard.png","assets/figures/oldwoman.webp","assets/figures/scribe.webp","assets/figures/girl.webp","assets/figures/boy.webp","assets/figures/trader.webp","assets/figures/soldier.webp","assets/figures/courier.webp","assets/things/dog-sleeping.webp","assets/figures/player-inspect.webp","assets/figures/player-inspect-away-r77.webp","assets/figures/player-inspect-sequence-r87.webp","assets/audio/fx/footstep00.mp3","assets/audio/fx/footstep01.mp3","assets/audio/fx/footstep02.mp3","assets/audio/fx/footstep03.mp3","assets/audio/fx/footstep04.mp3","assets/audio/fx/bookFlip1.mp3","assets/audio/fx/bookFlip2.mp3","assets/audio/fx/bookFlip3.mp3","assets/audio/fx/bookOpen.mp3","assets/audio/fx/cloth1.mp3","assets/audio/fx/cloth2.mp3","assets/audio/fx/handleCoins.mp3","assets/audio/fx/handleCoins2.mp3","assets/audio/fx/bookClose.mp3","assets/audio/fx/doorOpen_1.mp3","assets/audio/fx/dropLeather.mp3","assets/audio/fx/metalPot2.mp3","assets/audio/fx/creak1.mp3","assets/audio/fx/creak2.mp3","assets/audio/fx/metalPot1.mp3","assets/audio/fx/metalPot3.mp3","assets/audio/fx/handleSmallLeather.mp3","assets/things/cart-scene-parts.webp","assets/maps/landet.webp","assets/maps/landet-960.webp","assets/voice/manifest.json","manifest.webmanifest"];
 
 const at = (url) => new URL(url, self.location.href);
 const old = (key) => (key.startsWith(CODE_PREFIX) && key !== CODE) || (key.startsWith(VOICE_PREFIX) && key !== VOICE_CACHE);
@@ -110,7 +115,7 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin || isVideo(url.pathname)) return;
-  event.respondWith(busy(request.headers.has('range') ? ranged(request) : isStill(url.pathname) ? take(request.url) : networkFirst(event)));
+  event.respondWith(busy(request.headers.has('range') ? ranged(request) : isStill(url.pathname) ? take(request.url) : isHashed(url.pathname) ? hashedFirst(event) : networkFirst(event)));
 });
 
 // Storing happens beside the response, never in its way: a full quota is not a failed fetch.
@@ -139,19 +144,53 @@ async function part(response, range) {
   return new Response(body.slice(start, end + 1), { status: 206, headers });
 }
 
+// G5: the stored copy first; else the network; and when the server no longer has the file (a page opened before a new
+// build was published asks for the old build's code), any copy this game still keeps.
+async function hashedFirst(event) {
+  const { request } = event;
+  const kept = () => caches.match(request, { cacheName: CODE, ignoreVary: true });
+  const hit = await kept();
+  if (hit) return hit;
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      store(event, CODE, request, response.clone());
+      return response;
+    }
+    return (await kept()) || response;
+  } catch {
+    return (await kept()) || Response.error();
+  }
+}
+
 async function networkFirst(event) {
   const { request } = event;
   const navigate = request.mode === 'navigate';
   // Any chapter address is the same page, so it is stored once, without the query, for all of them.
   const key = navigate ? new Request(new URL(request.url).pathname) : request;
-  try {
-    const response = await fetch(request, navigate ? { cache: 'no-cache' } : undefined);
+  // The store filled these itself, without the page's request headers; a server that answers `Vary: Origin` (the
+  // module scripts' cross-origin mode sends one) would otherwise never match its own copy offline.
+  const cached = () => caches.match(key, { cacheName: CODE, ignoreSearch: navigate, ignoreVary: true });
+  const net = fetch(request, navigate ? { cache: 'no-cache' } : undefined).then((response) => {
     if (response.ok) store(event, CODE, key, response.clone());
     return response;
+  });
+  if (navigate) {
+    // G9: the network gets a few seconds; then the stored page of this same build, while the network keeps going.
+    const first = await Promise.race([net.catch(() => null), new Promise((go) => setTimeout(go, NAVIGATE_WAIT_MS, 'slow'))]);
+    if (first && first !== 'slow' && first.ok) return first;
+    const hit = await cached();
+    if (hit) {
+      event.waitUntil(net.catch(() => {}));
+      return hit;
+    }
+  }
+  try {
+    const response = await net;
+    if (response.ok) return response;
+    // G5: a server without the file (or one that answers with an error page): the stored copy, if there is one.
+    return (await cached()) || response;
   } catch {
-    // The store filled these itself, without the page's request headers; a server that answers `Vary: Origin` (the
-    // module scripts' cross-origin mode sends one) would otherwise never match its own copy offline.
-    const hit = await caches.match(key, { cacheName: CODE, ignoreSearch: navigate, ignoreVary: true });
-    return hit || Response.error();
+    return (await cached()) || Response.error();
   }
 }
