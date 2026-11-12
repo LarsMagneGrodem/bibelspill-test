@@ -1,3 +1,4 @@
+/* global URLSearchParams, location, window, performance */
 // The buy page: an e-mail and the consent go to the sale's worker, which answers with the code and how to pay.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
@@ -16,6 +17,11 @@ const ERRORS = {
   product: 'Velg personlig kode eller familiekode.',
   'slow-down': 'Vent et minutt og prøv igjen.',
   busy: 'Mange kjøper akkurat nå. Prøv igjen litt senere.',
+  // feilliste M2: the worker's own refusals get their own words; «network» only when the call itself fails.
+  origin: 'Kjøpet må gjøres på reisenmedlukas.no. Last siden på nytt og prøv igjen.',
+  misconfigured: 'Kassen er stengt en kort stund. Prøv igjen senere, eller skriv til oss.',
+  body: 'Noe gikk galt med skjemaet. Last siden på nytt og prøv igjen.',
+  server: 'Kassen svarte ikke som den skulle. Prøv igjen om litt, eller skriv til oss.',
   network: 'Fikk ikke kontakt. Sjekk at du er på nett, og prøv igjen.',
 };
 
@@ -66,6 +72,10 @@ function show(order) {
   $('sender').hidden = order.receipt !== 'sending';
   $('senere').hidden = order.receipt === 'sent' || order.receipt === 'sending';
   $('gavekort').onclick = () => void webCard(order);
+  // feilliste M3: the address the receipt goes to, so a typo shows now. feilliste M4: one tap into the game, unlocked.
+  $('til').hidden = !order.email;
+  $('til-epost').textContent = order.email ?? '';
+  $('spill').href = `../spill/?kode=${encodeURIComponent(order.code)}`;
   $('kvittering').focus();
 }
 
@@ -158,9 +168,10 @@ $('skjema').addEventListener('submit', async (event) => {
       body: JSON.stringify({ email, product, consent: true, website: $('nettsted').value }),
     });
     const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.ok) return say(data.error);
-    try { sessionStorage.setItem(KEPT, JSON.stringify({ ...data, email })); } catch { /* private mode */ }
-    show(data);
+    if (!res.ok || !data.ok) return say(Object.hasOwn(ERRORS, data.error ?? '') ? data.error : 'server');
+    const bought = { ...data, email };
+    try { sessionStorage.setItem(KEPT, JSON.stringify(bought)); } catch { /* private mode */ }
+    show(bought);
   } catch {
     say('network');
   } finally {
