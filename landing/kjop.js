@@ -23,7 +23,7 @@ const ERRORS = {
   order: 'Fant ikke bestillingen. Trykk «Tilbake» og prøv igjen, eller skriv til oss.',
   product: 'Velg personlig kode eller familiekode.',
   'slow-down': 'Vent et minutt og prøv igjen.',
-  // Sikkerhet 12.11 (B3): the worker takes at most three orders to one address a day.
+  // Sikkerhet 12.11 (B3): the worker takes at most ten orders to one address a day (SS-L11).
   'email-many': 'Det er alt bestilt flere koder til denne e-postadressen i dag. Skriv til oss hvis du trenger flere.',
   busy: 'Mange kjøper akkurat nå. Prøv igjen litt senere.',
   // feilliste M2: the worker's own refusals get their own words; «network» only when the call itself fails.
@@ -91,7 +91,12 @@ async function webCard(order) {
     let file = null;
     try { file = new File([pdf], name, { type: 'application/pdf' }); } catch { /* old browser */ }
     if (IOS && file && navigator.canShare?.({ files: [file] })) {
-      navigator.share({ files: [file], title: 'Gavekort – Reisen med Lukas' }).catch(() => {});
+      // SS-L2: a share sheet the phone refuses (not one the buyer closed) falls back to the download and its hint.
+      navigator.share({ files: [file], title: 'Gavekort – Reisen med Lukas' }).catch((error) => {
+        if (error?.name === 'AbortError') return;
+        download(pdf, name);
+        $('filer').hidden = false;
+      });
     } else {
       download(pdf, name);
       if (IOS) $('filer').hidden = false;
