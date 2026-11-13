@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Reglene for det skjulte gavekortet, ordrett fra delekampanje-2026-11-13.md avsnitt 5.6 (start 23. november etter Lars 13.11; perioden 23. november–5. desember, 13 dager, står i spesifikasjonen). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
+    <title>Det skjulte gavekortet – regler – Reisen med Lukas</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
+    <meta name="theme-color" content="#1b1a17" />
+    <style>
+      body { margin: 0; padding: 24px 16px 48px; background: #1b1a17; color: #ecd7a8; font: 18px/1.5 Georgia, serif; }
+      main { max-width: 640px; margin: 0 auto; overflow-wrap: break-word; }
+      h1 { font-size: 1.6em; margin: 0 0 0.5em; }
+      h2 { font-size: 1.15em; margin: 1.5em 0 0.4em; }
+      p, li { margin: 0.4em 0; }
+      a { color: #f8ebcb; }
+      :focus-visible { outline: 3px solid #ffd84a; outline-offset: 3px; }
+      table { border-collapse: collapse; width: 100%; font-size: 0.8em; }
+      th, td { text-align: left; border-bottom: 1px solid #4a4030; padding: 6px 4px; vertical-align: top; }
+      td code { font-size: 0.85em; word-break: break-all; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Det skjulte gavekortet – regler</h1>
+      <p><strong>Arrangør:</strong> Rygard Holding AS, org.nr. 938 118 132, Vestre Fognavegen 126, 4164 Fogn.</p>
+      <p><strong>Periode:</strong> 23. november til 5. desember 2026.</p>
+      <p><strong>Slik virker det:</strong> Hver dag velger en datamaskin et tilfeldig, hemmelig klokkeslett mellom kl. 08:00 og 21:00, norsk tid. Den første som åpner forsiden på reisenmedlukas.no etter dette klokkeslettet, får et gavekort med en familiekode til Reisen med Lukas (verdi 500 kr) på skjermen. Vi deler ut ett gavekort per dag, og høyst 13 til sammen. Blir gavekortet ikke funnet før midnatt, deles det ikke ut den dagen.</p>
+      <p><strong>Gratis:</strong> Det koster ingenting å være med, og kjøp gir ingen fordel. Gavekortet kan ikke byttes i penger.</p>
+      <p><strong>Hvem kan finne det:</strong> Alle som besøker forsiden. Er du under 18 år, vis gavekortet til en voksen. Automatiske besøk fra roboter teller ikke.</p>
+      <p><strong>Personvern:</strong> Vi bruker ikke informasjonskapsler, og vi lagrer verken IP-adresse eller andre opplysninger om den som finner gavekortet. Vi lagrer bare dato, klokkeslett og koden.</p>
+      <p><strong>Etterprøving:</strong> Hver morgen legger vi ut et fingeravtrykk (SHA-256) av dagens klokkeslett på denne siden. Dagen etter viser vi selve klokkeslettet, så alle kan se at det ikke er endret.</p>
+      <p>Ved feil eller misbruk kan vi stoppe ordningen. Da sier vi fra på denne siden. Spørsmål kan sendes til <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span>.</p>
+      <p>Når vi forteller om gavekortet på Facebook eller Instagram: ordningen er ikke sponset, støttet eller administrert av, eller knyttet til, Meta, Facebook eller Instagram.</p>
+
+      <!-- UTKAST: overskriften og kolonnenavnene under er ikke fra delekampanje-fila. Lars godkjenner dem først. -->
+      <h2 class="fasit-del" hidden>Fingeravtrykk</h2>
+      <table class="fasit-del" id="fasit" hidden>
+        <thead><tr><th>Dato</th><th>Fingeravtrykk (SHA-256)</th><th>Klokkeslett</th><th>Salt</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </main>
+    <script src="landing/konkurranse.js" data-kasse="https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev" defer></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"d5b09c79325d4c4abc9d2dac1d627fce"}'></script>
+  </body>
+</html>

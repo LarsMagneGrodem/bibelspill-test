@@ -1,0 +1,72 @@
+/* Det skjulte gavekortet: lastes bare når ordningen er på (landing/skjult-gavekort.js). Bare CSS, ingen bilder. */
+.skjult-boks {
+  position: relative; box-sizing: border-box; width: calc(100% - 32px); max-width: 620px; margin: 28px auto 18px;
+  padding: 0; border-radius: 22px; color: #f8ebcb; text-align: center;
+  background:
+    radial-gradient(circle at 12% 18%, #ffe9a855 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 86% 12%, #ffe9a877 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 62%, #ffe9a844 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 20% 78%, #ffe9a855 0 2px, transparent 3px),
+    radial-gradient(ellipse at 50% 0%, #6b2a1d 0%, #3a1c12 45%, #221810 100%);
+  border: 2px solid #f3d58a;
+  box-shadow: 0 0 0 6px #1b1a17, 0 0 0 8px #a8823a, 0 18px 50px #000a, 0 0 60px #f3d58a33;
+  animation: skjult-inn .6s cubic-bezier(.2, .9, .3, 1.2) both;
+}
+.skjult-boks:focus { outline: none; }
+.skjult-boks:focus-visible { outline: 3px solid #ffd84a; outline-offset: 10px; }
+/* Gavebåndet: ett loddrett gullbånd og en sløyfe på toppen. */
+.skjult-boks::before {
+  content: ""; position: absolute; top: 0; height: 64px; left: 50%; width: 22px; transform: translateX(-50%);
+  background: linear-gradient(90deg, #a8823a, #f3d58a 35%, #fff1c4 50%, #f3d58a 65%, #a8823a); opacity: .55; pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent);
+}
+.skjult-sloyfe { position: absolute; top: -22px; left: 50%; width: 92px; height: 40px; transform: translateX(-50%); pointer-events: none; }
+.skjult-sloyfe::before, .skjult-sloyfe::after {
+  content: ""; position: absolute; top: 4px; width: 40px; height: 30px; border: 5px solid #f3d58a; background: #8f2d1f;
+  box-shadow: inset 0 0 0 2px #a8823a;
+}
+.skjult-sloyfe::before { left: 2px; border-radius: 50% 10% 50% 50%; transform: rotate(-12deg); }
+.skjult-sloyfe::after { right: 2px; border-radius: 10% 50% 50% 50%; transform: rotate(12deg); }
+.skjult-innhold { position: relative; padding: 34px 22px 22px; }
+.skjult-innhold::before {
+  content: ""; position: absolute; top: 6px; left: 50%; width: 18px; height: 18px; transform: translateX(-50%);
+  border-radius: 50%; background: radial-gradient(#fff1c4, #f3d58a 55%, #a8823a); box-shadow: 0 0 10px #f3d58a99;
+}
+.skjult-tittel { margin: 6px 0 10px; font-size: clamp(1.4rem, 5.6vw, 2rem); line-height: 1.2; color: #ffe39a; text-shadow: 0 2px 0 #0008, 0 0 18px #f3d58a55; }
+.skjult-ikon { display: block; font-size: 2.6rem; line-height: 1; margin-bottom: 8px; animation: skjult-vugge 2.8s ease-in-out .7s 2; }
+.skjult-ingress { margin: 0 auto 16px; max-width: 34em; color: #f3e3bf; }
+.skjult-billett {
+  margin: 0 auto 16px; max-width: 420px; padding: 14px 14px 16px; border-radius: 14px;
+  background: linear-gradient(#fbf4e3, #f1e2bd); color: #2b1d0c;
+  border: 2px dashed #a8823a; box-shadow: inset 0 0 0 4px #fbf4e3, 0 6px 18px #0006;
+}
+.skjult-billett p { margin: 0; }
+.skjult-etikett { font-weight: 700; letter-spacing: .04em; color: #5a3414; }
+.skjult-kode {
+  margin: 4px 0 12px !important; font-family: ui-monospace, Menlo, Consolas, "Courier New", monospace; font-weight: 700;
+  font-size: clamp(1.7rem, 9.5vw, 2.6rem); letter-spacing: .1em; color: #2b1d0c; overflow-wrap: anywhere;
+  user-select: all; -webkit-user-select: all;
+}
+.skjult-kopirad { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+.skjult-kopier { min-width: 180px; box-shadow: 0 3px 0 #7a5a22; }
+.skjult-kopier:focus-visible { outline: 3px solid #5a3414; outline-offset: 3px; }
+.skjult-kopiert { min-width: 5.5em; font-weight: 700; color: #3c6b2a; }
+.skjult-kopiert:empty { min-width: 0; }
+.skjult-lenke { margin: 0 0 12px; font-size: .95rem; color: #ecd7a8; }
+.skjult-lenke a { color: #ffe9a8; overflow-wrap: anywhere; }
+.skjult-voksen { display: inline-block; margin: 0 0 12px; padding: 6px 14px; border-radius: 999px; background: #ffffff14; border: 1px solid #f3d58a66; color: #ffe9a8; font-weight: 700; }
+.skjult-frivillig { margin: 0 auto 10px; max-width: 32em; font-size: .92rem; color: #d9c49a; }
+.skjult-regler { margin: 0; }
+.skjult-regler a { color: #ffe9a8; font-weight: 700; }
+.skjult-boks a:focus-visible { outline: 3px solid #ffd84a; outline-offset: 3px; }
+.skjult-info { font-weight: 600; }
+.skjult-turnstile { position: fixed; bottom: 12px; right: 12px; z-index: 50; }
+@media (max-width: 360px) {
+  .skjult-innhold { padding: 32px 14px 18px; }
+  .skjult-kopier { min-width: 0; width: 100%; }
+}
+@keyframes skjult-inn { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes skjult-vugge { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-9deg); } 40% { transform: rotate(7deg); } 60% { transform: rotate(-4deg); } 80% { transform: rotate(2deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .skjult-boks, .skjult-ikon { animation: none; }
+}

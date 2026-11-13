@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Our own files only: no tracking, no third-party script or film. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
+  <!-- Our own files only: no tracking, no third-party film. Det skjulte gavekortet: kassen (connect-src) og Cloudflare Turnstile (script-src, frame-src), bare på denne norske forsiden. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src https://challenges.cloudflare.com; base-uri 'self'; form-action 'none'" />
   <script src="videre.js"></script>
   <title>Reisen med Lukas – julekalender på nett med fortellingene om Jesus</title>
   <meta name="description" content="En julekalender på nett der barnet blir lærlingen til legen Lukas og samler fortellingene om Jesus. 24 luker fram til julaften. Fra 8 år. Luke 1 er gratis. Ingen kjøp i appen, ingen reklame, ingen sporing." />
@@ -291,6 +291,7 @@
     <p class="credit">Musikk i traileren: «Born Of The Sky» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/born-of-the-sky/">scottbuckley.com.au</a>. Musikk i introfilmen: «Helios» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/helios/">scottbuckley.com.au</a>.</p>
   </footer>
   <script src="landing/salgsside.js" defer></script>
+  <script src="landing/skjult-gavekort.js" data-kasse="https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev" defer></script>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"d5b09c79325d4c4abc9d2dac1d627fce"}'></script>
 </body>
 </html>
