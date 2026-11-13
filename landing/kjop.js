@@ -1,6 +1,8 @@
 /* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File */
 // The buy page. Vipps is first (Lars 13.11 01:14). Bank transfer on trust (Lars 12.11 16:24) stays as the
-// less prominent choice: /order/start, then «Jeg har betalt» and the consent, /order/confirm. No deadline.
+// less prominent choice: the consent on step 1, /order/start (r38, Lars 13.11 10:51: the code and the receipt come with
+// the order), then the pay step. «Jeg har betalt» is still there, but never stops the code; /order/confirm writes it down.
+// An order started on an older page (no code yet) still asks the consent on the pay step. No deadline.
 // The bank step is one block (#bank). Vipps posts to /vipps/start and sends the buyer to Vipps.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
@@ -176,6 +178,11 @@ function showPay(pending) {
   $('ordre').textContent = pending.orderNo;
   $('betalt').checked = false;
   $('samtykke').checked = false;
+  // r38: an order with its code gave the consent on step 1; only an older waiting order asks it here.
+  // (.samtykke has display: flex in kjop.css, which would win over hidden alone.)
+  const consentLabel = $('samtykke').closest('label');
+  consentLabel.hidden = Boolean(pending.code);
+  consentLabel.style.display = pending.code ? 'none' : '';
   if ($('samtykke-bestill')) $('samtykke-bestill').checked = false;
   $('feil-betal').textContent = '';
   $('kopiert-betal').textContent = '';
@@ -368,6 +375,7 @@ $('kjop').addEventListener('click', async () => {
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
+  if (!$('samtykke-bestill').checked) return say('consent');
   $('feil').textContent = '';
   if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product) {
     keep(PENDING, backOrder);
@@ -376,8 +384,8 @@ $('kjop').addEventListener('click', async () => {
   }
   busy('kjop', true);
   try {
-    const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website });
-    const next = { orderNo: data.orderNo, key: data.key, amount: data.amount, account: data.account, product: data.product, email: fields.email };
+    const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website, consent: true });
+    const next = { ...data, email: fields.email };
     backOrder = null;
     keep(PENDING, next);
     showPay(next);
@@ -388,18 +396,23 @@ $('kjop').addEventListener('click', async () => {
   }
 });
 
-// Step 2: «Jeg har betalt» and the consent; the worker answers with the code.
+// Step 2: «Få koden», ticked «Jeg har betalt» or not (r38). The worker writes the tick down. An order with its code
+// shows it even if that call fails; an older waiting order (no code yet) needs the consent and the worker's answer.
 $('fa-kode').addEventListener('click', async () => {
   const say = (key) => { $('feil-betal').textContent = ERRORS[key] ?? ERRORS.network; };
   const order = readPending();
   if (!order) return say('order');
-  if (!$('betalt').checked) return say('paid');
-  if (!$('samtykke').checked) return say('consent');
+  if (!order.code && !$('samtykke').checked) return say('consent');
   $('feil-betal').textContent = '';
   busy('fa-kode', true);
   try {
-    const data = await ask('/confirm', { orderNo: order.orderNo, key: order.key, paid: true, consent: true });
-    const bought = { ...data, email: order.email };
+    let data = order;
+    try {
+      data = await ask('/confirm', { orderNo: order.orderNo, key: order.key, paid: $('betalt').checked, consent: true });
+    } catch (error) {
+      if (!order.code || error.message === 'order') throw error; // 'order': stopped by Lars, or gone
+    }
+    const bought = { ...order, ...data, email: order.email };
     keep(KEPT, bought);
     keep(PENDING, null);
     backOrder = null;

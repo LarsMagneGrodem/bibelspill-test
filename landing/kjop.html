@@ -54,7 +54,9 @@
       <p class="small">Les <a href="../vilkar.html">kjøpsvilkårene</a> og <a href="../personvern.html">personvernerklæringen</a>.</p>
     </section>
 
-    <!-- Bankoverføring på tillit (Lars 12.11 16:24): betalingsinformasjonen først, så «Jeg har betalt» og samtykket, så koden.
+    <!-- Bankoverføring på tillit (Lars 12.11 16:24): betalingsinformasjonen først, så «Jeg har betalt», så koden.
+         r38 (Lars 13.11 10:51): koden og kvitteringen kommer med bestillingen; avkryssingen står, men stopper ingenting.
+         Samtykket er gitt i steg 1; boksen her vises bare for en eldre ventende bestilling.
          Én boks for seg (betalingsmate), så Vipps kan stå først og banken under, mindre synlig. -->
     <section id="betal" aria-labelledby="betal-tittel" hidden tabindex="-1">
       <div id="bank" class="betalingsmate">
@@ -66,7 +68,7 @@
           <li>Melding: <strong id="ordre"></strong> <button class="btn kopier" type="button" data-kopier="ordre">Kopier</button><br />Skriv bare dette, så finner vi betalingen.</li>
         </ul>
         <p id="kopiert-betal" class="small" role="status"></p>
-        <label class="samtykke betalt"><input id="betalt" type="checkbox" required /> <span>Jeg har betalt.</span></label>
+        <label class="samtykke betalt"><input id="betalt" type="checkbox" /> <span>Jeg har betalt.</span></label>
         <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
         <button id="fa-kode" class="btn primary" type="button">Få koden</button>
         <p id="feil-betal" class="melding" role="alert"></p>
@@ -108,6 +110,6 @@
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
-  <script type="module" src="kjop.js?v=vipps4"></script>
+  <script type="module" src="kjop.js?v=bank38"></script>
 </body>
 </html>
