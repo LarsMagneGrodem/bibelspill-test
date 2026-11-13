@@ -4,7 +4,7 @@ Faktaark: Reisen med Lukas
 Navn: Reisen med Lukas
 Hva: Julekalender på nett, basert på Lukasevangeliet
 Nettsted: https://reisenmedlukas.no
-Når: 1.–24. desember, én luke om dagen. Etter julaften er alle lukene åpne.
+Når: 1.–24. desember, én luke om dagen. Etter julaften er alle lukene åpne, og spillet er åpent minst til og med 31. januar 2027.
 Tid per luke: Vanligvis 5–15 minutter. Den som vil mer, kan bli lenger.
 Alder: Fra 8 år. Godt å spille sammen med foreldre eller besteforeldre.
 Plattform: Nettleseren på telefon, nettbrett og PC. Ingenting må installeres.
@@ -28,7 +28,7 @@ Gave og salg:
 - Personlig kode selges også i den kristne bokhandelen Ordet è Ditt.
 - Familiekoden kjøpes bare på nettsiden.
 
-Betaling: Bankoverføring. Koden kommer med en gang. Vipps kommer snart.
+Betaling: Vipps eller bankoverføring. Koden kommer med en gang.
 
 Filmer: Trailer (46 sekunder) og introfilm (1 minutt 25 sekunder) ligger på nettsiden.
 Musikk i traileren: «Born Of The Sky» av Scott Buckley (CC BY 4.0).

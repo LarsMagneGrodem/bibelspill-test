@@ -46,6 +46,7 @@
         <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
         <!-- Left empty by people; a robot that fills every field is turned away. -->
         <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
+        <p class="small">Gjelder adventskalenderen 1.–24. desember 2026. Alle luker er åpne etter jul, og spillet er åpent minst til og med 31. januar 2027.</p>
         <label class="samtykke"><input id="samtykke-bestill" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
         <button id="kjop-vipps" class="btn vipps" type="submit">Betal med Vipps</button>
         <p class="bank-alternativ"><button id="kjop" class="lenke" type="button">Eller betal med bankoverføring</button></p>
@@ -61,7 +62,7 @@
     <section id="betal" aria-labelledby="betal-tittel" hidden tabindex="-1">
       <div id="bank" class="betalingsmate">
         <h1 id="betal-tittel">Betal <span id="belop"></span> kr med bankoverføring</h1>
-        <p>Betal i nettbanken eller bankappen. Kryss av når du har betalt, så får du koden med en gang.</p>
+        <p>Betal i nettbanken eller bankappen. Koden får du med en gang, og den kommer også på e-post.</p>
         <ul class="betaling">
           <li>Kontonummer: <strong id="konto"></strong> <button class="btn kopier" type="button" data-kopier="konto">Kopier</button></li>
           <li>Beløp: <strong><span id="belop2"></span> kr</strong> <button class="btn kopier" type="button" data-kopier="belop2">Kopier</button></li>
@@ -79,7 +80,7 @@
     <section id="kvittering" aria-labelledby="takk" hidden tabindex="-1">
       <h1 id="takk">Takk! Her er koden din: <span id="kode" class="kode"></span></h1>
       <p><button class="btn kopier" type="button" data-kopier="kode">Kopier koden</button></p>
-      <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>, hver på sin dag i desember. Luke 1 er alltid gratis.</p>
+      <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>, hver på sin dag i desember. Luke 1 er gratis.</p>
       <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Skriv inn koden og trykk «Lås opp».</p>
       <p><a id="spill" class="btn primary" href="../spill/?lang=nb">Åpne spillet og lås opp på denne enheten</a><br />Er koden en gave? Bruk gavekortet i stedet.</p>
       <p>Skriv inn koden på barnets enhet den dagen dere begynner, ikke lenge før.</p>
