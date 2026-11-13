@@ -302,11 +302,27 @@ if (oldSafari()) $('gammel-ios').hidden = false;
 // Shared checks for the first step (product and e-mail).
 function readOrderFields(say) {
   const email = $('epost').value.trim();
-  if (!$('epost').checkValidity() || !email) { say('email'); return null; }
+  const bad = !$('epost').checkValidity() || !email;
+  // Del 13 L9: a screen reader hears that the field is wrong, not only the message under it.
+  $('epost').setAttribute('aria-invalid', String(bad));
+  if (bad) { say('email'); return null; }
   const product = document.querySelector('input[name="product"]:checked')?.value;
   if (!product) { say('product'); return null; }
   return { email, product, website: $('nettsted').value };
 }
+
+$('epost').addEventListener('input', () => $('epost').removeAttribute('aria-invalid'));
+
+// Del 13 L1: a button waiting for the worker says so to a screen reader too (the look is in kjop.css).
+const busy = (id, on) => {
+  $(id).disabled = on;
+  if (on) $(id).setAttribute('aria-busy', 'true');
+  else $(id).removeAttribute('aria-busy');
+};
+
+// Del 13 L2: «Tilbake» on the bank step keeps the waiting order for this page, so going back and on again with the
+// same e-mail and product shows the same order instead of starting a new one (each counts against the daily limits).
+let backOrder = null;
 
 // Step 1, main: consent and «Betal med Vipps»; the worker answers with Vipps's page.
 $('skjema').addEventListener('submit', async (event) => {
@@ -317,7 +333,7 @@ $('skjema').addEventListener('submit', async (event) => {
   if (!$('samtykke-bestill').checked) return say('consent');
   if (!api) return say('misconfigured');
   $('feil').textContent = '';
-  $('kjop-vipps').disabled = true;
+  busy('kjop-vipps', true);
   try {
     let res;
     try {
@@ -338,7 +354,7 @@ $('skjema').addEventListener('submit', async (event) => {
   } catch (error) {
     say(error.message);
   } finally {
-    $('kjop-vipps').disabled = false;
+    busy('kjop-vipps', false);
   }
 });
 
@@ -348,16 +364,22 @@ $('kjop').addEventListener('click', async () => {
   const fields = readOrderFields(say);
   if (!fields) return;
   $('feil').textContent = '';
-  $('kjop').disabled = true;
+  if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product) {
+    keep(PENDING, backOrder);
+    showPay(backOrder);
+    return;
+  }
+  busy('kjop', true);
   try {
     const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website });
     const next = { orderNo: data.orderNo, key: data.key, amount: data.amount, account: data.account, product: data.product, email: fields.email };
+    backOrder = null;
     keep(PENDING, next);
     showPay(next);
   } catch (error) {
     say(error.message);
   } finally {
-    $('kjop').disabled = false;
+    busy('kjop', false);
   }
 });
 
@@ -369,21 +391,23 @@ $('fa-kode').addEventListener('click', async () => {
   if (!$('betalt').checked) return say('paid');
   if (!$('samtykke').checked) return say('consent');
   $('feil-betal').textContent = '';
-  $('fa-kode').disabled = true;
+  busy('fa-kode', true);
   try {
     const data = await ask('/confirm', { orderNo: order.orderNo, key: order.key, paid: true, consent: true });
     const bought = { ...data, email: order.email };
     keep(KEPT, bought);
     keep(PENDING, null);
+    backOrder = null;
     show(bought);
   } catch (error) {
     say(error.message);
   } finally {
-    $('fa-kode').disabled = false;
+    busy('fa-kode', false);
   }
 });
 
 $('tilbake').addEventListener('click', () => {
+  backOrder = readPending();
   keep(PENDING, null);
   showForm(readKept());
   window.scrollTo({ top: 0, behavior: 'instant' });
