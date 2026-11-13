@@ -77,7 +77,7 @@
     <section id="kvittering" aria-labelledby="takk" hidden tabindex="-1">
       <h1 id="takk">Takk! Her er koden din: <span id="kode" class="kode"></span></h1>
       <p><button class="btn kopier" type="button" data-kopier="kode">Kopier koden</button></p>
-      <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>. Luke 1 er alltid gratis.</p>
+      <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>, hver på sin dag i desember. Luke 1 er alltid gratis.</p>
       <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Skriv inn koden og trykk «Lås opp».</p>
       <p><a id="spill" class="btn primary" href="../spill/?lang=nb">Åpne spillet og lås opp på denne enheten</a><br />Er koden en gave? Bruk gavekortet i stedet.</p>
       <p>Skriv inn koden på barnets enhet den dagen dere begynner, ikke lenge før.</p>
@@ -95,8 +95,8 @@
       <h2>Gavekort</h2>
       <p>Gavekortet har koden ferdig påtrykt. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Gir du koden som gave, gi bort selve kortet, ikke et bilde av det.</p>
       <label for="navn">Til (kan stå tomt)</label>
-      <input id="navn" type="text" maxlength="40" autocomplete="off" />
-      <p>Skal koden være en gave? Last ned gavekortet, skriv det ut på begge sider av arket og brett det i tre.</p>
+      <input id="navn" type="text" maxlength="40" autocomplete="off" aria-describedby="navn-hjelp" />
+      <p id="navn-hjelp" class="small">Bokstaver og tall kommer med på kortet. Emoji kommer ikke med.</p>
       <p><button id="gavekort" class="btn primary" type="button">Last ned gavekortet (PDF)</button></p>
       <p id="filer" class="small" hidden>Finner du ikke kortet? Se i Filer-appen under Nedlastinger.</p>
       <p id="kortfeil" role="status"></p>
@@ -108,6 +108,6 @@
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
-  <script type="module" src="kjop.js?v=vipps3"></script>
+  <script type="module" src="kjop.js?v=vipps4"></script>
 </body>
 </html>

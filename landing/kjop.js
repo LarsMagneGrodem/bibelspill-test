@@ -24,7 +24,7 @@ const ERRORS = {
   product: 'Velg personlig kode eller familiekode.',
   'slow-down': 'Vent et minutt og prøv igjen.',
   // Sikkerhet 12.11 (B3): the worker takes at most ten orders to one address a day (SS-L11).
-  'email-many': 'Det er alt bestilt flere koder til denne e-postadressen i dag. Skriv til oss hvis du trenger flere.',
+  'email-many': 'Det er bestilt mange koder til denne e-postadressen i dag. Trenger du flere, skriv til lihai260@hotmail.com.',
   busy: 'Mange kjøper akkurat nå. Prøv igjen litt senere.',
   // feilliste M2: the worker's own refusals get their own words; «network» only when the call itself fails.
   origin: 'Kjøpet må gjøres på reisenmedlukas.no. Last siden på nytt og prøv igjen.',
