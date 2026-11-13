@@ -1,8 +1,7 @@
 /* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File */
-// The buy page. Bank transfer on trust (Lars 12.11 16:24): the product and the e-mail go to the sale's worker
-// (/order/start), which answers with how to pay; the buyer pays, ticks «Jeg har betalt» and the consent, and the worker
-// (/order/confirm) answers with the code. No deadline. The bank step is one block (#bank) with its own functions here,
-// so Vipps can go first later and the bank stay below it.
+// The buy page. Vipps is first (Lars 13.11 01:14). Bank transfer on trust (Lars 12.11 16:24) stays as the
+// less prominent choice: /order/start, then «Jeg har betalt» and the consent, /order/confirm. No deadline.
+// The bank step is one block (#bank). Vipps posts to /vipps/start and sends the buyer to Vipps.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
 import { PAGES, cardPdf } from './gavekort-nett.mjs';
@@ -172,6 +171,7 @@ function showPay(pending) {
   $('ordre').textContent = pending.orderNo;
   $('betalt').checked = false;
   $('samtykke').checked = false;
+  if ($('samtykke-bestill')) $('samtykke-bestill').checked = false;
   $('feil-betal').textContent = '';
   $('kopiert-betal').textContent = '';
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -299,19 +299,59 @@ if (!api) {
 }
 if (oldSafari()) $('gammel-ios').hidden = false;
 
-// Step 1: the product and the e-mail; the worker books the order and answers with how to pay.
+// Shared checks for the first step (product and e-mail).
+function readOrderFields(say) {
+  const email = $('epost').value.trim();
+  if (!$('epost').checkValidity() || !email) { say('email'); return null; }
+  const product = document.querySelector('input[name="product"]:checked')?.value;
+  if (!product) { say('product'); return null; }
+  return { email, product, website: $('nettsted').value };
+}
+
+// Step 1, main: consent and «Betal med Vipps»; the worker answers with Vipps's page.
 $('skjema').addEventListener('submit', async (event) => {
   event.preventDefault();
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
-  const email = $('epost').value.trim();
-  if (!$('epost').checkValidity() || !email) return say('email');
-  const product = document.querySelector('input[name="product"]:checked')?.value;
-  if (!product) return say('product');
+  const fields = readOrderFields(say);
+  if (!fields) return;
+  if (!$('samtykke-bestill').checked) return say('consent');
+  if (!api) return say('misconfigured');
+  $('feil').textContent = '';
+  $('kjop-vipps').disabled = true;
+  try {
+    let res;
+    try {
+      res = await fetch(`${base}/vipps/start`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: fields.email, product: fields.product, website: fields.website, consent: true }),
+        signal: timeoutSignal(ORDER_TIMEOUT_MS),
+      });
+    } catch (error) {
+      throw new Error(error?.name === 'TimeoutError' || error?.name === 'AbortError' ? 'timeout' : 'network', { cause: error });
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ok) throw new Error(Object.hasOwn(ERRORS, data.error ?? '') ? data.error : 'server');
+    const url = typeof data.redirectUrl === 'string' ? data.redirectUrl : '';
+    if (!url.startsWith('https://')) throw new Error('server');
+    location.href = url;
+  } catch (error) {
+    say(error.message);
+  } finally {
+    $('kjop-vipps').disabled = false;
+  }
+});
+
+// The less prominent choice: bank transfer on trust, same as before.
+$('kjop').addEventListener('click', async () => {
+  const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
+  const fields = readOrderFields(say);
+  if (!fields) return;
   $('feil').textContent = '';
   $('kjop').disabled = true;
   try {
-    const data = await ask('/start', { email, product, website: $('nettsted').value });
-    const next = { orderNo: data.orderNo, key: data.key, amount: data.amount, account: data.account, product: data.product, email };
+    const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website });
+    const next = { orderNo: data.orderNo, key: data.key, amount: data.amount, account: data.account, product: data.product, email: fields.email };
     keep(PENDING, next);
     showPay(next);
   } catch (error) {

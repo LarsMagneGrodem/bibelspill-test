@@ -24,3 +24,9 @@
 .kasse .qr-boks { margin: 12px 0; }
 .kasse .qr-boks svg { display: block; background: #fff; border-radius: 6px; max-width: 60vw; height: auto; }
 .kasse .qr-boks figcaption { margin-top: 6px; }
+
+/* Vipps's orange, stored here (no third-party script). Official button colour #FF5B24. */
+.kasse .btn.vipps { margin-top: 16px; width: 100%; background: #FF5B24; color: #fff; border: 0; }
+.kasse .btn.vipps:hover, .kasse .btn.vipps:focus { background: #e85220; }
+.kasse .bank-alternativ { margin: 12px 0 0; text-align: center; }
+.kasse .bank-alternativ .lenke { margin: 0; padding: 0; min-height: 0; font: inherit; font-weight: 400; font-size: 1rem; color: inherit; background: none; border: 0; text-decoration: underline; cursor: pointer; }

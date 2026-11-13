@@ -23,7 +23,7 @@
 
     <section id="bestill" aria-labelledby="bestill-tittel">
       <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
-      <p>Du betaler med bankoverføring og får koden med en gang. Vipps kommer snart.</p>
+      <p>Du får koden med en gang. Betal med Vipps eller med bankoverføring.</p>
       <p id="siste" hidden><button id="vis-siste" class="btn" type="button"><span>Vis siste kjøp (kode <span id="siste-kode" class="kode"></span>)</span></button></p>
       <p id="gammel-ios" class="melding" hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
       <p id="stengt" class="melding" hidden>Vi gjør klart for advent. Salget er ikke åpnet ennå.</p>
@@ -46,7 +46,9 @@
         <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
         <!-- Left empty by people; a robot that fills every field is turned away. -->
         <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
-        <button id="kjop" class="btn primary" type="submit">Gå til betaling</button>
+        <label class="samtykke"><input id="samtykke-bestill" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
+        <button id="kjop-vipps" class="btn vipps" type="submit">Betal med Vipps</button>
+        <p class="bank-alternativ"><button id="kjop" class="lenke" type="button">Eller betal med bankoverføring</button></p>
         <p id="feil" class="melding" role="alert"></p>
       </form>
       <p class="small">Les <a href="../vilkar.html">kjøpsvilkårene</a> og <a href="../personvern.html">personvernerklæringen</a>.</p>
@@ -106,6 +108,6 @@
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
-  <script type="module" src="kjop.js?v=tillit2"></script>
+  <script type="module" src="kjop.js?v=vipps1"></script>
 </body>
 </html>
