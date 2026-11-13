@@ -317,7 +317,8 @@ function readOrderFields(say) {
   const bad = !$('epost').checkValidity() || !email;
   // Del 13 L9: a screen reader hears that the field is wrong, not only the message under it.
   $('epost').setAttribute('aria-invalid', String(bad));
-  if (bad) { say('email'); return null; }
+  // Round 2 (keyboard): the field that is wrong gets the focus, so a keyboard or screen-reader user lands on it.
+  if (bad) { say('email'); $('epost').focus(); return null; }
   const product = document.querySelector('input[name="product"]:checked')?.value;
   if (!product) { say('product'); return null; }
   return { email, product, website: $('nettsted').value };
@@ -342,7 +343,7 @@ $('skjema').addEventListener('submit', async (event) => {
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
-  if (!$('samtykke-bestill').checked) return say('consent');
+  if (!$('samtykke-bestill').checked) { $('samtykke-bestill').focus(); return say('consent'); }
   if (!api) return say('misconfigured');
   $('feil').textContent = '';
   busy('kjop-vipps', true);
@@ -375,7 +376,7 @@ $('kjop').addEventListener('click', async () => {
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
-  if (!$('samtykke-bestill').checked) return say('consent');
+  if (!$('samtykke-bestill').checked) { $('samtykke-bestill').focus(); return say('consent'); }
   $('feil').textContent = '';
   if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product) {
     keep(PENDING, backOrder);

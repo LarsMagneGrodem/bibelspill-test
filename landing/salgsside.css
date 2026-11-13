@@ -11,7 +11,7 @@
 .hero2 h1 { font-size: clamp(1.7rem, 6.4vw, 2.9rem); margin: 0; }
 .hero2 .eyebrow { margin-bottom: 6px; }
 .hero2 .cta-row .btn { flex: 1 1 220px; }
-.cta-under { color: var(--soft); font-size: 15px; margin: -6px 0 14px; }
+.cta-under { color: var(--soft); font-size: 0.9375rem; margin: -6px 0 14px; }
 @media (min-width: 880px) {
   .hero2 { grid-template-columns: 1.15fr .85fr; grid-template-areas: "tittel film" "tekst film";
     column-gap: 40px; row-gap: 18px; padding-top: 32px; align-items: start; }
@@ -31,17 +31,21 @@ a.film-knapp { text-decoration: none; }
   border-radius: 999px; border: 1px solid #f3d58a; background: #1b1a17e6; color: #f6efdf;
   font: inherit; font-size: 1.05rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
 .film--bred .film-knapp { top: 50%; bottom: auto; transform: translate(-50%, -50%); }
-.film-knapp small { display: block; font-weight: 400; font-size: 13px; color: var(--muted); }
+.film-knapp small { display: block; font-weight: 400; font-size: 0.8125rem; color: var(--muted); }
 .film-knapp > span:last-child { text-align: left; line-height: 1.2; }
+/* With a large text size the label ran out of the narrow trailer card («Se traileren med l…»); it may wrap instead. */
+.film-knapp { width: max-content; max-width: calc(100% - 16px); box-sizing: border-box; }
+.film-knapp > span:last-child { white-space: normal; }
+.film-ikon { flex: none; }
 .film-ikon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
-  background: var(--gold); color: #2b1d0c; font-size: 18px; padding-left: 3px; }
+  background: var(--gold); color: #2b1d0c; font-size: 1.125rem; padding-left: 3px; }
 .film-knapp:hover .film-ikon { background: #fff1c4; }
 .film.spiller .film-knapp { display: none; }
 .hero2-film figcaption, #introfilm figcaption { text-align: center; }
 
 .trygt-rad { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .trygt-rad li { padding: 6px 12px 6px 30px; border-radius: 999px; border: 1px solid var(--line);
-  background: #ffffff0d; color: var(--soft); font-size: 15px; position: relative; }
+  background: #ffffff0d; color: var(--soft); font-size: 0.9375rem; position: relative; }
 .trygt-rad li::before { content: "✓"; position: absolute; left: 11px; color: var(--gold); font-weight: 700; }
 
 .ingress { color: var(--soft); font-size: 1.06rem; max-width: 62ch; }
@@ -72,7 +76,7 @@ a.film-knapp { text-decoration: none; }
 #menighet p { color: var(--soft); max-width: 70ch; }
 .slutt-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .slutt-cta .btn { flex: 1 1 220px; }
-.credit { font-size: 14px; }
+.credit { font-size: 0.875rem; }
 /* G6: the note for an iPad or iPhone too old for the game (salgsside.js shows it). */
 .gammel-ios { color: #ffd98a; font-weight: 600; margin: 10px 0; }
 .gammel-ios[hidden] { display: none; }
