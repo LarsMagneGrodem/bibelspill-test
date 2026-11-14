@@ -43,6 +43,7 @@
   }
   // Vinnerboksen, ordrett fra delekampanje 5.5. «Kopiert!» er samme ord som på kjøpssiden (kjop.js).
   // Oppbygning: pynt (bånd, segl med Lukas), toppen (tittel og ingress), kortet med koden, lenken, og en roligere fot.
+  // Linja om under 18 år er tatt ut (Lars 14.11 01:32 «Ja kutt det under 18 år»).
   function winnerBox(code, link) {
     var box = el('section', 'skjult-boks');
     box.setAttribute('role', 'dialog');
@@ -96,7 +97,6 @@
     lp.appendChild(la);
     inner.appendChild(lp);
     var fot = el('div', 'skjult-fot');
-    fot.appendChild(el('p', 'skjult-voksen', 'Er du under 18 år? Vis dette til en voksen.'));
     fot.appendChild(el('p', 'skjult-frivillig', 'Har du lyst, kan du fortelle at du fant den i kommentarfeltet under innlegget om det skjulte gavekortet på Facebook. Det er helt frivillig.'));
     var rp = el('p', 'skjult-regler');
     var ra = el('a', '', 'Regler');

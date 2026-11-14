@@ -62,7 +62,6 @@
 .skjult-lenke a { display: block; margin: 8px auto 0; max-width: 24em; padding: 8px 12px; border-radius: 10px; background: #6b16112e; border: 1px solid #ffe7a366; color: #ffe7a3; font-size: .95rem; word-break: break-all; text-underline-offset: 3px; }
 .skjult-fot { margin: 22px calc(-1 * clamp(18px, 6vw, 48px)) -26px; padding: 18px clamp(18px, 6vw, 48px) 22px; background: linear-gradient(#fbf1dc, #f4e3bf); border-top: 2px solid #e6bf62; border-radius: 0 0 16px 16px; color: #5a4128; font-size: .95rem; line-height: 1.5; }
 .skjult-fot p { margin: 0 auto 8px; max-width: 30em; }
-.skjult-voksen { color: #3a2412; font-weight: 700; }
 .skjult-regler { margin-bottom: 0 !important; }
 .skjult-regler a { color: #8e241d; font-weight: 700; }
 .skjult-fot a:focus-visible { outline-color: #8e241d; }
