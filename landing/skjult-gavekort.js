@@ -42,21 +42,37 @@
     foot.insertBefore(p, foot.firstChild);
   }
   // Vinnerboksen, ordrett fra delekampanje 5.5. «Kopiert!» er samme ord som på kjøpssiden (kjop.js).
+  // Oppbygning: pynt (bånd, segl med Lukas), toppen (tittel og ingress), kortet med koden, lenken, og en roligere fot.
   function winnerBox(code, link) {
     var box = el('section', 'skjult-boks');
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-labelledby', 'skjult-tittel');
     box.tabIndex = -1;
-    box.appendChild(el('div', 'skjult-sloyfe')).setAttribute('aria-hidden', 'true');
+    var pynt = el('div', 'skjult-pynt');
+    pynt.setAttribute('aria-hidden', 'true');
+    pynt.appendChild(el('span', 'skjult-baand'));
+    pynt.appendChild(el('span', 'skjult-sloyfe'));
+    var segl = el('span', 'skjult-segl');
+    var bilde = el('img', 'skjult-portrett');
+    bilde.src = new URL('assets/skjult-lukas.webp', BASE).href;
+    bilde.alt = '';
+    bilde.width = 400;
+    bilde.height = 400;
+    bilde.decoding = 'async';
+    segl.appendChild(bilde);
+    pynt.appendChild(segl);
+    box.appendChild(pynt);
     var inner = el('div', 'skjult-innhold');
+    var top = el('div', 'skjult-topp');
     var h = el('h2', 'skjult-tittel');
     h.id = 'skjult-tittel';
     var gift = el('span', 'skjult-ikon', '🎁');
     gift.setAttribute('aria-hidden', 'true');
     h.appendChild(gift);
-    h.appendChild(el('span', '', 'Du fant dagens skjulte gavekort!'));
-    inner.appendChild(h);
-    inner.appendChild(el('p', 'skjult-ingress', 'Du var den første som åpnet siden etter dagens hemmelige klokkeslett. Gavekortet er en familiekode til Reisen med Lukas. Den er gratis, og du trenger ikke kjøpe noe.'));
+    h.appendChild(el('span', 'skjult-tittel-tekst', 'Du fant dagens skjulte gavekort!'));
+    top.appendChild(h);
+    top.appendChild(el('p', 'skjult-ingress', 'Du var den første som åpnet siden etter dagens hemmelige klokkeslett. Gavekortet er en familiekode til Reisen med Lukas. Den er gratis, og du trenger ikke kjøpe noe.'));
+    inner.appendChild(top);
     var ticket = el('div', 'skjult-billett');
     ticket.appendChild(el('p', 'skjult-etikett', 'Koden din:'));
     ticket.appendChild(el('p', 'skjult-kode', code));
@@ -66,7 +82,7 @@
     var status = el('span', 'skjult-kopiert');
     status.setAttribute('role', 'status');
     copy.addEventListener('click', function () {
-      var shown = function () { status.textContent = 'Kopiert!'; };
+      var shown = function () { status.textContent = 'Kopiert!'; box.classList.add('skjult-er-kopiert'); };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(shown, function () {});
     });
     row.appendChild(copy);
@@ -79,13 +95,15 @@
     la.rel = 'noreferrer';
     lp.appendChild(la);
     inner.appendChild(lp);
-    inner.appendChild(el('p', 'skjult-voksen', 'Er du under 18 år? Vis dette til en voksen.'));
-    inner.appendChild(el('p', 'skjult-frivillig', 'Har du lyst, kan du fortelle at du fant den i kommentarfeltet under innlegget om det skjulte gavekortet på Facebook. Det er helt frivillig.'));
+    var fot = el('div', 'skjult-fot');
+    fot.appendChild(el('p', 'skjult-voksen', 'Er du under 18 år? Vis dette til en voksen.'));
+    fot.appendChild(el('p', 'skjult-frivillig', 'Har du lyst, kan du fortelle at du fant den i kommentarfeltet under innlegget om det skjulte gavekortet på Facebook. Det er helt frivillig.'));
     var rp = el('p', 'skjult-regler');
     var ra = el('a', '', 'Regler');
     ra.href = REGLER;
     rp.appendChild(ra);
-    inner.appendChild(rp);
+    fot.appendChild(rp);
+    inner.appendChild(fot);
     box.appendChild(inner);
     var main = document.getElementById('innhold') || document.body;
     main.insertBefore(box, main.firstChild);
