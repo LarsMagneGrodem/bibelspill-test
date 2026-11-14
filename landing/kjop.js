@@ -325,6 +325,14 @@ function readOrderFields(say) {
 }
 
 $('epost').addEventListener('input', () => $('epost').removeAttribute('aria-invalid'));
+// Finpuss r3: an unticked consent box is marked as wrong for a screen reader and gets the focus, as the email field does;
+// ticking it clears the mark.
+function consentMissing(id, say) {
+  $(id).setAttribute('aria-invalid', 'true');
+  $(id).focus();
+  return say('consent');
+}
+for (const id of ['samtykke-bestill', 'samtykke']) $(id)?.addEventListener('change', () => $(id).removeAttribute('aria-invalid'));
 
 // Del 13 L1: a button waiting for the worker says so to a screen reader too (the look is in kjop.css).
 const busy = (id, on) => {
@@ -343,7 +351,7 @@ $('skjema').addEventListener('submit', async (event) => {
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
-  if (!$('samtykke-bestill').checked) { $('samtykke-bestill').focus(); return say('consent'); }
+  if (!$('samtykke-bestill').checked) return consentMissing('samtykke-bestill', say);
   if (!api) return say('misconfigured');
   $('feil').textContent = '';
   busy('kjop-vipps', true);
@@ -376,7 +384,7 @@ $('kjop').addEventListener('click', async () => {
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
-  if (!$('samtykke-bestill').checked) { $('samtykke-bestill').focus(); return say('consent'); }
+  if (!$('samtykke-bestill').checked) return consentMissing('samtykke-bestill', say);
   $('feil').textContent = '';
   if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product) {
     keep(PENDING, backOrder);
@@ -403,7 +411,7 @@ $('fa-kode').addEventListener('click', async () => {
   const say = (key) => { $('feil-betal').textContent = ERRORS[key] ?? ERRORS.network; };
   const order = readPending();
   if (!order) return say('order');
-  if (!order.code && !$('samtykke').checked) return say('consent');
+  if (!order.code && !$('samtykke').checked) return consentMissing('samtykke', say);
   $('feil-betal').textContent = '';
   busy('fa-kode', true);
   try {

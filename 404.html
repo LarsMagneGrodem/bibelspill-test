@@ -12,6 +12,19 @@
       var p = location.pathname;
       var base = p.indexOf('/bibelspill-test/') === 0 ? '/bibelspill-test/' : '/';
       var rest = p.slice(base.length);
+      // Finpuss r3 (Lars 14.11 01:02): an unknown English address (en/…) stays here and says so in English, with the way
+      // back to the English front page; it is not sent into the game.
+      if (rest.indexOf('en/') === 0) {
+        document.documentElement.lang = 'en';
+        document.title = 'Page not found – The Journey with Luke';
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelector('h1').textContent = 'Page not found';
+          var back = document.querySelector('main a');
+          back.textContent = 'Back to the front page';
+          back.setAttribute('href', base + 'en/');
+        });
+        return;
+      }
       if (rest && rest.indexOf('spill/') !== 0) location.replace(base + 'spill/' + rest + location.search + location.hash);
     })();
   </script>
