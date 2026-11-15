@@ -3,8 +3,10 @@
 .btn.gull { background: linear-gradient(#f3d58a, #d9b25e); color: #2b1d0c; border-color: #a8823a; }
 .btn.gull:hover { background: linear-gradient(#f7df9f, #e2bd6c); }
 
+/* NS-01: on a phone the words, the price and the two buttons come before the trailer, as on the English page; side by
+   side from 880 px as before. */
 .hero2 { display: grid; gap: 16px; padding: 8px 0 32px; border-top: 0;
-  grid-template-areas: "tittel" "film" "tekst"; }
+  grid-template-areas: "tittel" "tekst" "film"; }
 .hero2-tittel { grid-area: tittel; }
 .hero2-film { grid-area: film; }
 .hero2-tekst { grid-area: tekst; }
@@ -80,3 +82,59 @@ a.film-knapp { text-decoration: none; }
 /* G6: the note for an iPad or iPhone too old for the game (salgsside.js shows it). */
 .gammel-ios { color: #ffd98a; font-weight: 600; margin: 10px 0; }
 .gammel-ios[hidden] { display: none; }
+/* Alderslinja under ingressen (Lars 15.11). */
+.hero2 .lead { margin-bottom: 8px; }
+.alder { color: var(--soft); margin: 0 0 16px; }
+/* Forsiden 15.11 (eget sett, kan tas ut): «Kjøp» står alltid i toppmenyen, som står fast øverst mens man ruller. På
+   telefon er menyen én rad (navnet, språket og «Kjøp»); lenkene til delene av siden står fra 720 px. */
+nav a.topp-kjop { min-height: 44px; padding: 4px 18px; font-weight: 700; color: #2b1d0c; text-decoration: none; }
+nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
+@media (max-width: 719px) {
+  .top { flex-wrap: nowrap; padding: 6px 16px; }
+  .brand { font-size: 0.95rem; letter-spacing: .08em; }
+  nav { flex-wrap: nowrap; align-items: center; gap: 0 14px; }
+  nav .nav-bred { display: none; }
+}
+
+/* Natt 15.–16.11 (salg-v2). Linja som skifter med datoen (dato.mjs), øverst på forsiden og kjøpssiden. */
+.dato-linje { margin: 0 0 6px; color: var(--paper); font-size: 0.9375rem; line-height: 1.4; }
+.dato-linje[hidden] { display: none; }
+.hero2 .dato-linje { border-left: 3px solid var(--gold); padding-left: 10px; }
+/* «📅 Minn meg på 1. desember»: en stille knapp som ser ut som en lenke; vises bare før 1. desember. */
+.minn { margin: -4px 0 12px; }
+.minn[hidden] { display: none; }
+.lenke-knapp { font: inherit; font-size: 1rem; color: var(--gold); background: none; border: 0; padding: 10px 0; min-height: 44px;
+  text-decoration: underline; cursor: pointer; text-align: left; }
+.minn .small { display: block; margin: 0; }
+/* «Hele reisen, luke for luke»: seks malte steder og lista over lukene, sammenfoldet. */
+.steder { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 10px; grid-template-columns: repeat(3, 1fr); }
+@media (min-width: 760px) { .steder { grid-template-columns: repeat(6, 1fr); } }
+.steder img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; border: 1px solid #89734f; }
+.steder figcaption { margin-top: 4px; font-size: 0.875rem; text-align: center; }
+.luke-liste { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 2px 14px; }
+.luke-liste summary { cursor: pointer; min-height: 48px; display: flex; align-items: center; font-weight: 700; color: var(--gold); }
+.luker { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 6px; }
+@media (min-width: 760px) { .luker { grid-template-columns: 1fr 1fr; column-gap: 24px; } }
+.luker li { display: grid; grid-template-columns: 2.2em 1fr; column-gap: 6px; color: var(--soft); line-height: 1.35; }
+.luker .nr { grid-row: span 2; color: var(--gold); font-weight: 700; text-align: right; }
+.luker .lt { color: var(--paper); }
+.luker .ls { font-size: 0.875rem; color: var(--muted); grid-column: 2; }
+.luker em { grid-column: 2; font-style: normal; font-size: 0.875rem; color: var(--gold); }
+/* Prisene: pris per luke og en sann merkelapp på familiekoden. */
+.card .per-luke { margin: -6px 0 0; color: var(--soft); }
+.card .merkelapp { margin: 0; font-size: 0.9375rem; color: var(--gold); }
+/* Tillitsplassen: står skjult til det finnes ekte sitater (salg.mjs). */
+.sitater[hidden] { display: none; }
+.sitater { padding: 20px 0 0; border-top: 0; }
+.sitater ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+@media (min-width: 760px) { .sitater ul { grid-template-columns: repeat(3, 1fr); } }
+.sitater li { padding: 12px 16px; border-left: 3px solid var(--gold); background: #ffffff0a; border-radius: 0 10px 10px 0; }
+.sitater blockquote { margin: 0 0 6px; font-style: italic; }
+.sitater p { margin: 0; font-size: 0.9375rem; color: var(--muted); }
+/* Gaven: datoen for overleveringen. */
+.gave-dato { color: var(--paper); font-weight: 700; max-width: 62ch; }
+.gave-dato[hidden] { display: none; }
+/* Den lydløse løkka kan stoppes. */
+.film-pause { position: absolute; top: 10px; right: 10px; min-height: 44px; min-width: 44px; padding: 6px 14px; border-radius: 999px;
+  border: 1px solid #f3d58a; background: #1b1a17cc; color: #f6efdf; font: inherit; font-size: 0.9375rem; cursor: pointer; }
+.film-pause[hidden], .film.spiller .film-pause { display: none; }

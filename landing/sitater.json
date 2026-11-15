@@ -1,0 +1,5 @@
+{
+  "_slik": "Bare ekte sitater fra navngitte voksne som har prøvd luke 1, med skriftlig ja (samtykke: true). Ordrett, med egne ord. Fikk personen hele koden gratis, sett gratisKode: true; da står det ved sitatet. Ingen barn, ingen bilder. Høyst tre vises. Er listene tomme, vises ikke feltet i det hele tatt. Eksempel på formen (ikke et sitat): {\"sitat\": \"…\", \"navn\": \"Fornavn\", \"rolle\": \"mor til to\", \"sted\": \"Stavanger\", \"gratisKode\": false, \"samtykke\": true}",
+  "nb": [],
+  "en": []
+}

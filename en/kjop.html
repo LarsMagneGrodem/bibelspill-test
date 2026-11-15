@@ -4,8 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://reisenmedlukas.no; script-src 'self'; style-src 'self' https://reisenmedlukas.no; img-src 'self' https://reisenmedlukas.no data:; connect-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'" />
-  <title>Buy The Journey with Luke</title>
+  <title>Buy a code – The Journey with Luke</title>
   <meta name="robots" content="noindex" />
+  <meta name="description" content="A personal or family code for The Journey with Luke. Pay by card, Apple Pay or Google Pay; the code comes by email. Printable gift card." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:site_name" content="The Journey with Luke" />
+  <meta property="og:title" content="Buy a code for The Journey with Luke" />
+  <meta property="og:description" content="A personal or family code. Pay by card, Apple Pay or Google Pay, and the code comes by email straight away. Printable gift card. Door 1 is free." />
+  <meta property="og:url" content="https://reisenmedlukas.no/en/kjop.html" />
+  <meta property="og:image" content="https://reisenmedlukas.no/en/assets/delingskort-en-kjop.jpg?v=a5c1aa05" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The gift card for The Journey with Luke, with the words: A code for the whole calendar. Door 1 is free." />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#1b1a17" />
   <link rel="icon" type="image/png" sizes="32x32" href="https://reisenmedlukas.no/landing/assets/icon-32.png" />
   <link rel="stylesheet" href="https://reisenmedlukas.no/landing/styles.css" />
@@ -13,35 +25,50 @@
 </head>
 <body>
   <main id="innhold" class="kasse">
-    <p><a href="./">Back to the front page</a></p>
+    <p class="til-forsiden"><a href="./">Back to the front page</a></p>
 
     <section id="bestill" aria-labelledby="bestill-tittel">
+      <!-- Changes with the date on the device (landing/dato.mjs); November's line stays here without a script. -->
+      <p class="dato-linje" data-dato="kjop">The calendar starts on Tuesday 1 December. Buy now, and everything is ready when it begins.</p>
       <h1 id="bestill-tittel">Buy The Journey with Luke</h1>
-      <p>An Advent calendar, ages 8 and up, to be bought by an adult. Door 1 is free. A code unlocks doors 2–24. For the Advent calendar 1–24 December 2026. All doors are open after Christmas, and the game stays open at least until 31 January 2027.</p>
-      <p>There are no in-app purchases, no ads and no tracking.</p>
-      <p>Payment on this English site is sold by Stripe (“Sold through Link”). Stripe sends the payment receipt. We send the code by email and show it on the page after payment. Customers in Norway can still pay on the <a href="https://reisenmedlukas.no/landing/kjop.html">Norwegian checkout</a>.</p>
+      <p>An Advent calendar for ages 8 and up, well into the teens, to be bought by an adult. Door 1 is free. A code unlocks doors 2–24.</p>
 
       <form id="skjema" novalidate>
         <fieldset class="valg">
           <legend>Choose a code</legend>
-          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personal code – €24,99 / £19,99 / $24,99</strong><br />For one person.</span></label>
-          <label><input type="radio" name="product" value="family" /> <span><strong>Family code – €49,99 / £39,99 / $49,99</strong><br />For the whole household: everyone who lives in the same home.</span></label>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personal code – €24.99 / £19.99 / $24.99</strong><br />For one person. <span class="per-luke">Less than €1.10 / 87p / $1.10 a door.</span></span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Family code – €49.99 / £39.99 / $49.99</strong><br />For everyone who lives in the same home. <span class="per-luke">Less than €2.20 / £1.75 / $2.20 a door.</span><br /><span class="merkelapp">The same price as two personal codes.</span></span></label>
+          <p class="small flere-hjem">Giving to grandchildren or friends in more than one home? Each home needs its own code.</p>
         </fieldset>
-        <p class="small">Prices in euro and pounds include VAT. The price in dollars does not include US sales tax, which Stripe adds where it applies. The checkout will show the amount you pay.</p>
-        <p class="small">A printable gift card, already filled in with the code, is attached to the email with the code. If you would rather write the code yourself, you can <a href="/en/gift-card.pdf">download a blank gift card (PDF)</a>.</p>
+        <!-- ?gave=1 (the gift's own way from the front page) opens this. Nothing about the gift is sent anywhere. -->
+        <details id="gave-mer" class="gave-mer gave-mer--en">
+          <summary>Buying it as a gift?</summary>
+          <p>A printable gift card, already filled in with the code, is attached to the email with the code. Does the child live somewhere else? Send the PDF to the parents by email or message. They can print it, or scan the QR code straight from the screen. If you would rather write the code yourself, you can <a href="/en/gift-card.pdf">download a blank gift card (PDF)</a>.</p>
+        </details>
+        <p class="small">Payment on this English site is sold by Stripe (“Sold through Link”). Prices in euro and pounds include VAT. The price in dollars does not include US sales tax, which Stripe adds where it applies. The checkout will show the amount you pay.</p>
+        <ul id="foer-betal" class="foer-betal">
+          <li>Door 1 is free. <a href="../spill/?lang=en">Try it first.</a></li>
+          <li>Doors open one a day from 1 December.</li>
+          <li>Made by Rygard Holding AS in Norway. <a href="kontakt.html">Contact</a>.</li>
+        </ul>
+        <p>
+          <a id="betal" class="btn primary stor" href="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-personal="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-family="https://buy.stripe.com/cNi7sNeH7aFb7KS0MngnK01">Continue to payment</a>
+        </p>
+        <p class="trygg-linje">You pay in Stripe Checkout. The code is shown on the page after payment, and sent by email.</p>
+        <!-- The happiness guarantee (decided 15.11): on top of the legal rights; the same promise is in the terms, section 5 («Happiness guarantee»). -->
+        <p class="garanti">Not happy? Write to us by 31 December 2026 and you get your money back, even if you have played.</p>
+        <p class="small">By continuing you agree to the <a href="vilkar.html">terms of sale</a>. Refunds and payment questions are explained there. Read the <a href="personvern.html">privacy policy</a> too.</p>
 
         <h2>How you pay</h2>
         <p>You pay in Stripe Checkout with a card, or with Apple Pay or Google Pay where those are offered. The purchase is shown as “Sold through Link”. You receive the code when the payment has gone through, by email and on the page after payment. We never see your card number. Stripe sends the payment receipt in a separate email.</p>
         <p class="small">If you cannot find the email with the code from kvittering@reisenmedlukas.no, check the junk or promotions folder. Stripe sends the payment receipt from Link.</p>
-        <p>
-          <a id="betal" class="btn primary stor" href="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-personal="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-family="https://buy.stripe.com/cNi7sNeH7aFb7KS0MngnK01">Continue to payment</a>
-        </p>
-        <p class="small">By continuing you agree to the <a href="vilkar.html">terms of sale</a>. Refunds and payment questions are explained there. Read the <a href="personvern.html">privacy policy</a> too.</p>
+        <p class="small">For the Advent calendar 1–24 December 2026. All doors are open after Christmas, and the game stays open at least until 31 January 2027. There are no in-app purchases, no ads and no tracking in the game. Customers in Norway can still pay on the <a href="https://reisenmedlukas.no/landing/kjop.html">Norwegian checkout</a>.</p>
       </form>
     </section>
 
     <p class="small"><a href="kontakt.html">Contact</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (at) hotmail.com</span>, phone <a href="tel:+4795145892">+47 951 45 892</a>. Do not send a card number, CVC or BankID details.</p>
   </main>
   <script src="kjop.js"></script>
+  <script type="module" src="../landing/dato.mjs"></script>
 </body>
 </html>

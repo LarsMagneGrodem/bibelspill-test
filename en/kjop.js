@@ -4,7 +4,11 @@
 (function () {
   var pay = document.getElementById('betal');
   var family = document.querySelector('input[name="product"][value="family"]');
-  if (new URLSearchParams(location.search).get('valg') === 'familie' && family) family.checked = true;
+  var params = new URLSearchParams(location.search);
+  if (params.get('valg') === 'familie' && family) family.checked = true;
+  // ?gave=1 (the gift's own way from the front page) opens «Buying it as a gift?». Nothing is sent or stored.
+  var gift = document.getElementById('gave-mer');
+  if (params.get('gave') === '1' && gift) gift.open = true;
   function pick() {
     var chosen = document.querySelector('input[name="product"]:checked');
     pay.href = chosen && chosen.value === 'family' ? pay.dataset.family : pay.dataset.personal;

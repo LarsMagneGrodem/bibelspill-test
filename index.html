@@ -6,8 +6,8 @@
   <!-- Our own files only: no tracking, no third-party film. Det skjulte gavekortet: kassen (connect-src) og Cloudflare Turnstile (script-src, frame-src), bare på denne norske forsiden. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src https://challenges.cloudflare.com; base-uri 'self'; form-action 'none'" />
   <script src="videre.js"></script>
-  <title>Reisen med Lukas – julekalender på nett med fortellingene om Jesus</title>
-  <meta name="description" content="En julekalender på nett der barnet blir lærlingen til legen Lukas og samler fortellingene om Jesus. 24 luker fram til julaften. Fra 8 år. Luke 1 er gratis. Ingen kjøp i appen, ingen reklame, ingen sporing." />
+  <title>Reisen med Lukas – kristen julekalender på nett fra 8 år</title>
+  <meta name="description" content="Julekalender med kristent innhold, bygd på juleevangeliet i Lukas. Én luke om dagen 1.–24. desember. Fra 8 år og opp i tenårene. Luke 1 er gratis." />
   <meta name="theme-color" content="#1b1a17" />
   <!-- Share preview: the build puts the game's address (VITE_SITE_URL) in place of https://reisenmedlukas.no/ (scripts/vite-plugins.mjs). Scrapers need absolute URLs for og:image. -->
   <link rel="canonical" href="https://reisenmedlukas.no/" />
@@ -17,20 +17,20 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nb_NO" />
   <meta property="og:site_name" content="Reisen med Lukas" />
-  <meta property="og:title" content="Reisen med Lukas – én luke om dagen fram til julaften" />
-  <meta property="og:description" content="Bli lærlingen til legen Lukas, møt folk som var der, og samle fortellingene om Jesus. 24 luker i desember. Luke 1 er gratis." />
+  <meta property="og:title" content="Reisen med Lukas – julekalender med kristent innhold" />
+  <meta property="og:description" content="Bygd på juleevangeliet i Lukas: barnet blir lærlingen til Lukas og undersøker én sak om dagen. Fra 8 år og opp i tenårene. Luke 1 er gratis." />
   <meta property="og:url" content="https://reisenmedlukas.no/" />
-  <meta property="og:image" content="https://reisenmedlukas.no/landing/assets/og-trailer.jpg?v=7068f846" />
+  <meta property="og:image" content="https://reisenmedlukas.no/landing/assets/delingskort-forside.jpg?v=3541458f" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Lukas og lærlingen går sammen på en vei i landet der Jesus levde. Fra traileren til Reisen med Lukas." />
+  <meta property="og:image:alt" content="Det malte kartet over landet der Jesus levde, med teksten: Reisen med Lukas. Julekalender på nett, 1.–24. desember. Luke 1 er gratis." />
   <meta property="og:video" content="https://reisenmedlukas.no/landing/assets/film/trailer.mp4?v=65c5cbb5" />
   <meta property="og:video:secure_url" content="https://reisenmedlukas.no/landing/assets/film/trailer.mp4?v=65c5cbb5" />
   <meta property="og:video:type" content="video/mp4" />
   <meta property="og:video:width" content="720" />
   <meta property="og:video:height" content="1280" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://reisenmedlukas.no/landing/assets/og-trailer.jpg?v=7068f846" />
+  <meta name="twitter:image" content="https://reisenmedlukas.no/landing/assets/delingskort-forside.jpg?v=3541458f" />
   <link rel="icon" type="image/png" sizes="32x32" href="landing/assets/icon-32.png" />
   <link rel="apple-touch-icon" href="https://reisenmedlukas.no/spill/icon-192.png" />
   <link rel="privacy-policy" href="personvern.html" />
@@ -43,12 +43,13 @@
   <header class="top">
     <p class="brand">Reisen med Lukas</p>
     <nav aria-label="Hovedmeny">
-      <a href="#opplevelse">Hva barna gjør</a>
-      <a href="#introfilm">Introfilmen</a>
-      <a href="#gave">Gavekort</a>
-      <a href="#pris">Pris</a>
-      <a href="#faq">Spørsmål</a>
+      <a class="nav-bred" href="#opplevelse">Hva barna gjør</a>
+      <a class="nav-bred" href="#pris">Pris</a>
+      <a class="nav-bred" href="#gave">Gavekort</a>
+      <a class="nav-bred" href="#introfilm">Introfilmen</a>
+      <a class="nav-bred" href="#faq">Spørsmål</a>
       <a href="https://reisenmedlukas.no/en/" lang="en" hreflang="en">English</a>
+      <a class="btn gull topp-kjop" href="til/kjop/">Kjøp</a>
     </nav>
   </header>
 
@@ -56,6 +57,8 @@
     <!-- HERO: the trailer. Swap the film by replacing assets/film/trailer.mp4 and trailer-plakat.webp (same names). -->
     <section class="hero2" aria-labelledby="hovedtittel">
       <div class="hero2-tittel">
+        <!-- Skifter med datoen på enheten (dato.mjs); novembers linje står her for den som ikke har skript. -->
+        <p class="dato-linje" data-dato="topp">Kalenderen starter tirsdag 1. desember. Luke 1 er gratis og kan prøves nå.</p>
         <p class="eyebrow">Julekalender på nett · 1.–24. desember</p>
         <h1 id="hovedtittel">Én luke om dagen med Lukas – helt fram til julaften</h1>
       </div>
@@ -63,7 +66,9 @@
       <figure class="hero2-film">
         <div class="film film--staaende" data-film>
           <video id="trailer" class="film-video" playsinline muted loop preload="none"
-            poster="landing/assets/film/trailer-plakat.webp?v=fac3eb1a" width="720" height="1280"
+            poster="landing/assets/film/trailer-plakat.webp?v=fac3eb1a"
+            data-lokke="landing/assets/film/lokke.mp4?v=3935a0fa" data-lokke-webm="landing/assets/film/lokke.webm?v=b3ef57ac"
+            data-lokke-plakat="landing/assets/film/lokke-plakat.webp?v=054e1c22" width="720" height="1280"
             aria-label="Traileren for Reisen med Lukas, 46 sekunder">
             <source src="landing/assets/film/trailer.mp4?v=65c5cbb5" type="video/mp4" />
           </video>
@@ -71,21 +76,26 @@
             <span class="film-ikon" aria-hidden="true">▶</span>
             <span>Se traileren med lyd <small>46 sek</small></span>
           </button>
+          <!-- Den lydløse løkka (data-lokke på videoen, sju sekunder fra luke 1) kan alltid stoppes. -->
+          <button class="film-pause" type="button" data-lokke-pause hidden aria-pressed="false">Stopp</button>
         </div>
       </figure>
 
       <div class="hero2-tekst">
-        <p class="lead">Bli lærlingen til legen Lukas, gå rundt i landet der Jesus levde, snakk med folk som var der og samle fortellingene i vitneboka. Fra 8 år. Godt å spille sammen med foreldre eller besteforeldre.</p>
+        <p class="lead">En julekalender med kristent innhold, bygd på juleevangeliet i Lukas. Barnet blir lærlingen til legen Lukas, snakker med folk som var der, og løser én liten sak om dagen, 5–15 minutter.</p>
+        <p class="alder">Fra 8 år, med et detektivnivå som gir utfordring helt opp i tenårene. Like gøy for voksne som spiller med.</p>
         <div class="cta-row">
-          <a class="btn primary stor" href="spill/?kapittel=lukas-oppdrag&amp;lang=nb">Prøv luke 1 gratis</a>
-          <a class="btn gull stor" href="landing/kjop.html">Kjøp kode – 250 kr</a>
+          <a class="btn primary stor" href="til/luke-1/">Prøv luke 1 gratis</a>
+          <a class="btn gull stor" href="til/kjop/">Kjøp kode – 250 kr</a>
         </div>
         <p class="gammel-ios" data-gammel-ios hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
-        <p class="cta-under">Familiekode for hele husstanden: <a href="landing/kjop.html?valg=familie">500 kr</a>. Engangskjøp, ingen abonnement.</p>
+        <p class="cta-under">Luke 1 er gratis, uten konto. Koden låser opp luke 2–24: 250 kr for én, eller <a href="til/kjop-familie/">500 kr for hele husstanden</a>. Betal med Vipps, og koden kommer med en gang. Engangskjøp, ingen abonnement.</p>
+        <!-- Før 1. desember: én kalenderhendelse laget på enheten (salg.mjs). Ingen e-post, ingenting lagres eller sendes. -->
+        <p class="minn" data-for-desember hidden><button class="lenke-knapp" type="button" data-minn="minn-status">📅 Minn meg på 1. desember</button> <span id="minn-status" class="small" role="status"></span></p>
         <ul class="trygt-rad" aria-label="Trygt å spille">
           <li>Ingen kjøp i appen</li>
           <li>Ingen reklame</li>
-          <li>Ingen sporing</li>
+          <li>Ingen sporing i spillet</li>
           <li>Ingen konto</li>
         </ul>
       </div>
@@ -119,6 +129,7 @@
         <li><strong>Åpne dagens luke</strong> på kartet over landet.</li>
         <li><strong>Snakk med folk og samle spor.</strong> Den første saken begynner på torget i Cæsarea, der en kjerre har veltet.</li>
         <li><strong>Fyll vitneboka.</strong> Barnet ser kildene selv og bestemmer hva sporene peker på.</li>
+        <li><strong>Snakk sammen etter hver luke.</strong> Når luka er løst, får en voksen to spørsmål å snakke om rundt bordet.</li>
         <li><strong>Samle dagskortene.</strong> På julaften kan en voksen lage et diplom med barnets navn.</li>
       </ol>
 
@@ -126,14 +137,141 @@
       <ul class="phones" tabindex="0" aria-label="Bilder fra spillet på telefon">
         <li><figure><img src="landing/assets/spill-samtale.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et malt landsbytorg i Nasaret sett ovenfra. Nederst sier Lukas: Hva spurte Maria om da engelen kom?" /><figcaption>Lukas gir dagens spørsmål, og barnet går rundt og snakker med folk.</figcaption></figure></li>
         <li><figure><img src="landing/assets/spill-sak.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et saksark med spørsmålet Hva spurte Maria om? Over står det en kilde kan fortelle, og under velger barnet hva som passer i Lukas' notat." /><figcaption>I saken velger barnet selv hva kildene faktisk sier.</figcaption></figure></li>
-        <li><figure><img src="landing/assets/spill-pastand.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Kortet Dagens påstand: Jesus vokste opp i Nasaret. Barnet har svart Troverdig, og under står hvorfor historikerne sier det samme." /><figcaption>Dagens påstand: barnet gjetter hva historikerne sier, og får se hvorfor.</figcaption></figure></li>
+        <li><figure><img src="landing/assets/spill-pastand.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Kortet Dagens sjekk: Jesus vokste opp i Nasaret. Barnet har valgt Sterke spor, og under står hvorfor historikerne sier det samme." /><figcaption>Dagens sjekk: barnet vurderer hvor gode spor historikerne har, og får se hvorfor.</figcaption></figure></li>
         <li><figure><img src="landing/assets/spill-dagskort.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Sluttkortet for luke 4 med dagskortet, morgendagens spørsmål på en forseglet lapp og knappen Neste luke." /><figcaption>Sluttkortet med dagskortet og en forseglet lapp om neste luke.</figcaption></figure></li>
       </ul>
     </section>
 
+    <!-- «Hele reisen, luke for luke»: lista er laget fra chapters/*/chapter.json (tittel, sted, bibelhenvisning; ingen
+         løsninger), og tests/salg-v2.test.mjs passer på at den ikke spriker fra spillet. Bildene er spillets egne steder. -->
+    <section id="luker" aria-labelledby="luker-tittel">
+      <h2 id="luker-tittel">Hele reisen, luke for luke</h2>
+      <ul class="steder" aria-label="Seks av de malte stedene i spillet">
+        <li><figure><img src="landing/assets/steder/cesarea.webp" width="360" height="240" loading="lazy" decoding="async" alt="Havna i Cæsarea, malt ovenfra." /><figcaption>Cæsarea</figcaption></figure></li>
+        <li><figure><img src="landing/assets/steder/templet.webp" width="360" height="240" loading="lazy" decoding="async" alt="Templet i Jerusalem, malt ovenfra." /><figcaption>Templet</figcaption></figure></li>
+        <li><figure><img src="landing/assets/steder/nasaret.webp" width="360" height="240" loading="lazy" decoding="async" alt="Nasaret, en liten by i åssiden, malt ovenfra." /><figcaption>Nasaret</figcaption></figure></li>
+        <li><figure><img src="landing/assets/steder/fjellbygda.webp" width="360" height="240" loading="lazy" decoding="async" alt="Fjellbygda med hus og terrasser, malt ovenfra." /><figcaption>Fjellbygda</figcaption></figure></li>
+        <li><figure><img src="landing/assets/steder/jordan.webp" width="360" height="240" loading="lazy" decoding="async" alt="Elva Jordan med en bro og åkrer, malt ovenfra." /><figcaption>Jordan</figcaption></figure></li>
+        <li><figure><img src="landing/assets/steder/betlehem.webp" width="360" height="240" loading="lazy" decoding="async" alt="Markene ved Betlehem om natta, med et bål ved en steinkve." /><figcaption>Betlehem</figcaption></figure></li>
+      </ul>
+      <p>Luke 1 er en hel luke, akkurat som de andre 23. <a href="til/luke-1/">Prøv den gratis.</a></p>
+      <details class="luke-liste">
+        <summary>Se alle de 24 lukene</summary>
+        <ol class="luker">
+          <li><span class="nr">1</span> <span class="lt">Uhellet på torget</span> <span class="ls">Cæsarea · Luk 1,1–4</span> <em>gratis</em></li>
+          <li><span class="nr">2</span> <span class="lt">Presten i templet</span> <span class="ls">Jerusalem · Luk 1,5–25</span></li>
+          <li><span class="nr">3</span> <span class="lt">Den stumme presten</span> <span class="ls">Fjellbygda · Luk 1,57–80</span></li>
+          <li><span class="nr">4</span> <span class="lt">En by ingen regnet med</span> <span class="ls">Nasaret · Luk 1,26–38</span></li>
+          <li><span class="nr">5</span> <span class="lt">Det Maria gjemte i hjertet</span> <span class="ls">Jerusalem · Luk 1,26–56; 2,19</span></li>
+          <li><span class="nr">6</span> <span class="lt">Marias sang</span> <span class="ls">Fjellbygda · Luk 1,39–56</span></li>
+          <li><span class="nr">7</span> <span class="lt">Keiserens befaling</span> <span class="ls">Cæsarea · Luk 2,1–7</span></li>
+          <li><span class="nr">8</span> <span class="lt">Veien til Betlehem</span> <span class="ls">Jeriko · Luk 2,4–5</span></li>
+          <li><span class="nr">9</span> <span class="lt">Natten i Betlehem</span> <span class="ls">Betlehem · Luk 2,1–20</span></li>
+          <li><span class="nr">10</span> <span class="lt">Gjesterommet og krybben</span> <span class="ls">Betlehem · Luk 2,6–7</span></li>
+          <li><span class="nr">11</span> <span class="lt">Gjeterne og englene</span> <span class="ls">Betlehem · Luk 2,8–20</span></li>
+          <li><span class="nr">12</span> <span class="lt">Tre titler</span> <span class="ls">Jerusalem · Luk 2,11</span></li>
+          <li><span class="nr">13</span> <span class="lt">To fortellinger</span> <span class="ls">Betlehem · Matt 2,1–12</span></li>
+          <li><span class="nr">14</span> <span class="lt">Simeon i templet</span> <span class="ls">Jerusalem · Luk 2,21–35</span></li>
+          <li><span class="nr">15</span> <span class="lt">Anna og kvinnene</span> <span class="ls">Jerusalem · Luk 2,36–40</span></li>
+          <li><span class="nr">16</span> <span class="lt">Tolv år i templet</span> <span class="ls">Jerusalem · Luk 2,41–52</span></li>
+          <li><span class="nr">17</span> <span class="lt">Johannes ved Jordan</span> <span class="ls">Jeriko · Luk 3,1–22</span></li>
+          <li><span class="nr">18</span> <span class="lt">Hva folk ventet seg</span> <span class="ls">Nasaret · Luk 4,16–30; 7,18–23</span></li>
+          <li><span class="nr">19</span> <span class="lt">Uenige i templet</span> <span class="ls">Jerusalem · Luk 20,27–40; Apg 23,6–8</span></li>
+          <li><span class="nr">20</span> <span class="lt">Lukas og Matteus side om side</span> <span class="ls">Cæsarea · Luk 1–2; Matt 1–2</span></li>
+          <li><span class="nr">21</span> <span class="lt">Avskriftene</span> <span class="ls">Cæsarea · Luk 1,1–4</span></li>
+          <li><span class="nr">22</span> <span class="lt">Lys for flere folk</span> <span class="ls">Cæsarea · Luk 2,32; Apg 10</span></li>
+          <li><span class="nr">23</span> <span class="lt">En Messias som dør?</span> <span class="ls">Jerusalem · Luk 23,50–24,35; 1 Kor 15,3–8</span></li>
+          <li><span class="nr">24</span> <span class="lt">Rullen forsegles</span> <span class="ls">Cæsarea · Luk 1,1–4</span></li>
+        </ol>
+      </details>
+    </section>
+    <section id="pris" aria-labelledby="pris-tittel">
+      <h2 id="pris-tittel">Velg hvordan dere vil være med</h2>
+      <p class="gammel-ios" data-gammel-ios hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
+      <p><a href="spill/aktiviteter/">Aktivitetsark</a> til utskrift for hver dag, gratis for alle.</p>
+      <div class="cards">
+        <article class="card">
+          <h3>Prøv luke 1</h3>
+          <p class="price">Gratis</p>
+          <ul>
+            <li>Den første saken, på torget i Cæsarea</li>
+            <li>Ingen konto, ingen e-post</li>
+          </ul>
+          <a class="btn primary" href="til/luke-1/">Prøv luke 1 gratis</a>
+        </article>
+        <article class="card">
+          <h3>Personlig kode</h3>
+          <p class="price">250 kr</p>
+          <p class="per-luke">Under 11 kr per luke</p>
+          <ul>
+            <li>Låser opp luke 2–24 for én person</li>
+            <li>Gavekort som PDF</li>
+          </ul>
+          <a class="btn primary" href="til/kjop/">Kjøp kode – 250 kr</a>
+        </article>
+        <article class="card featured">
+          <h3>Familiekode</h3>
+          <p class="price">500 kr</p>
+          <p class="per-luke">Under 22 kr per luke for hele huset</p>
+          <p class="merkelapp">Samme pris som to personlige koder. Alle i huset kan spille.</p>
+          <ul>
+            <li>Låser opp luke 2–24 for hele husstanden</li>
+            <li>Gavekort som PDF</li>
+          </ul>
+          <a class="btn primary" href="til/kjop-familie/">Kjøp familiekode – 500 kr</a>
+        </article>
+      </div>
+
+      <!-- Tillitsplassen: bare ekte sitater fra navngitte voksne som har prøvd luke 1, med skriftlig ja (sitater.json).
+           Feltet står skjult og vises ikke i det hele tatt før lista har sitater (salg.mjs). -->
+      <section id="sitater" class="sitater" aria-labelledby="sitater-tittel" hidden>
+        <h3 id="sitater-tittel">Noen som har prøvd luke 1</h3>
+        <ul></ul>
+      </section>
+
+      <div class="betaling">
+        <h3>Slik betaler dere</h3>
+        <p>Betal med Vipps eller bankoverføring. Dere får koden med en gang, og den kommer også på e-post.</p>
+        <p class="small">Prisen per luke er regnet for de 23 lukene koden låser opp; luke 1 er gratis. Lukene åpner på sin dag i desember, og etter julaften er alle åpne. Spillet er åpent minst til og med 31. januar 2027. Angrerett og refusjon: se <a href="vilkar.html">kjøpsvilkårene</a>. Hva vi lagrer ved kjøp, står i <a href="personvern.html">personvernerklæringen</a>.</p>
+      </div>
+    </section>
+
+    <section id="gave" aria-labelledby="gave-tittel">
+      <h2 id="gave-tittel">Gi en kalender til noen du kjenner</h2>
+      <p class="ingress">En gave som varer i 24 dager. Passer fra 8 år og opp i tenårene. Koden står på gavekortet, og QR-koden på kortet låser opp spillet på enheten barnet spiller på. Kortet kan skrives ut eller sendes som PDF.</p>
+      <p class="gave-dato" data-dato="gave">Gi gavekortet første søndag i advent, 29. november. Da er alt klart når kalenderen starter tirsdag 1. desember.</p>
+      <div class="tre">
+        <article class="kort-tekst">
+          <h3>Gavekort med koden</h3>
+          <p>Etter kjøpet laster du ned et gavekort som PDF med koden ferdig påtrykt, og med navnet til den som skal få det. Bor barnet et annet sted, sender du PDF-en til foreldrene.</p>
+          <a class="btn gull" href="til/gave/">Kjøp som gave</a>
+        </article>
+        <article class="kort-tekst">
+          <h3>Kjøp i butikk</h3>
+          <p>Gavekort med personlig kode til 250 kr kan også kjøpes i butikken hos Ordet è Ditt. Familiekoden kjøpes bare her på nettsiden.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="tro" aria-labelledby="tro-tittel">
+      <h2 id="tro-tittel">Hva bygger spillet på?</h2>
+      <ul class="list">
+        <li><strong>Gjenfortalt fra Lukasevangeliet</strong> med egne ord og med henvisning til kapittel og vers. Lukas skriver selv at han undersøkte alt nøye og bygde på dem som var øyenvitner (Luk 1,1–4).</li>
+        <li><strong>Klassisk kristen tro.</strong> Bibelen behandles som troverdig og som Guds ord til mennesker.</li>
+        <li><strong>Vitnene prøves ærlig.</strong> Barnet øver på å spørre: Så de det selv? Sier flere det samme? Ble det fortalt tidlig? Passer det med alt det andre vi vet?</li>
+        <li><strong>Barnet ser hvorfor vi kan stole på Bibelen.</strong> Hver dag sjekker barnet noe Lukas forteller, og ser hvor gode spor historikerne har. Der vi kan sjekke Lukas, treffer han ofte.</li>
+        <li><strong>Det som er diktet, holdes atskilt.</strong> Mange personer og samtalene med Lukas er diktet til spillet, og det står hva som er hentet fra Bibelen og andre kilder.</li>
+      </ul>
+    </section>
+
+    <section id="hva-vi-vil" aria-labelledby="hva-vi-vil-tittel">
+      <h2 id="hva-vi-vil-tittel">Hva vil vi med spillet?</h2>
+      <p class="ingress">Vi som har laget spillet, tror at Bibelen er sann og til å stole på. Vi vil at barna skal oppdage at mye av det som står der, også har et godt historisk grunnlag: steder, personer og hendelser som andre kilder og funn støtter. Underveis møter de også spørsmål historikerne fortsatt diskuterer. Det hører med når man undersøker noe ærlig, og slike spørsmål trenger ikke å rokke ved tilliten til Bibelen. Målet er barn som er trygge på troen sin, og som vet at den tåler å bli undersøkt.</p>
+    </section>
+
     <section id="trygt" aria-labelledby="trygt-tittel">
       <div class="trygt-boks">
-        <h2 id="trygt-tittel">Ingen kjøp i appen. Ingen reklame. Ingen sporing.</h2>
+        <h2 id="trygt-tittel">Ingen kjøp i appen. Ingen reklame. Ingen sporing i spillet.</h2>
         <p>Dere betaler én gang for koden, og så er det ferdig. Inne i spillet finnes det ingen butikk, ingen mynter å kjøpe og ingen tilbud som dukker opp. Det er ingen konto og ingen innlogging, og framgangen lagres bare på enheten dere spiller på.</p>
       </div>
     </section>
@@ -157,73 +295,6 @@
       </figure>
     </section>
 
-    <section id="gave" aria-labelledby="gave-tittel">
-      <h2 id="gave-tittel">Gi reisen som gave</h2>
-      <p class="ingress">En fin adventsgave til barn eller barnebarn. Koden står på gavekortet, og QR-koden på kortet fører til reisenmedlukas.no.</p>
-      <div class="tre">
-        <article class="kort-tekst">
-          <h3>Gavekort med koden</h3>
-          <p>Etter kjøpet kan du laste ned et gavekort som PDF med koden ferdig påtrykt. Du kan skrive navnet til den som skal få det.</p>
-          <a class="btn ghost" href="landing/kjop.html">Kjøp og last ned</a>
-        </article>
-        <article class="kort-tekst">
-          <h3>Kjøp i butikk</h3>
-          <p>Gavekort med personlig kode til 250 kr kan også kjøpes i butikken hos Ordet è Ditt. Familiekoden kjøpes bare her på nettsiden.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="pris" aria-labelledby="pris-tittel">
-      <h2 id="pris-tittel">Velg hvordan dere vil være med</h2>
-      <p class="gammel-ios" data-gammel-ios hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
-      <p><a href="spill/aktiviteter/">Aktivitetsark</a> til utskrift for hver dag, gratis for alle.</p>
-      <div class="cards">
-        <article class="card">
-          <h3>Prøv luke 1</h3>
-          <p class="price">Gratis</p>
-          <ul>
-            <li>Den første saken, på torget i Cæsarea</li>
-            <li>Ingen konto, ingen e-post</li>
-          </ul>
-          <a class="btn primary" href="spill/?kapittel=lukas-oppdrag&amp;lang=nb">Prøv luke 1 gratis</a>
-        </article>
-        <article class="card">
-          <h3>Personlig kode</h3>
-          <p class="price">250 kr</p>
-          <ul>
-            <li>Låser opp luke 2–24 for én person</li>
-            <li>Gavekort som PDF</li>
-          </ul>
-          <a class="btn primary" href="landing/kjop.html">Kjøp kode – 250 kr</a>
-        </article>
-        <article class="card featured">
-          <h3>Familiekode</h3>
-          <p class="price">500 kr</p>
-          <ul>
-            <li>Låser opp luke 2–24 for hele husstanden</li>
-            <li>Gavekort som PDF</li>
-          </ul>
-          <a class="btn primary" href="landing/kjop.html?valg=familie">Kjøp familiekode – 500 kr</a>
-        </article>
-      </div>
-
-      <div class="betaling">
-        <h3>Slik betaler dere</h3>
-        <p>Betal med Vipps eller bankoverføring. Dere får koden med en gang, og den kommer også på e-post.</p>
-        <p class="small">Lukene åpner på sin dag i desember, og etter julaften er alle åpne. Spillet er åpent minst til og med 31. januar 2027. Angrerett og refusjon: se <a href="vilkar.html">kjøpsvilkårene</a>. Hva vi lagrer ved kjøp, står i <a href="personvern.html">personvernerklæringen</a>.</p>
-      </div>
-    </section>
-
-    <section id="tro" aria-labelledby="tro-tittel">
-      <h2 id="tro-tittel">Hva bygger spillet på?</h2>
-      <ul class="list">
-        <li><strong>Gjenfortalt fra Lukasevangeliet</strong> med egne ord og med henvisning til kapittel og vers. Lukas skriver selv at han undersøkte alt nøye og bygde på dem som var øyenvitner (Luk 1,1–4).</li>
-        <li><strong>Klassisk kristen tro.</strong> Bibelen behandles som troverdig og som Guds ord til mennesker.</li>
-        <li><strong>Vitnene prøves ærlig.</strong> Barnet øver på å spørre: Så de det selv? Sier flere det samme? Ble det fortalt tidlig? Passer det med alt det andre vi vet?</li>
-        <li><strong>Det som er diktet, holdes atskilt.</strong> Mange personer og samtalene med Lukas er diktet til spillet, og det står hva som er hentet fra Bibelen og andre kilder.</li>
-      </ul>
-    </section>
-
     <section class="faq" id="faq" aria-labelledby="faq-tittel">
       <h2 id="faq-tittel">Spørsmål og svar</h2>
       <details>
@@ -235,24 +306,36 @@
         <p>Koden låser opp luke 2–24. Lukene åpner på sin dag i desember, og etter julaften er alle åpne. Spillet er åpent minst til og med 31. januar 2027. Det er et engangskjøp: ingen abonnement og ingen kjøp inne i spillet.</p>
       </details>
       <details>
+        <summary>Når på dagen åpner lukene?</summary>
+        <p>Ved midnatt, etter klokka på enheten barnet spiller på.</p>
+      </details>
+      <details>
         <summary>Hva er forskjellen på personlig kode og familiekode?</summary>
         <p>En personlig kode (250 kr) er for én person. En familiekode (500 kr) er for hele husstanden, altså alle som bor i samme hus, og kan tastes inn på alle enhetene dere har hjemme.</p>
       </details>
       <details>
+        <summary>Kan vi gi koden til et barn i et annet hjem?</summary>
+        <p>Ja. Etter kjøpet laster du ned gavekortet med koden. Bor barnet et annet sted? Send PDF-en på e-post eller melding til foreldrene. De kan skrive den ut, eller skanne QR-koden rett fra skjermen. Del kortet bare med den som skal ha gaven. Gir du til barnebarn eller venner i flere hjem, trenger hvert hjem sin egen kode.</p>
+      </details>
+      <details>
         <summary>Hvordan låser jeg opp med koden?</summary>
-        <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Skriv inn koden og trykk «Lås opp».</p>
+        <p>Enklest: åpne lenka i e-posten, eller skann QR-koden på kvitteringen eller gavekortet, på enheten barnet skal spille på. Vil du skrive koden selv: trykk på tannhjulet ⚙ på startsiden og «Skriv inn kode». Skriv inn koden og trykk «Lås opp».</p>
       </details>
       <details>
         <summary>Hvordan betaler vi?</summary>
-        <p>Betal med bankoverføring. Dere får koden med en gang, og den kommer også på e-post.</p>
+        <p>Betal med Vipps eller bankoverføring. Dere får koden med en gang, og den kommer også på e-post.</p>
       </details>
       <details>
         <summary>Hvilken alder passer det for?</summary>
-        <p>Spillet passer fra 8 år. Yngre barn kan være med sammen med en voksen eller et eldre søsken, og alle kort kan leses høyt.</p>
+        <p>Spillet passer fra 8 år og opp i tenårene. Yngre barn kan være med sammen med en voksen eller et eldre søsken, og alle kort kan leses høyt.</p>
       </details>
       <details>
         <summary>Virker det på telefon, nettbrett og PC?</summary>
         <p>Ja. Spillet kjører i nettleseren på telefon, nettbrett og PC, uten at noe må installeres. En ny luke trenger nett første gang den åpnes. Etter det kan den spilles uten nett på samme enhet. På iPhone og iPad trengs iOS 16.4 eller nyere.</p>
+      </details>
+      <details>
+        <summary>Hva lagres om barnet?</summary>
+        <p>Spillet sender ingenting om barnet. Hvor langt barnet har kommet, og svarene i spillet, lagres bare i nettleseren på enheten barnet spiller på. Det er ingen konto, ingen innlogging og ingen statistikk i spillet. Mer står i <a href="personvern.html">personvernerklæringen</a>.</p>
       </details>
       <details>
         <summary>Hva skjer om vi kjøper midt i desember?</summary>
@@ -270,6 +353,10 @@
         <summary>Er det bare for kristne familier?</summary>
         <p>Spillet er laget på kristent grunnlag og tar Bibelen på alvor. Samtidig øver det på noe alle har nytte av: å stille gode spørsmål og prøve det man hører. Alle er velkomne til å være med.</p>
       </details>
+      <details>
+        <summary>Hva vil vi med spillet?</summary>
+        <p>Vi tror at Bibelen er sann og til å stole på. Med spillet vil vi vise at mye av det Bibelen forteller, også har et godt historisk grunnlag. <a href="#hva-vi-vil">Les mer</a>.</p>
+      </details>
     </section>
 
     <section id="kontakt" aria-labelledby="kontakt-tittel">
@@ -279,8 +366,8 @@
         <p>Vi svarer så fort vi kan. Ikke send kortnummer eller BankID-opplysninger på e-post.</p>
       </div>
       <div class="slutt-cta">
-        <a class="btn primary stor" href="spill/?kapittel=lukas-oppdrag&amp;lang=nb">Prøv luke 1 gratis</a>
-        <a class="btn gull stor" href="landing/kjop.html">Kjøp kode – 250 kr</a>
+        <a class="btn primary stor" href="til/luke-1/">Prøv luke 1 gratis</a>
+        <a class="btn gull stor" href="til/kjop/">Kjøp kode – 250 kr</a>
       </div>
     </section>
   </main>
@@ -288,9 +375,10 @@
   <footer class="foot">
     <p>Selger: Rygard Holding AS, org.nr. 938 118 132, Foretaksregisteret, Vestre Fognavegen 126, 4164 Fogn, telefon +47 951 45 892, e-post <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
     <p><a href="landing/kontakt.html">Kontakt</a> · <a href="vilkar.html">Kjøpsvilkår</a> · <a href="personvern.html">Personvern</a> · <a href="tilgjengelighet.html">Tilgjengelighet</a> · <a href="spill/filmer.html">Filmer fra BibleProject</a> · Besøkstelling uten informasjonskapsler, se personvernerklæringen.</p>
-    <p class="credit">Musikk i traileren: «Born Of The Sky» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/born-of-the-sky/">scottbuckley.com.au</a>. Musikk i introfilmen: «Helios» av Scott Buckley (CC BY 4.0), <a href="https://www.scottbuckley.com.au/library/helios/">scottbuckley.com.au</a>.</p>
+    <p class="credit">Musikk i traileren: «Born Of The Sky» av Scott Buckley, <a href="https://www.scottbuckley.com.au/library/born-of-the-sky/">scottbuckley.com.au</a>, lisens <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Endret: utsnitt, EQ, inn- og uttoning og lydnivå, mikset med tale og lydeffekter. Musikk i introfilmen: «Helios» av Scott Buckley, <a href="https://www.scottbuckley.com.au/library/helios/">scottbuckley.com.au</a>, lisens <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Endret: utsnitt, lydnivå, demping under tale og inn- og uttoning.</p>
   </footer>
   <script src="landing/salgsside.js" defer></script>
+  <script type="module" src="landing/salg.mjs"></script>
   <script src="landing/skjult-gavekort.js" data-kasse="https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev" defer></script>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"d5b09c79325d4c4abc9d2dac1d627fce"}'></script>
 </body>

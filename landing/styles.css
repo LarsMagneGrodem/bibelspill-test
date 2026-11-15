@@ -10,7 +10,7 @@
   font-family: Georgia, "Times New Roman", serif;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
@@ -24,7 +24,7 @@ a { color: var(--gold); }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .skip {
   position: absolute; left: -999px; top: 0;
-  background: var(--gold); color: var(--ink); padding: 8px 12px;
+  background: var(--gold); color: var(--ink); padding: 8px 12px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center;
 }
 .skip:focus { left: 8px; z-index: 10; }
 
@@ -35,7 +35,8 @@ a { color: var(--gold); }
 }
 .brand { margin: 0; font-variant: small-caps; letter-spacing: .12em; color: var(--gold); }
 nav { display: flex; flex-wrap: wrap; gap: 0 16px; font-size: 0.9375rem; }
-nav a { color: var(--paper); text-decoration: none; padding: 6px 0; }
+/* NS-13: each link in the menu is a finger tall (44 px). */
+nav a { color: var(--paper); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; padding: 0; }
 nav a:hover, nav a:focus-visible { text-decoration: underline; }
 
 main { width: min(1080px, 100%); margin: 0 auto; padding: 16px; }

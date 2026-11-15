@@ -7,7 +7,7 @@
 // shop. Shop cards and the blank card are drawn by gavekort.mjs, whose QR code holds the site alone.
 import { qrCode } from './qr.mjs';
 import { LAYOUT } from './nettkort-oppsett.mjs';
-import { escape, winAnsi } from './gavekort.mjs';
+import { cardName, escape, winAnsi } from './gavekort.mjs';
 
 export const SITE = 'https://reisenmedlukas.no';
 export const PAGES = { utside: 'nettkort/utside.jpg', personal: 'nettkort/innside-personlig.jpg', family: 'nettkort/innside-familie.jpg' };
@@ -73,10 +73,15 @@ function qrOps(text) {
   return `q ${colour} rg ${rects.join(' ')} f Q`;
 }
 
-function nameOps(name) {
-  const to = winAnsi(String(name ?? '').trim().slice(0, 40));
+// F15: the «Fra» line under «Til» on the outside's back panel. Not in LAYOUT (made by lag-nettkort.py from Marketing's
+// script, which is not here), so measured on nettkort/utside.jpg: the two lines lie 174 px apart (y 711 and 885 of
+// 1653), and «Fra» is 8 px wider than «Til».
+const FRA = { ...LAYOUT.til, x: f2(LAYOUT.til.x + 8 * LAYOUT.page.w / LAYOUT.image.w), baseline: f2(LAYOUT.til.baseline - 174 * LAYOUT.page.h / LAYOUT.image.h) };
+
+function nameOps(name, at = LAYOUT.til) {
+  const to = winAnsi(cardName(name));
   if (!to) return '';
-  const { x, baseline, size, colour } = LAYOUT.til;
+  const { x, baseline, size, colour } = at;
   return `BT ${colour} rg /F1 ${size} Tf ${x} ${baseline} Td (${escape(to)}) Tj ET`;
 }
 
@@ -130,11 +135,11 @@ export function cardPrefix(product, lengths) {
 }
 
 /** The suffix of one card: its two page drawings, the cross-reference table and the trailer. */
-export function cardSuffix({ code, name = '' }, prefix) {
+export function cardSuffix({ code, name = '', from = '' }, prefix) {
   const kode = webCode(code);
   if (!kode) throw new Error('not a web code');
   const draw = (turn, extra) => `q ${turn}\nq ${page.w} 0 0 ${page.h} 0 0 cm /Im Do Q\n${extra}\nQ`;
-  const contents = [draw(TURN.outside, nameOps(name)), draw(TURN.inside, `${codeOps(kode)}\n${qrOps(webCardQr(kode))}`)];
+  const contents = [draw(TURN.outside, [nameOps(name), nameOps(from, FRA)].filter(Boolean).join('\n')), draw(TURN.inside, `${codeOps(kode)}\n${qrOps(webCardQr(kode))}`)];
   const offsets = prefix.offsets.slice();
   let out = '';
   let at = prefix.length;

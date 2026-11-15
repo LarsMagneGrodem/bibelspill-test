@@ -5,24 +5,37 @@
 .kasse .valg { border: 1px solid #89734f; border-radius: 8px; margin: 16px 0 0; padding: 8px 14px 14px; }
 .kasse .valg label { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
 .kasse .valg input { width: 24px; height: 24px; flex: none; margin-top: 2px; }
+/* F03 (Lars 15.11): who a code is for, and that each home needs its own; under the choice, not a third choice. */
+.kasse .valg .flere-hjem { margin: 12px 0 0; }
 .kasse .samtykke { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
 .kasse .samtykke input { width: 24px; height: 24px; flex: none; margin-top: 2px; }
 .kasse .btn { margin-top: 16px; min-height: 52px; font-size: 1.125rem; font-weight: 700; }
 .kasse .kode { display: inline-block; font-family: 'Courier New', monospace; letter-spacing: 0.08em; color: var(--gold); white-space: nowrap; }
-.kasse .melding { color: var(--gold); min-height: 1.5em; }
+/* NS-11: what went wrong stands out from the gold body text under the buttons (10:1 on the dark page). */
+.kasse .melding { color: #ffb4a3; font-weight: 600; min-height: 1.5em; }
 .kasse .skjult { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .kasse .betaling li { margin-bottom: 10px; }
 .kasse .btn.kopier { margin: 4px 0 0 4px; min-height: 44px; padding: 6px 14px; font-size: 1rem; vertical-align: middle; }
 .kasse .nowrap { white-space: nowrap; }
-/* The game button on the receipt had the next line («Er koden en gave?») right against its lower edge. */
-.kasse #spill { margin-bottom: 10px; }
+/* F05: the three ways onto the child's device, each a short block; the game button sits under its line. */
+.kasse .hvor { padding-left: 1.4em; }
+.kasse .hvor > li { margin: 0 0 16px; }
+.kasse #spill { margin: 10px 0 0; }
+.kasse .for-haand { margin: 12px 0 16px; }
+/* F01: the ways to send the link; the share sheet first, SMS and copy beside each other under it. */
+.kasse .send { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 10px 0 0; }
+.kasse .send .btn { margin-top: 0; }
+.kasse .send .btn[hidden] { display: none; }
+.kasse .send a.btn { display: inline-flex; align-items: center; text-decoration: none; }
+.kasse #delt { min-height: 1.5em; margin: 6px 0 0; }
+.kasse .for-haand summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; text-decoration: underline; }
 /* Lars 11.11: before buying, what the gift card is (a picture of its outside only); no download before the purchase. */
 .kasse .gave-info { border: 1px solid #89734f; border-radius: 8px; margin: 16px 0 0; padding: 4px 14px 14px; }
 .kasse .gave-info h2 { font-size: 1.25rem; margin: 10px 0 6px; }
 .kasse .gave-info figure { margin: 12px 0 0; }
 .kasse .gave-info img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .kasse .gave-info figcaption { font-size: 1rem; margin-top: 6px; opacity: .85; }
-/* G3: the QR code on the receipt, for the child's iPad. */
+/* G3: the QR code on the receipt, for the child's phone or tablet. */
 .kasse .qr-boks { margin: 12px 0; }
 .kasse .qr-boks svg { display: block; background: #fff; border-radius: 6px; max-width: 60vw; height: auto; }
 .kasse .qr-boks figcaption { margin-top: 6px; }
@@ -33,4 +46,51 @@
 /* Del 13 L1: a button waiting for the worker looks switched off. */
 .kasse .btn:disabled { opacity: 0.55; cursor: progress; }
 .kasse .bank-alternativ { margin: 12px 0 0; text-align: center; }
-.kasse .bank-alternativ .lenke { margin: 0; padding: 0; min-height: 0; font: inherit; font-weight: 400; font-size: 1rem; color: inherit; background: none; border: 0; text-decoration: underline; cursor: pointer; }
+/* F04: the three lines above paying, as quiet facts, not a list with bullets. */
+.kasse .foer-betal { list-style: none; margin: 16px 0 0; padding: 0; }
+.kasse .foer-betal li { margin: 4px 0; }
+.kasse .bank-alternativ .lenke { margin: 0; padding: 10px 0; min-height: 44px; font: inherit; font-weight: 400; font-size: 1rem; color: inherit; background: none; border: 0; text-decoration: underline; cursor: pointer; }
+/* Natt 15.–16.11 (salg-v2): «Betal med Vipps» i første skjerm på telefon. Linja med datoen øverst, gaven som én
+   avkrysning med forklaringen sammenfoldet, og trygghetslinja rett under knappen. */
+.kasse .til-forsiden { margin: 0 0 10px; }
+.kasse .dato-linje { margin: 0 0 6px; color: var(--paper); font-size: 0.9375rem; line-height: 1.4; border-left: 3px solid var(--gold); padding-left: 10px; }
+.kasse .dato-linje[hidden] { display: none; }
+.kasse h1 { margin-bottom: 4px; }
+.kasse .valg { margin-top: 10px; }
+.kasse .valg .per-luke { color: var(--soft); }
+.kasse .valg .merkelapp { font-size: 0.9375rem; color: var(--gold); }
+.kasse .gave-valg { margin: 4px 0 0; }
+.kasse .gave-boks { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; font-weight: 700; }
+.kasse .gave-boks input { width: 24px; height: 24px; flex: none; margin-top: 2px; }
+.kasse .small-inline { display: block; font-weight: 400; font-size: 0.9375rem; color: var(--muted); }
+.kasse .gave-mer { margin: 2px 0 0 34px; }
+.kasse .gave-mer summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; text-decoration: underline; color: var(--gold); }
+.kasse .gave-mer figure { margin: 8px 0 0; }
+.kasse .gave-mer img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.kasse .gave-mer figcaption { font-size: 1rem; margin-top: 6px; opacity: .85; }
+.kasse .foer-betal { margin-top: 12px; }
+.kasse .trygg-linje { margin: 8px 0 0; text-align: center; font-size: 0.9375rem; color: var(--soft); }
+.kasse .bank-alternativ { margin-top: 4px; }
+/* Kvitteringen: det som er nytt, i rolige deler. */
+.kasse .viktig { border-left: 3px solid var(--gold); padding: 6px 0 6px 12px; background: #ffffff0a; }
+.kasse .viktig[hidden], .kasse .kvittering-del[hidden] { display: none; }
+.kasse .kvittering-del { padding: 8px 0 0; border-top: 0; }
+.kasse .kalender-rad { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 6px 0 0; }
+.kasse .kalender-rad .btn { margin-top: 0; }
+.kasse input[type='time'] { font: inherit; font-size: 1.125rem; padding: 8px 10px; min-height: 48px; border-radius: 8px; border: 1px solid #89734f; }
+.kasse .tips-tekst { padding: 10px 14px; border: 1px dashed #89734f; border-radius: 8px; color: var(--soft); }
+.kasse #tips-status, .kasse #kalender-status { min-height: 1.5em; margin: 6px 0 0; }
+.kasse .gave-mer--en { margin: 12px 0 0; }
+/* Første skjerm på telefon: mindre luft over skjemaet. */
+.kasse { padding-top: 10px; }
+.kasse > section { padding-top: 6px; border-top: 0; }
+.kasse .til-forsiden { margin: 0 0 4px; }
+.kasse .valg { padding: 4px 14px 10px; }
+.kasse .valg label { margin-top: 10px; }
+.kasse label[for='epost'] { margin-top: 8px; }
+.kasse .foer-betal li { margin: 2px 0; }
+.kasse h1 { font-size: 1.45rem; }
+.kasse .samtykke { margin-top: 8px; }
+.kasse .foer-betal { margin-top: 8px; }
+.kasse .gave-mer summary { font-size: 0.9375rem; }
+.kasse .garanti { margin: 6px 0 0; text-align: center; font-size: 0.9375rem; color: var(--gold); }

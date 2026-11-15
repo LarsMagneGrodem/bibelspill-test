@@ -27,7 +27,7 @@ const NAVIGATE_WAIT_MS = 3500;
 
 // Filled in by the build (scripts/vite-plugins.mjs): the page, the code and the still pictures that every
 // visit needs, so the start page and a first board work without the network.
-const PRECACHE = ["./","assets/index-Yl-LOQRo.js","assets/WorldScene-K1I9NUvA.js","assets/chapter-0W-8v4h6.js","assets/companion-BXvQDIgk.js","assets/diagnose-CBflY84c.js","assets/discovery-Ce6-belp.js","assets/effects-DFPfwZXY.js","assets/game-B1nniyld.js","assets/phaser-D8At0iQG.js","assets/playroom-Dk1XmzW-.js","assets/road-schema-t9Rfb6pr.js","assets/rolldown-runtime-XKyaHtl9.js","assets/schema-CcGpFnNw.js","assets/ui-CNtu2NYx.js","assets/index-CekvCmR0.css","assets/playroom-CejZnrfb.css","assets/ui-BvE8cVWw.css","assets/maps/cesarea-torg.webp","assets/maps/skrivestue.webp","assets/maps/verksted.webp","assets/maps/stue.webp","assets/art/intro-grandfather-arrival.webp","assets/art/intro-grandfather-nature.webp","assets/art/intro-grandfather.webp","assets/art/intro-luke-apprentice.jpg","assets/films/grandfather-intro-nb-readable-r138.vtt","assets/films/grandfather-intro-en-readable-r140.vtt","assets/voice/nb/ab3c675e65f62df9.mp3","assets/voice/en/edbdb09715454007.mp3","assets/voice/nb/3b082339ed18080a.mp3","assets/voice/en/615b56ab0a53bb41.mp3","assets/voice/nb/3ae4ee7c01301cce.mp3","assets/voice/en/c3f00f6ecced99ef.mp3","assets/voice/nb/0abede796b06af78.mp3","assets/voice/en/f4b1f77a26ef24ac.mp3","assets/voice/nb/715b3c98b066825c.mp3","assets/voice/en/4450aa4b707dab0a.mp3","assets/voice/nb/75fb455f2adaade1.mp3","assets/voice/en/58e929f668729457.mp3","assets/voice/nb/2552db08128d82a9.mp3","assets/voice/en/0ae4eb5e8e1bf67b.mp3","assets/voice/nb/74905554e1be4c01.mp3","assets/voice/en/9a343fc71b33413f.mp3","assets/voice/nb/2f3866d77bc83107.mp3","assets/voice/en/c9b353514b37bfc0.mp3","assets/voice/nb/ba4e4e1911d6412b.mp3","assets/voice/en/752ac4fc814cfee9.mp3","assets/voice/nb/083aa6a669f393e4.mp3","assets/voice/en/12d03b2139f4d80e.mp3","assets/voice/nb/85bdc0fb8c1b0ec0.mp3","assets/voice/en/47e40c77ad3ed4f2.mp3","assets/portraits/lukas.webp","assets/portraits/fisher.webp","assets/portraits/potter.webp","assets/portraits/driver.webp","assets/portraits/cart-donkey.webp","assets/portraits/shards.webp","assets/portraits/oldwoman.webp","assets/portraits/well.webp","assets/portraits/scribe.webp","assets/portraits/girl.webp","assets/portraits/boy.webp","assets/portraits/trader.webp","assets/portraits/soldier.webp","assets/portraits/courier.webp","assets/figures/apprentice.webp","assets/figures/luke.webp","assets/figures/fisher.webp","assets/figures/potter.webp","assets/figures/driver.webp","assets/things/cart-donkey-map.webp","assets/things/shard.png","assets/figures/oldwoman.webp","assets/figures/scribe.webp","assets/figures/girl.webp","assets/figures/boy.webp","assets/figures/trader.webp","assets/figures/soldier.webp","assets/figures/courier.webp","assets/things/dog-sleeping.webp","assets/figures/player-inspect.webp","assets/figures/player-inspect-away-r77.webp","assets/figures/player-inspect-sequence-r87.webp","assets/audio/fx/footstep00.mp3","assets/audio/fx/footstep01.mp3","assets/audio/fx/footstep02.mp3","assets/audio/fx/footstep03.mp3","assets/audio/fx/footstep04.mp3","assets/audio/fx/bookFlip1.mp3","assets/audio/fx/bookFlip2.mp3","assets/audio/fx/bookFlip3.mp3","assets/audio/fx/bookOpen.mp3","assets/audio/fx/cloth1.mp3","assets/audio/fx/cloth2.mp3","assets/audio/fx/handleCoins.mp3","assets/audio/fx/handleCoins2.mp3","assets/audio/fx/bookClose.mp3","assets/audio/fx/doorOpen_1.mp3","assets/audio/fx/dropLeather.mp3","assets/audio/fx/metalPot2.mp3","assets/audio/fx/creak1.mp3","assets/audio/fx/creak2.mp3","assets/audio/fx/metalPot1.mp3","assets/audio/fx/metalPot3.mp3","assets/audio/fx/handleSmallLeather.mp3","assets/things/cart-scene-parts.webp","assets/maps/landet.webp","assets/maps/landet-960.webp","assets/voice/manifest.json","manifest.webmanifest"];
+const PRECACHE = ["./","assets/index-D7laRkEd.js","assets/WorldScene-CGHWbB-H.js","assets/adult-door-D-u3OM1A.js","assets/chapter-D7vbsX__.js","assets/companion-9uvRPl4a.js","assets/diagnose-Ea4bVY0X.js","assets/discovery-SjUAbmUp.js","assets/draw-C6udlnEs.js","assets/effects-DGZt0Qo2.js","assets/focus-Ddc2HRde.js","assets/game-BCAWFklw.js","assets/phaser-D8At0iQG.js","assets/playroom-Tcu999-L.js","assets/report-BWtv5Tki.js","assets/road-schema-C-0P1Xic.js","assets/rolldown-runtime-XKyaHtl9.js","assets/schema-E_TiqWg-.js","assets/scroll-closeup-DaqHUCBV.js","assets/theme-Cky6eHWJ.js","assets/ui-C4nDZsBV.js","assets/adult-door-CsSCQWwa.css","assets/index-BnihAYJ7.css","assets/playroom-B7Q1D5mS.css","assets/report-BcYlqtqx.css","assets/scroll-closeup-C6tYEGpK.css","assets/ui-CQ0RtpGh.css","assets/maps/cesarea-torg.webp","assets/maps/skrivestue.webp","assets/maps/verksted.webp","assets/maps/stue.webp","assets/art/intro-grandfather-arrival.webp","assets/art/intro-grandfather-nature.webp","assets/art/intro-grandfather.webp","assets/art/intro-luke-apprentice.jpg","assets/films/grandfather-intro-nb-readable-r138.vtt","assets/films/grandfather-intro-en-readable-r140.vtt","assets/voice/nb/ab3c675e65f62df9.mp3","assets/voice/en/edbdb09715454007.mp3","assets/voice/nb/3b082339ed18080a.mp3","assets/voice/en/615b56ab0a53bb41.mp3","assets/voice/nb/3ae4ee7c01301cce.mp3","assets/voice/en/c3f00f6ecced99ef.mp3","assets/voice/nb/0abede796b06af78.mp3","assets/voice/en/f4b1f77a26ef24ac.mp3","assets/voice/nb/715b3c98b066825c.mp3","assets/voice/en/4450aa4b707dab0a.mp3","assets/voice/nb/75fb455f2adaade1.mp3","assets/voice/en/58e929f668729457.mp3","assets/voice/nb/2552db08128d82a9.mp3","assets/voice/en/0ae4eb5e8e1bf67b.mp3","assets/voice/nb/74905554e1be4c01.mp3","assets/voice/en/9a343fc71b33413f.mp3","assets/voice/nb/2f3866d77bc83107.mp3","assets/voice/en/c9b353514b37bfc0.mp3","assets/voice/nb/ba4e4e1911d6412b.mp3","assets/voice/en/752ac4fc814cfee9.mp3","assets/voice/nb/083aa6a669f393e4.mp3","assets/voice/en/12d03b2139f4d80e.mp3","assets/voice/nb/85bdc0fb8c1b0ec0.mp3","assets/voice/en/47e40c77ad3ed4f2.mp3","assets/portraits/lukas.webp","assets/portraits/fisher.webp","assets/portraits/potter.webp","assets/portraits/driver.webp","assets/portraits/cart-donkey.webp","assets/portraits/shards.webp","assets/portraits/oldwoman.webp","assets/portraits/well.webp","assets/portraits/scribe.webp","assets/portraits/girl.webp","assets/portraits/boy.webp","assets/portraits/trader.webp","assets/portraits/soldier.webp","assets/portraits/courier.webp","assets/figures/apprentice.webp","assets/figures/luke.webp","assets/figures/fisher.webp","assets/figures/potter.webp","assets/figures/driver.webp","assets/things/cart-donkey-map.webp","assets/things/shard.png","assets/figures/oldwoman.webp","assets/figures/scribe.webp","assets/figures/girl.webp","assets/figures/boy.webp","assets/figures/trader.webp","assets/figures/soldier.webp","assets/figures/courier.webp","assets/things/dog-sleeping.webp","assets/figures/player-inspect.webp","assets/figures/player-inspect-away-r77.webp","assets/figures/player-inspect-sequence-r87.webp","assets/audio/fx/footstep00.mp3","assets/audio/fx/footstep01.mp3","assets/audio/fx/footstep02.mp3","assets/audio/fx/footstep03.mp3","assets/audio/fx/footstep04.mp3","assets/audio/fx/bookFlip1.mp3","assets/audio/fx/bookFlip2.mp3","assets/audio/fx/bookFlip3.mp3","assets/audio/fx/bookOpen.mp3","assets/audio/fx/cloth1.mp3","assets/audio/fx/cloth2.mp3","assets/audio/fx/handleCoins.mp3","assets/audio/fx/handleCoins2.mp3","assets/audio/fx/bookClose.mp3","assets/audio/fx/doorOpen_1.mp3","assets/audio/fx/dropLeather.mp3","assets/audio/fx/metalPot2.mp3","assets/audio/fx/creak1.mp3","assets/audio/fx/creak2.mp3","assets/audio/fx/metalPot1.mp3","assets/audio/fx/metalPot3.mp3","assets/audio/fx/handleSmallLeather.mp3","assets/things/cart-scene-parts.webp","assets/voice/nb/4f1b5cb90c3efa79.mp3","assets/voice/nb/499d9a89259320ad.mp3","assets/voice/nb/250a947b4314ee06.mp3","assets/voice/nb/ef7bbe5fed1ebf52.mp3","assets/voice/nb/bbb88ccecbd05dd6.mp3","assets/voice/nb/795113d80fac2da7.mp3","assets/voice/nb/0b9045f50b7d52e2.mp3","assets/voice/nb/0080024cb59fae25.mp3","assets/voice/en/96ddf473fd192a86.mp3","assets/voice/en/7875c651e46c2aa1.mp3","assets/voice/en/d01f5a6a070f6958.mp3","assets/voice/en/053e671928e55098.mp3","assets/voice/en/e293b8bbc1cde1e3.mp3","assets/voice/en/0cddd1f960013a11.mp3","assets/voice/en/65e5fc227d7b7310.mp3","assets/voice/en/d157e05c360cf7ae.mp3","assets/maps/landet.webp","assets/maps/landet-960.webp","assets/voice/manifest.json","manifest.webmanifest"];
 
 const at = (url) => new URL(url, self.location.href);
 // H1 (check 12.11): a page is only stored when it is this build's page. A page from a newer build that comes in behind a
@@ -107,13 +107,35 @@ self.addEventListener('message', (event) => {
 // has no build to keep, so it takes the page at once and the store fills while the player plays. The code is fetched past
 // the browser's own cache: the page and the lists keep their names from build to build, and the copy the browser held for
 // ten minutes was the last build's page, stored under the new build's name, so offline it asked for code no longer kept.
+// P-03 (publisering 15.11): an update takes over only when everything a start and the first board need is stored: the
+// code, and the pictures and sounds of PRECACHE (most are kept from the last build already). One file that does not come
+// (the network went away, the server answered with an error, or a newer build's page came in) fails the install, so the
+// browser keeps the old worker and its whole store, and tries again at the next visit or check (src/app/ny-versjon.ts).
+// Before, each file's failure was swallowed: the new worker took over with half a store, deleted the old one, and offline
+// the child stood on «Laster …». A full device is the one exception: a store that cannot be written takes over as before.
+const full = (error) => error?.name === 'QuotaExceededError';
+async function keep(name, url, fresh) {
+  const key = at(url).href;
+  if (!fresh && (await caches.match(key, { cacheName: name }))) return;
+  const response = await fetch(new Request(key, fresh ? { cache: 'reload' } : undefined));
+  if (!response.ok || !(await ownBuild(response))) throw new Error(`${key}: ${response.status}`);
+  await caches.open(name).then((cache) => cache.put(key, response)).catch((error) => { if (!full(error)) throw error; });
+}
+async function storeWhole() {
+  await caches.open(CODE);
+  const files = queue.slice();
+  const next = async () => {
+    while (files.length) {
+      const url = files.shift();
+      const name = cacheFor(url);
+      await keep(name, url, name === CODE);
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, next));
+}
 self.addEventListener('install', (event) => {
   const update = caches.keys().then((keys) => keys.some(old));
-  const code = queue.filter((url) => cacheFor(url) === CODE);
-  const stored = update.then((yes) => yes && caches.open(CODE).then((cache) => Promise.all(code.map((url) => fetch(new Request(at(url), { cache: 'reload' })).then(async (response) => {
-    if (response.ok && (await ownBuild(response))) await cache.put(at(url).href, response);
-  }).catch(() => {})))));
-  event.waitUntil(stored.then(() => self.skipWaiting()));
+  event.waitUntil(update.then((yes) => yes && storeWhole()).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
@@ -129,12 +151,36 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin || isVideo(url.pathname)) return;
-  event.respondWith(busy(request.headers.has('range') ? ranged(request) : isStill(url.pathname) ? take(request.url) : isHashed(url.pathname) ? hashedFirst(event) : networkFirst(event)));
+  const later = lifetime(event);
+  const answer = busy(request.headers.has('range') ? ranged(request) : isStill(url.pathname) ? take(request.url) : isHashed(url.pathname) ? hashedFirst(event, later) : networkFirst(event, later));
+  event.respondWith(answer);
+  later.answered(answer);
 });
 
+// P-12 (publisering 15.11): WebKit refuses `waitUntil` once the fetch event has been dispatched, and the code fetched
+// while the child played was then never stored (the store stood at 21 files after a whole first board; offline the first
+// case could not be solved). So the event's life is extended at once, while it is dispatched, with one promise that holds
+// until the answer is given and every store started for it is done.
+function lifetime(event) {
+  const jobs = new Set();
+  let release = () => {};
+  let given = false;
+  const settle = () => { if (given && jobs.size === 0) release(); };
+  try {
+    event.waitUntil(new Promise((go) => (release = go)));
+  } catch { /* an event that cannot be kept alive: the stores still run */ }
+  return {
+    add(promise) {
+      const job = Promise.resolve(promise).catch(() => {}).finally(() => { jobs.delete(job); settle(); });
+      jobs.add(job);
+    },
+    answered(promise) { Promise.resolve(promise).catch(() => {}).finally(() => { given = true; settle(); }); },
+  };
+}
+
 // Storing happens beside the response, never in its way: a full quota is not a failed fetch.
-function store(event, name, key, response) {
-  event.waitUntil(ownBuild(response).then((yes) => yes && caches.open(name).then((cache) => cache.put(key, response))).catch(() => {}));
+function store(later, name, key, response) {
+  later.add(ownBuild(response).then((yes) => yes && caches.open(name).then((cache) => cache.put(key, response))));
 }
 
 // A media player asks for a sound in ranges. A sound stored on install (the first board's lines) is cut from
@@ -160,7 +206,7 @@ async function part(response, range) {
 
 // G5: the stored copy first; else the network; and when the server no longer has the file (a page opened before a new
 // build was published asks for the old build's code), any copy this game still keeps.
-async function hashedFirst(event) {
+async function hashedFirst(event, later) {
   const { request } = event;
   const kept = () => caches.match(request, { cacheName: CODE, ignoreVary: true });
   const hit = await kept();
@@ -168,7 +214,7 @@ async function hashedFirst(event) {
   try {
     const response = await fetch(request);
     if (response.ok) {
-      store(event, CODE, request, response.clone());
+      store(later, CODE, request, response.clone());
       return response;
     }
     return (await kept()) || response;
@@ -177,7 +223,7 @@ async function hashedFirst(event) {
   }
 }
 
-async function networkFirst(event) {
+async function networkFirst(event, later) {
   const { request } = event;
   const navigate = request.mode === 'navigate';
   // Any chapter address is the same page, so it is stored once, without the query, for all of them.
@@ -186,7 +232,7 @@ async function networkFirst(event) {
   // module scripts' cross-origin mode sends one) would otherwise never match its own copy offline.
   const cached = () => caches.match(key, { cacheName: CODE, ignoreSearch: navigate, ignoreVary: true });
   const net = fetch(request, navigate ? { cache: 'no-cache' } : undefined).then((response) => {
-    if (response.ok) store(event, CODE, key, response.clone());
+    if (response.ok) store(later, CODE, key, response.clone());
     return response;
   });
   if (navigate) {
@@ -195,7 +241,7 @@ async function networkFirst(event) {
     if (first && first !== 'slow' && first.ok) return first;
     const hit = await cached();
     if (hit) {
-      event.waitUntil(net.catch(() => {}));
+      later.add(net);
       return hit;
     }
   }

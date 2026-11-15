@@ -5,8 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- The buy page talks to the sale's worker alone. No tracking, no third-party script. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'" />
-  <title>Kjøp Reisen med Lukas</title>
+  <title>Kjøp kode – Reisen med Lukas</title>
   <meta name="robots" content="noindex" />
+  <meta name="description" content="Personlig kode 250 kr eller familiekode 500 kr. Betal med Vipps, og koden kommer med en gang. Gavekort som PDF. Luke 1 er gratis." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:site_name" content="Reisen med Lukas" />
+  <meta property="og:title" content="Kjøp kode til Reisen med Lukas" />
+  <meta property="og:description" content="Personlig kode 250 kr eller familiekode 500 kr. Betal med Vipps, og koden kommer med en gang. Gavekort som PDF. Luke 1 er gratis." />
+  <meta property="og:url" content="https://reisenmedlukas.no/landing/kjop.html" />
+  <meta property="og:image" content="https://reisenmedlukas.no/landing/assets/delingskort-kjop.jpg?v=f3eea8c7" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Gavekortet til Reisen med Lukas, med teksten: Kode til hele kalenderen. 250 kr personlig kode, 500 kr familiekode. Luke 1 er gratis." />
+  <meta name="twitter:card" content="summary_large_image" />
   <!-- The worker's address (https://reisen-med-lukas-unlock.<konto>.workers.dev/order). Empty: the page says the sale is not open. -->
   <meta name="kasse-api" content="https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev" />
   <!-- Salget åpner først når denne står til «ja». -->
@@ -15,42 +27,58 @@
   <meta name="theme-color" content="#1b1a17" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="kjop.css?v=l2" />
+  <link rel="stylesheet" href="kjop.css?v=salgv2" />
 </head>
 <body>
   <main id="innhold" class="kasse">
-    <p><a href="../">Til forsiden</a></p>
+    <p class="til-forsiden"><a href="../">Til forsiden</a></p>
 
     <section id="bestill" aria-labelledby="bestill-tittel">
+      <!-- Skifter med datoen på enheten (dato.mjs); novembers linje står her for den som ikke har skript. -->
+      <p class="dato-linje" data-dato="kjop">Kalenderen starter tirsdag 1. desember. Kjøp nå, så er alt klart når kalenderen starter.</p>
       <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
-      <p>Du får koden med en gang. Betal med Vipps eller med bankoverføring.</p>
       <p id="siste" hidden><button id="vis-siste" class="btn" type="button"><span>Vis siste kjøp (kode <span id="siste-kode" class="kode"></span>)</span></button></p>
       <p id="gammel-ios" class="melding" hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
       <p id="stengt" class="melding" hidden>Vi gjør klart for advent. Salget er ikke åpnet ennå.</p>
       <form id="skjema" novalidate>
         <fieldset class="valg">
           <legend>Velg kode</legend>
-          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode – 250 kr</strong><br />For én person.</span></label>
-          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode – 500 kr</strong><br />For hele husstanden: alle som bor i samme hus.</span></label>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode – 250 kr</strong><br />For én person. <span class="per-luke">Under 11 kr per luke.</span></span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode – 500 kr</strong><br />For alle som bor i samme hus. <span class="per-luke">Under 22 kr per luke.</span><br /><span class="merkelapp">Samme pris som to personlige koder.</span></span></label>
+          <p class="small flere-hjem">Gir du til barnebarn eller venner i flere hjem, trenger hvert hjem sin egen kode.</p>
         </fieldset>
-        <section class="gave-info" aria-labelledby="gave-tittel">
-          <h2 id="gave-tittel">Vil du gi koden bort?</h2>
-          <p>Etter kjøpet kan du laste ned koden som et gavekort du skriver ut og gir bort, i stedet for å bruke den selv. Kortet brettes i tre og har koden ferdig påtrykt. Den som får det, skanner QR-koden, og spillet åpnes med koden ferdig utfylt. Gavekortet kommer også på e-post.</p>
-          <figure>
-            <img src="assets/gavekort-utside.webp" width="900" height="637" loading="lazy" decoding="async" alt="Utsiden av gavekortet: «24 kvelder sammen», «En gave å åpne sammen i advent» og en QR-kode til reisenmedlukas.no." />
-            <figcaption>Slik ser gavekortet ut.</figcaption>
-          </figure>
-        </section>
+        <!-- «Dette er en gave» (natt 15.–16.11): endrer ingenting i bestillingen og sendes ikke til kassen. Den viser bare
+             gavekortet først på kvitteringen (kjop.js husker den for denne fanen). -->
+        <div class="gave-valg">
+          <label class="gave-boks"><input id="gave-valg" type="checkbox" /> <span>Dette er en gave</span></label>
+          <details class="gave-mer">
+            <summary>Du får et gavekort å skrive ut eller sende. Slik virker det</summary>
+            <p>Etter kjøpet laster du ned gavekortet som PDF, med koden ferdig påtrykt og navnet til den som skal få det. Kortet brettes i tre. Den som får det, skanner QR-koden, og spillet åpnes med koden ferdig utfylt. Gavekortet kommer også på e-post. Bor barnet et annet sted, kan du sende PDF-en til foreldrene på e-post eller melding.</p>
+            <figure>
+              <img src="assets/gavekort-utside.webp" width="900" height="637" loading="lazy" decoding="async" alt="Utsiden av gavekortet: «24 kvelder sammen», «En gave å åpne sammen i advent» og en QR-kode til reisenmedlukas.no." />
+              <figcaption>Slik ser gavekortet ut.</figcaption>
+            </figure>
+          </details>
+        </div>
         <label for="epost">E-postadressen din</label>
         <input id="epost" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="epost-hint" />
-        <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
         <!-- Left empty by people; a robot that fills every field is turned away. -->
         <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
-        <p class="small">Gjelder adventskalenderen 1.–24. desember 2026. Alle luker er åpne etter jul, og spillet er åpent minst til og med 31. januar 2027.</p>
+        <!-- F04 (Lars 15.11): three short lines right above paying; nothing new about the right of withdrawal. -->
+        <ul id="foer-betal" class="foer-betal">
+          <li>Luke 1 er gratis. <a href="../spill/?lang=nb">Prøv den først.</a></li>
+          <li>Lukene åpner én om dagen fra 1. desember.</li>
+          <li>Selges av Rygard Holding AS. <a href="kontakt.html">Kontakt</a>.</li>
+        </ul>
         <label class="samtykke"><input id="samtykke-bestill" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
         <button id="kjop-vipps" class="btn vipps" type="submit">Betal med Vipps</button>
-        <p class="bank-alternativ"><button id="kjop" class="lenke" type="button">Eller betal med bankoverføring</button></p>
+        <p class="trygg-linje">Du betaler i Vipps-appen. Koden kommer her på siden med en gang, og på e-post.</p>
+        <!-- Fornøyd-garantien (vedtatt 15.11): et løfte i tillegg til angreretten, som står urørt. Samme løfte står i vilkårene, punkt 5 («Fornøyd-garanti»). -->
+        <p class="garanti">Ikke fornøyd? Skriv til oss innen 31. desember 2026, så får dere pengene tilbake, også om dere har spilt.</p>
+        <p class="bank-alternativ"><button id="kjop" class="lenke" type="button">Eller kjøp og betal med bankoverføring</button></p>
         <p id="feil" class="melding" role="alert"></p>
+        <p id="epost-hint" class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame.</p>
+        <p class="small">Gjelder adventskalenderen 1.–24. desember 2026. Alle luker er åpne etter jul, og spillet er åpent minst til og med 31. januar 2027.</p>
       </form>
       <p class="small">Les <a href="../vilkar.html">kjøpsvilkårene</a> og <a href="../personvern.html">personvernerklæringen</a>.</p>
     </section>
@@ -71,7 +99,7 @@
         <p id="kopiert-betal" class="small" role="status"></p>
         <label class="samtykke betalt"><input id="betalt" type="checkbox" /> <span>Jeg har betalt.</span></label>
         <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
-        <button id="fa-kode" class="btn primary" type="button">Få koden</button>
+        <button id="fa-kode" class="btn primary" type="button">Bekreft kjøpet og få koden</button>
         <p id="feil-betal" class="melding" role="alert"></p>
         <p><button id="tilbake" class="btn" type="button">Tilbake</button></p>
       </div>
@@ -82,35 +110,76 @@
       <p><button class="btn kopier" type="button" data-kopier="kode">Kopier koden</button></p>
       <p id="kopiert" class="small" role="status"></p>
       <p><span id="produkt"></span> Den låser opp <span class="nowrap">luke 2–24</span>, hver på sin dag i desember. Luke 1 er gratis.</p>
-      <p>Start en luke og trykk på tannhjulet ⚙. Åpne «Mer» og trykk «Jeg har en kode». Skriv inn koden og trykk «Lås opp».</p>
-      <p><a id="spill" class="btn primary" href="../spill/?lang=nb">Åpne spillet og lås opp på denne enheten</a><br />Er koden en gave? Bruk gavekortet i stedet.</p>
-      <p>Skriv inn koden på barnets enhet den dagen dere begynner, ikke lenge før.</p>
-      <figure id="qr-boks" class="qr-boks" hidden>
-        <div id="qr"></div>
-        <figcaption>Skann med kameraet på barnets iPad. Da låses spillet opp der.</figcaption>
-      </figure>
+      <!-- Før 2. desember (dato.mjs): at koden virker nå, selv om luke 2 venter, så ingen tror at den ikke virket. -->
+      <p id="foer-luke2" class="viktig" data-dato="kvittering" hidden></p>
+      <p id="gave-forst" class="viktig" hidden>Kjøpt som gave: <a href="#gavekort-tittel">last ned gavekortet</a> lenger ned. Ikke lås opp her.</p>
+      <!-- F05 (Lars 15.11): where the child will play, as three choices; the recipe by hand waits behind a fold. -->
+      <h2 id="hvor-tittel">Hvor skal barnet spille?</h2>
+      <ol id="hvor" class="hvor" aria-labelledby="hvor-tittel">
+        <li><strong>På denne enheten:</strong> trykk knappen under.<br /><a id="spill" class="btn primary" href="../spill/?lang=nb">Åpne spillet og lås opp på denne enheten</a></li>
+        <li><strong>På barnets telefon eller nettbrett:</strong> send lenka dit. Åpnes lenka på enheten barnet skal spille på, låses spillet opp der med én gang.
+          <p class="send">
+            <button id="send-lenke" class="btn primary" type="button" hidden>Send lenka til barnets telefon eller nettbrett</button>
+            <a id="send-sms" class="btn" href="sms:" hidden>Send på SMS</a>
+            <button id="kopier-lenke" class="btn" type="button">Kopier lenka</button>
+          </p>
+          <p id="delt" class="small" role="status"></p>
+          <figure id="qr-boks" class="qr-boks" hidden>
+            <div id="qr"></div>
+            <figcaption>Skann med kameraet på barnets telefon eller nettbrett. Da låses spillet opp der.</figcaption>
+          </figure>
+        </li>
+        <li><strong>Det er en gave:</strong> <a href="#gavekort-tittel">last ned gavekortet</a> lenger ned. Ikke lås opp her.</li>
+      </ol>
+      <p>Koden kan tastes inn når som helst. Er lukene låst igjen senere, skriv den inn på nytt.</p>
+      <details id="for-haand" class="for-haand">
+        <summary>Skrive koden for hånd?</summary>
+        <p>Åpne spillet på enheten barnet skal spille på. Trykk på tannhjulet ⚙ på startsiden og «Skriv inn kode». Skriv inn koden og trykk «Lås opp».</p>
+      </details>
       <p id="husstand" hidden>Familiekoden kan tastes inn på alle enhetene i husstanden.</p>
       <p id="til" hidden>Vi sender kvitteringen til <strong id="til-epost"></strong>. Er adressen feil? Skriv koden ned nå.</p>
       <p id="sendt" hidden>Koden, betalingsinformasjonen og gavekortet er også sendt til e-posten din.</p>
       <p id="sender" hidden>Koden, betalingsinformasjonen og gavekortet sendes også til e-posten din. Kommer ikke e-posten med en gang, sender vi den innen en dag.</p>
       <p id="senere" hidden>Kvitteringen med koden og betalingsinformasjonen kommer på e-post innen en dag. Gavekortet kan du laste ned her.</p>
       <p class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame. Koden står også her på siden.</p>
-      <h2>Gavekort</h2>
-      <p>Gavekortet har koden ferdig påtrykt. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Gir du koden som gave, gi bort selve kortet, ikke et bilde av det.</p>
+      <!-- Natt 15.–16.11: én påminnelse om dagen i kalenderen, laget her på enheten som spillets egen fil (kalender.mjs). -->
+      <div id="kalender-del" class="kvittering-del" role="group" aria-labelledby="kalender-tittel">
+        <h2 id="kalender-tittel">Legg lukene i kalenderen</h2>
+        <p>En påminnelse om dagen fram til julaften, på det klokkeslettet dere velger. Fila lages her på enheten, og ingenting sendes.</p>
+        <label for="kalender-tid">Klokkeslett</label>
+        <p class="kalender-rad"><input id="kalender-tid" type="time" value="18:00" step="900" /> <button id="kalender" class="btn primary" type="button">📅 Last ned kalenderfila</button></p>
+        <p id="kalender-status" class="small" role="status"></p>
+      </div>
+      <h2 id="gavekort-tittel">Gavekort</h2>
+      <p>Gavekortet har koden ferdig påtrykt. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Bor barnet et annet sted? Send PDF-en på e-post eller melding til foreldrene. De kan skrive den ut, eller skanne QR-koden rett fra skjermen. Del kortet bare med den som skal ha gaven.</p>
       <label for="navn">Til (kan stå tomt)</label>
       <input id="navn" type="text" maxlength="40" autocomplete="off" aria-describedby="navn-hjelp" />
+      <label for="fra">Fra (kan stå tomt)</label>
+      <input id="fra" type="text" maxlength="40" autocomplete="off" aria-describedby="navn-hjelp" />
       <p id="navn-hjelp" class="small">Bokstaver og tall kommer med på kortet. Emoji kommer ikke med.</p>
       <p><button id="gavekort" class="btn primary" type="button">Last ned gavekortet (PDF)</button></p>
       <p id="filer" class="small" hidden>Finner du ikke kortet? Se i Filer-appen under Nedlastinger.</p>
       <p id="kortfeil" role="status"></p>
+      <!-- Natt 15.–16.11: en ferdig tekst kjøperen sender selv, fra voksen til voksen, uten belønning. Ingenting sendes fra oss. -->
+      <div id="tips-del" class="kvittering-del" role="group" aria-labelledby="tips-tittel">
+        <h2 id="tips-tittel">Gi luke 1 til en familie</h2>
+        <p>Kjenner du en familie som kunne likt kalenderen? Luke 1 er gratis for alle. Send dem denne teksten selv:</p>
+        <p id="tips-tekst" class="tips-tekst">Kjenner dere Reisen med Lukas? Det er en julekalender på nett med kristent innhold, bygd på juleevangeliet i Lukas, fra 8 år og opp i tenårene. Luke 1 er gratis, og dere kan prøve den her: https://reisenmedlukas.no/</p>
+        <p class="send">
+          <button id="tips-del-knapp" class="btn primary" type="button" hidden>Send teksten</button>
+          <a id="tips-sms" class="btn" href="sms:" hidden>Send på SMS</a>
+          <button id="tips-kopier" class="btn" type="button">Kopier teksten</button>
+        </p>
+        <p id="tips-status" class="small" role="status"></p>
+      </div>
       <h2>Flere koder</h2>
-      <p>Vil du kjøpe en kode til, for eksempel som en gave?</p>
-      <p><button id="ny" class="btn" type="button">Kjøp en kode til</button></p>
+      <p>Skal du gi til et barnebarn eller en familie til? Hver kode får sitt eget gavekort.</p>
+      <p class="send"><button id="ny-gave" class="btn" type="button">Kjøp en til som gave</button> <button id="ny" class="btn" type="button">Kjøp en kode til</button></p>
     </section>
 
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lihai260" data-d="hotmail.com">lihai260 (krøllalfa) hotmail.com</span></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
-  <script type="module" src="kjop.js?v=bank38f3"></script>
+  <script type="module" src="kjop.js?v=salgv2"></script>
 </body>
 </html>

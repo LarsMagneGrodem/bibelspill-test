@@ -29,6 +29,10 @@ export const winAnsi = (text) =>
     return (c >= 32 && c < 127) || (c >= 0xa0 && c <= 0xff) ? ch : '?';
   }).join('');
 
+// NS-10: the name on «Til», with what the card's font cannot print (emoji, their joiners) left out instead of a «?», as
+// the help under the field says. A «?» typed on purpose stays.
+export const cardName = (name) => [...String(name ?? '')].filter((ch) => ch === '?' || winAnsi(ch) !== '?').join('').replace(/\s+/g, ' ').trim().slice(0, 40);
+
 export const escape = (bytes) => bytes.replace(/[\\()]/g, (c) => `\\${c}`);
 export const textWidth = (text, font, size) => [...text].reduce((sum, ch) => sum + (FONTS[font].get(ch.charCodeAt(0)) ?? 556), 0) * size / 1000;
 
@@ -64,7 +68,7 @@ export const CARD = {
   enter: 'Skriv koden inn på reisenmedlukas.no.',
   steps: [
     '1. Skann QR-koden, eller gå til reisenmedlukas.no.',
-    '2. Start en luke, trykk på tannhjulet, åpne «Mer» og trykk «Jeg har en kode».',
+    '2. Trykk på tannhjulet ⚙ på startsiden og «Skriv inn kode».',
     '3. Skriv inn koden og trykk «Lås opp».',
   ],
   doors: 'Luke 1 er gratis. Koden låser opp luke 2–24 på enheten der den tastes inn.',
@@ -79,7 +83,7 @@ export function cardContent({ code = '', name = '', product = '' } = {}) {
   const steps = CARD.steps;
   const kind = (code && CARD.kinds[product]) || CARD.kind;
   const who = code ? CARD.who[product] : '';
-  const to = winAnsi(String(name).trim().slice(0, 40));
+  const to = winAnsi(cardName(name));
   let toSize = 14;
   while (toSize > 9 && textWidth(`${CARD.to} ${to}`, 'F1', toSize) > 380) toSize -= 1;
   const ops = [

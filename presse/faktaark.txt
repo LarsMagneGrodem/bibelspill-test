@@ -6,7 +6,7 @@ Hva: Julekalender på nett, basert på Lukasevangeliet
 Nettsted: https://reisenmedlukas.no
 Når: 1.–24. desember, én luke om dagen. Etter julaften er alle lukene åpne, og spillet er åpent minst til og med 31. januar 2027.
 Tid per luke: Vanligvis 5–15 minutter. Den som vil mer, kan bli lenger.
-Alder: Fra 8 år. Godt å spille sammen med foreldre eller besteforeldre.
+Alder: Fra 8 år og opp i tenårene. Godt å spille sammen med foreldre eller besteforeldre.
 Plattform: Nettleseren på telefon, nettbrett og PC. Ingenting må installeres.
 
 Innhold: Den som spiller, blir lærlingen til legen Lukas, går rundt i landet der Jesus levde, snakker med folk som var der, og samler fortellingene om Jesus i vitneboka. Malte spillbrett, småspill underveis og aktivitetsark til utskrift for hver dag.
@@ -20,7 +20,7 @@ Pris:
 Trygt:
 - Ingen kjøp i appen
 - Ingen reklame
-- Ingen sporing
+- Ingen sporing i spillet
 - Ingen konto
 
 Gave og salg:
@@ -31,8 +31,8 @@ Gave og salg:
 Betaling: Vipps eller bankoverføring. Koden kommer med en gang.
 
 Filmer: Trailer (46 sekunder) og introfilm (1 minutt 25 sekunder) ligger på nettsiden.
-Musikk i traileren: «Born Of The Sky» av Scott Buckley (CC BY 4.0).
-Musikk i introfilmen: «Helios» av Scott Buckley (CC BY 4.0).
+Musikk i traileren: «Born Of The Sky» av Scott Buckley, https://www.scottbuckley.com.au/library/born-of-the-sky/, lisens CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Endret: utsnitt, EQ, inn- og uttoning og lydnivå, mikset med tale og lydeffekter.
+Musikk i introfilmen: «Helios» av Scott Buckley, https://www.scottbuckley.com.au/library/helios/, lisens CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Endret: utsnitt, lydnivå, demping under tale og inn- og uttoning.
 
 Grunnlag: Gjenfortalt fra Lukasevangeliet med henvisning til kapittel og vers. Klassisk kristen tro. Det som er diktet til spillet, holdes atskilt fra det som er hentet fra Bibelen og andre kilder.
 

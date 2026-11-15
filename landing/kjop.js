@@ -1,13 +1,16 @@
-/* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File */
+/* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File, localStorage */
 // The buy page. Vipps is first (Lars 13.11 01:14). Bank transfer on trust (Lars 12.11 16:24) stays as the
 // less prominent choice: the consent on step 1, /order/start (r38, Lars 13.11 10:51: the code and the receipt come with
 // the order), then the pay step. «Jeg har betalt» is still there, but never stops the code; /order/confirm writes it down.
 // An order started on an older page (no code yet) still asks the consent on the pay step. No deadline.
 // The bank step is one block (#bank). Vipps posts to /vipps/start and sends the buyer to Vipps.
-// The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the name on it never leaves the page.
+// The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the names on it never leave the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
 import { PAGES, cardPdf } from './gavekort-nett.mjs';
 import { qrCode } from './qr.mjs';
+// Natt 15.–16.11: the line that changes with the date (filled on import), and the calendar file on the receipt.
+import './dato.mjs';
+import { YEAR, clock, remindDoors, remindersIcs, saveIcs } from './kalender.mjs';
 
 const $ = (id) => document.getElementById(id);
 const meta = (name) => document.querySelector(`meta[name="${name}"]`)?.content.trim() ?? '';
@@ -88,7 +91,7 @@ async function webCard(order) {
   $('gavekort').disabled = true;
   try {
     const [utside, innside] = await (pictures ?? fetchPictures(order));
-    const pdf = cardPdf({ code: order.code, product: order.product, name: $('navn').value }, { utside, [order.product]: innside });
+    const pdf = cardPdf({ code: order.code, product: order.product, name: $('navn').value, from: $('fra').value }, { utside, [order.product]: innside });
     const name = `gavekort-${order.code}.pdf`;
     let file = null;
     try { file = new File([pdf], name, { type: 'application/pdf' }); } catch { /* old browser */ }
@@ -111,12 +114,80 @@ async function webCard(order) {
   }
 }
 
-// G3: a QR code with the code, for the child's iPad: the camera opens the link in the default browser, which unlocks there.
+// The link that unlocks the game where it is opened (the QR code and «Send lenka» hold the same).
+const unlockLink = (code) => `https://reisenmedlukas.no/spill/?kode=${encodeURIComponent(code)}&lang=nb`;
+const shareText = (code) => `Her er koden til Reisen med Lukas: ${code}. Trykk på lenka på enheten barnet skal spille på, så låses spillet opp: ${unlockLink(code)}`;
+// F01: Messages opens with the text filled in. iOS reads the body after «sms:&», Android after «sms:?».
+const smsHref = (text, ios) => `sms:${ios ? '&' : '?'}body=${encodeURIComponent(text)}`;
+
+async function copyLink(link) {
+  try {
+    await navigator.clipboard.writeText(link);
+    $('delt').textContent = 'Kopiert!';
+  } catch {
+    $('delt').textContent = `Fikk ikke kopiert. Her er lenka: ${link}`;
+  }
+}
+
+// F01 (Lars 15.11): the buyer seldom holds the child's phone. The phone's share sheet (it has Messages), a ready SMS on
+// a phone, and «Kopier lenka». No e-mail is needed on the child's side. An app's own browser on the child's phone gets
+// «Åpne i Safari først» in the game (in-app.ts).
+function offerLink(code) {
+  const [link, text] = [unlockLink(code), shareText(code)];
+  $('delt').textContent = '';
+  $('send-lenke').hidden = typeof navigator.share !== 'function';
+  $('send-lenke').onclick = () => navigator.share({ text }).catch((error) => {
+    if (error?.name !== 'AbortError') void copyLink(link);
+  });
+  $('send-sms').hidden = !(IOS || /Android/i.test(navigator.userAgent));
+  $('send-sms').href = smsHref(text, IOS);
+  $('kopier-lenke').onclick = () => void copyLink(link);
+}
+
+// «Gi luke 1 til en familie»: the buyer sends a ready text from their own phone, grown-up to grown-up, with no reward.
+// The phone's share sheet where there is one, a ready SMS on a phone, and «Kopier teksten». Nothing is sent from us.
+function offerTip() {
+  const text = $('tips-tekst').textContent.trim();
+  const say = (words) => { $('tips-status').textContent = words; };
+  $('tips-status').textContent = '';
+  $('tips-del-knapp').hidden = typeof navigator.share !== 'function';
+  $('tips-del-knapp').onclick = () => navigator.share({ text }).catch(() => {});
+  $('tips-sms').hidden = !(IOS || /Android/i.test(navigator.userAgent));
+  $('tips-sms').href = smsHref(text, IOS);
+  $('tips-kopier').onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      say('Kopiert!');
+    } catch {
+      say('Fikk ikke kopiert. Merk teksten og kopier den selv.');
+    }
+  };
+}
+
+// «Legg lukene i kalenderen»: one reminder a day at the chosen time, the game's own file (kalender.mjs), made here.
+// Nothing is stored or sent. After Christmas Eve there are no doors left to remind of, and the part goes away.
+function offerCalendar() {
+  const doors = (time) => remindDoors(new Date(), YEAR, clock(time));
+  $('kalender-del').hidden = !doors($('kalender-tid').value);
+  $('kalender-status').textContent = '';
+  $('kalender').onclick = () => {
+    const time = $('kalender-tid').value;
+    const left = doors(time);
+    if (!left) { $('kalender-status').textContent = 'Alle lukene har åpnet seg i år, så det er ingen flere å minne om.'; return; }
+    saveIcs(remindersIcs({
+      year: YEAR, ...left, time, now: new Date(), url: 'https://reisenmedlukas.no/spill/',
+      title: (door) => `Reisen med Lukas: luke ${door}`, description: 'Dagens luke er åpen.',
+    }), 'reisen-med-lukas.ics');
+    $('kalender-status').textContent = 'Fila er lastet ned. Åpne den for å legge påminnelsene i kalenderen.';
+  };
+}
+
+// G3: a QR code with the code, for the child's phone or tablet: the camera opens the link in the default browser, which unlocks there.
 function drawQr(code) {
   const box = $('qr-boks');
   const holder = $('qr');
   holder.replaceChildren();
-  const symbol = qrCode(`https://reisenmedlukas.no/spill/?kode=${encodeURIComponent(code)}&lang=nb`);
+  const symbol = qrCode(unlockLink(code));
   if (!symbol) { box.hidden = true; return; }
   const n = symbol.dark.length;
   const quiet = 4;
@@ -162,6 +233,11 @@ function show(order) {
   $('spill').href = `../spill/?kode=${encodeURIComponent(order.code)}&lang=nb`;
   $('filer').hidden = true;
   drawQr(order.code);
+  offerLink(order.code);
+  // Bought as a gift (the tick box on the form, never sent to the worker): the gift card first.
+  $('gave-forst').hidden = !order.gave;
+  offerCalendar();
+  offerTip();
   pictures = null;
   void fetchPictures(order).catch(() => {});
   $('kvittering').focus();
@@ -249,7 +325,8 @@ for (const button of document.querySelectorAll('[data-kopier]')) {
 }
 
 // A link from the sales page with ?valg=familie picks the family code.
-const choice = new URLSearchParams(location.search).get('valg');
+const params = new URLSearchParams(location.search);
+const choice = params.get('valg');
 function pickProduct() {
   const value = choice === 'familie' ? 'family' : 'personal';
   const input = document.querySelector(`input[name="product"][value="${value}"]`);
@@ -257,13 +334,43 @@ function pickProduct() {
 }
 pickProduct();
 
+// «Dette er en gave» (natt 15.–16.11): ticked by ?gave=1 (the gift's own way from the sales page, and «Kjøp en til som
+// gave» on the receipt), and kept for this tab only (sessionStorage), also across Vipps and back. It is never sent to
+// the worker; it only puts the gift card first on the receipt.
+const GIFT = 'kasse:gave';
+function setGift(on) {
+  $('gave-valg').checked = on;
+  keep(GIFT, on ? true : null);
+}
+$('gave-valg').addEventListener('change', () => keep(GIFT, $('gave-valg').checked ? true : null));
+setGift(params.get('gave') === '1' || stored(GIFT) === true);
+
+// NS-08: the last purchase is also kept on the device for two weeks (localStorage), so a new tab, or the page opened
+// again from the e-mail's link the next day, still has «Vis siste kjøp». Only this page reads it; nothing is sent.
+const KEPT_DAYS = 14;
+function keepLast(order) {
+  keep(KEPT, order);
+  // Only what the receipt shows, as the privacy page says (the e-mail and the code): not the order's key, number or sum.
+  const { code, product, email, receipt } = order;
+  try { localStorage.setItem(KEPT, JSON.stringify({ code, product, email, receipt, keptAt: Date.now() })); } catch { /* private mode */ }
+}
+function lastOnDevice(now = Date.now()) {
+  try {
+    const last = JSON.parse(localStorage.getItem(KEPT) ?? 'null');
+    if (last?.code && now - Number(last.keptAt) < KEPT_DAYS * 864e5) return last;
+    localStorage.removeItem(KEPT);
+  } catch { /* private mode, or not JSON */ }
+  return null;
+}
+
 function readKept() {
-  const kept = stored(KEPT);
+  const kept = stored(KEPT) ?? lastOnDevice();
   return kept?.code ? kept : null;
 }
 
 // The form again, for one more code (feilliste H1). The e-mail stays; the tick box and the name on the card do not.
-function showForm(kept) {
+function showForm(kept, gift) {
+  if (gift !== undefined) setGift(gift);
   $('kvittering').hidden = true;
   $('betal').hidden = true;
   $('bestill').hidden = false;
@@ -272,6 +379,7 @@ function showForm(kept) {
   $('kortfeil').textContent = '';
   $('samtykke').checked = false;
   $('navn').value = '';
+  $('fra').value = '';
   pickProduct();
   $('siste').hidden = !kept;
   if (kept?.email && !$('epost').value) $('epost').value = kept.email;
@@ -281,12 +389,14 @@ function showForm(kept) {
   }
 }
 
-$('ny').addEventListener('click', () => {
-  keep(PENDING, null);
-  showForm(readKept());
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  document.querySelector('input[name="product"]:checked')?.focus({ preventScroll: true });
-});
+for (const [id, gift] of [['ny', false], ['ny-gave', true]]) {
+  $(id).addEventListener('click', () => {
+    keep(PENDING, null);
+    showForm(readKept(), gift);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.querySelector('input[name="product"]:checked')?.focus({ preventScroll: true });
+  });
+}
 
 // The last order stays for this tab, so a reload (or the back button) does not lose the code. A fresh visit from a
 // link, such as «Kjøp familiekode» on the sales page, opens the form, with a button back to the last purchase.
@@ -311,10 +421,14 @@ if (!api) {
 }
 if (oldSafari()) $('gammel-ios').hidden = false;
 
+// NS-08: the browser takes «ola@gmail» as an address, and the receipt would never come. The domain needs a dot, and
+// something after it.
+const emailLooksSent = (email) => /^[^@\s]+@[^@\s]+\.[^@\s.]{2,}$/.test(email) && !/\.\./.test(email.split('@')[1] ?? '');
+
 // Shared checks for the first step (product and e-mail).
 function readOrderFields(say) {
   const email = $('epost').value.trim();
-  const bad = !$('epost').checkValidity() || !email;
+  const bad = !$('epost').checkValidity() || !emailLooksSent(email);
   // Del 13 L9: a screen reader hears that the field is wrong, not only the message under it.
   $('epost').setAttribute('aria-invalid', String(bad));
   // Round 2 (keyboard): the field that is wrong gets the focus, so a keyboard or screen-reader user lands on it.
@@ -387,6 +501,7 @@ $('kjop').addEventListener('click', async () => {
   if (!$('samtykke-bestill').checked) return consentMissing('samtykke-bestill', say);
   $('feil').textContent = '';
   if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product) {
+    backOrder = { ...backOrder, gave: $('gave-valg').checked };
     keep(PENDING, backOrder);
     showPay(backOrder);
     return;
@@ -394,7 +509,7 @@ $('kjop').addEventListener('click', async () => {
   busy('kjop', true);
   try {
     const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website, consent: true });
-    const next = { ...data, email: fields.email };
+    const next = { ...data, email: fields.email, gave: $('gave-valg').checked };
     backOrder = null;
     keep(PENDING, next);
     showPay(next);
@@ -422,7 +537,7 @@ $('fa-kode').addEventListener('click', async () => {
       if (!order.code || error.message === 'order') throw error; // 'order': stopped by Lars, or gone
     }
     const bought = { ...order, ...data, email: order.email };
-    keep(KEPT, bought);
+    keepLast(bought);
     keep(PENDING, null);
     backOrder = null;
     show(bought);
