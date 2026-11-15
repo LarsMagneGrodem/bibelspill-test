@@ -91,8 +91,8 @@ nav a.topp-kjop { min-height: 44px; padding: 4px 18px; font-weight: 700; color: 
 nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
 @media (max-width: 719px) {
   .top { flex-wrap: nowrap; padding: 6px 16px; }
-  .brand { font-size: 0.95rem; letter-spacing: .08em; }
-  nav { flex-wrap: nowrap; align-items: center; gap: 0 14px; }
+  .brand { font-size: 0.95rem; letter-spacing: .08em; min-width: 0; }
+  nav { flex-wrap: nowrap; align-items: center; gap: 0 14px; flex: 0 0 auto; white-space: nowrap; overflow-wrap: normal; }
   nav .nav-bred { display: none; }
 }
 
