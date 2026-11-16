@@ -143,3 +143,121 @@
   .kasse .valg { padding: 0; }
   .kasse .valg label { margin-top: 4px; padding: 6px 10px; }
 }
+
+
+/* === Forslag stjernehimmel B: kjøp === */
+/* Forslag 16.11.2026: stjernehimmel B (kongeblå #1a3270/#2d4c96, gull #cca64f/#f0d38a, krem #f3ead6)
+   på nettsidens krom. Ingen tekstendring, ingen ny avhengighet, rører ikke betalingslogikk.
+   Kontrast WCAG AA: krem og gull på nattblå minst 5,2:1, blekk #14204a på gull og krem minst 6,8:1. */
+:root {
+  --bg: #0f2150;
+  --paper: #f3ead6;
+  --ink: #14204a;
+  --soft: #e8d9b0;
+  --muted: #d8c79c;
+  --gold: #f0d38a;
+  --line: rgba(217, 178, 92, 0.45);
+  --card: #13285a;
+}
+body {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Ccircle cx='78' cy='228' r='1.2' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='65' cy='72' r='0.6' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='40' cy='106' r='1.0' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='119' cy='214' r='0.6' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='114' cy='206' r='0.8' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='178' cy='154' r='0.6' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='143' r='0.8' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='88' cy='160' r='0.7' fill='%23dfe8ff' fill-opacity='0.5'/%3E%3Ccircle cx='114' cy='199' r='1.0' fill='%23f6e7b8' fill-opacity='0.65'/%3E%3Ccircle cx='122' cy='125' r='0.8' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='40' cy='149' r='0.9' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='235' cy='23' r='1.2' fill='%23dfe8ff' fill-opacity='0.4'/%3E%3Ccircle cx='110' cy='63' r='1.0' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='205' cy='201' r='1.0' fill='%23fff' fill-opacity='0.5'/%3E%3Ccircle cx='58' cy='157' r='0.7' fill='%23f6e7b8' fill-opacity='0.5'/%3E%3Ccircle cx='69' cy='102' r='1.2' fill='%23fff' fill-opacity='0.5'/%3E%3C/svg%3E") , url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Ccircle cx='78' cy='228' r='1.2' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='65' cy='72' r='0.6' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='40' cy='106' r='1.0' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='119' cy='214' r='0.6' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='114' cy='206' r='0.8' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='178' cy='154' r='0.6' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='143' r='0.8' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='88' cy='160' r='0.7' fill='%23dfe8ff' fill-opacity='0.5'/%3E%3Ccircle cx='114' cy='199' r='1.0' fill='%23f6e7b8' fill-opacity='0.65'/%3E%3Ccircle cx='122' cy='125' r='0.8' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='40' cy='149' r='0.9' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='235' cy='23' r='1.2' fill='%23dfe8ff' fill-opacity='0.4'/%3E%3Ccircle cx='110' cy='63' r='1.0' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='205' cy='201' r='1.0' fill='%23fff' fill-opacity='0.5'/%3E%3Ccircle cx='58' cy='157' r='0.7' fill='%23f6e7b8' fill-opacity='0.5'/%3E%3Ccircle cx='69' cy='102' r='1.2' fill='%23fff' fill-opacity='0.5'/%3E%3C/svg%3E") , radial-gradient(ellipse 60% 38% at 50% 0%, rgba(255, 220, 140, 0.16), transparent 70%), radial-gradient(ellipse at 50% 20%, #2d4c96, #1a3270 55%, #0f2150);
+  background-size: 240px 240px, 420px 420px, auto, auto;
+  background-position: 0 0, 113px 71px, 0 0, 0 0;
+  background-attachment: fixed, fixed, fixed, fixed;
+  background-color: #0f2150;
+}
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  animation: natt-blink 4.5s ease-in-out infinite alternate;
+}
+body::before {
+  background-image:
+    radial-gradient(circle at 8% 14%, #fff8dc 0 1.4px, rgba(255, 236, 170, 0.35) 2px, transparent 6px),
+    radial-gradient(circle at 91% 22%, #fff8dc 0 1.6px, rgba(255, 236, 170, 0.35) 2.2px, transparent 7px),
+    radial-gradient(circle at 18% 64%, #ffffff 0 1.2px, rgba(220, 232, 255, 0.35) 1.8px, transparent 5px),
+    radial-gradient(circle at 84% 78%, #fff8dc 0 1.3px, rgba(255, 236, 170, 0.3) 2px, transparent 6px),
+    radial-gradient(circle at 62% 6%, #ffffff 0 1.1px, rgba(220, 232, 255, 0.3) 1.7px, transparent 5px);
+}
+body::after {
+  animation-duration: 6.2s;
+  animation-delay: -2.4s;
+  background-image:
+    radial-gradient(circle at 30% 9%, #fff8dc 0 1.3px, rgba(255, 236, 170, 0.35) 2px, transparent 6px),
+    radial-gradient(circle at 74% 44%, #ffffff 0 1.1px, rgba(220, 232, 255, 0.3) 1.7px, transparent 5px),
+    radial-gradient(circle at 5% 88%, #fff8dc 0 1.5px, rgba(255, 236, 170, 0.35) 2.1px, transparent 7px),
+    radial-gradient(circle at 96% 58%, #ffffff 0 1.2px, rgba(220, 232, 255, 0.3) 1.8px, transparent 5px),
+    radial-gradient(circle at 44% 96%, #fff8dc 0 1.2px, rgba(255, 236, 170, 0.3) 1.8px, transparent 5px);
+}
+@keyframes natt-blink {
+  0%, 30% { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after { animation: none; opacity: 0.7; }
+}
+header.top {
+  background: #0f2150f2;
+  border-bottom-color: var(--line);
+}
+.btn {
+  border-color: #d9b25c;
+}
+/* «Prøv luke 1» blir nattblå med gullkant, så den ikke blir lik den gullfylte «Kjøp»-knappen. Krem på denne blåen er 10:1. */
+.btn.primary {
+  background: linear-gradient(#2a4687, #1c3368);
+  color: #f3ead6;
+  border-color: #d9b25c;
+}
+.btn.primary:hover {
+  background: linear-gradient(#34539b, #223c78);
+}
+.card {
+  background: linear-gradient(#1d3673, #13285a);
+  border-color: var(--line);
+}
+.card.featured {
+  border-color: #d9b25c;
+  box-shadow: 0 0 0 1px rgba(217, 178, 92, 0.45);
+}
+.facts, .contact, .quote, .faq details {
+  border-color: var(--line);
+}
+
+/* Kjøp og kontakt (kjop.css). Vipps-knappen, skjulte gaveeska og betalingsflyten er urørt. */
+.kasse input[type='email'],
+.kasse input[type='text'],
+.kasse input[type='time'] {
+  background: #fdf6e3;
+  color: #14204a;
+  border-color: #d9b25c;
+}
+.kasse .valg,
+.kasse .gave-info {
+  border-color: #d9b25c;
+}
+.kasse .valg label {
+  background: var(--card);
+  border-color: rgba(217, 178, 92, 0.55);
+}
+.kasse .valg label:has(input:checked) {
+  background: #2a4687;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+.kasse .tips-tekst {
+  border-color: #d9b25c;
+}
+@media (max-height: 500px) {
+  .kasse .kasse-betaling {
+    box-shadow: 0 -10px 24px #0f2150, 0 4px 16px #0006;
+  }
+}
+/* Den røde gaveeska på kvitteringen beholder sitt eget utseende. */

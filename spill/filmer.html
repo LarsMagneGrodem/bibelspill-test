@@ -9,17 +9,38 @@
     <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png" />
     <meta name="theme-color" content="#1b1a17" />
     <style>
-      body { margin: 0; padding: 24px 16px 48px; background: #1b1a17; color: #ecd7a8; font: 1.125rem/1.5 Georgia, serif; }
-      main { max-width: 640px; margin: 0 auto; overflow-wrap: break-word; }
-      h1 { font-size: 1.6em; margin: 0 0 0.5em; }
-      h2 { font-size: 1.15em; margin: 1.5em 0 0.4em; }
-      p, li { margin: 0.4em 0; }
-      ul { padding-left: 1.2em; }
-      li { margin-bottom: 0.8em; }
-      a { color: #f8ebcb; font-weight: bold; }
-      .card { color: #d8bb82; font-size: 0.9em; }
-      .source { border-left: 3px solid #d8bb82; padding-left: 12px; }
-      :focus-visible { outline: 3px solid #ffd84a; outline-offset: 3px; }
+/* Forslag 16.11.2026: stjernehimmel B på vilkår, personvern, filmer og tilgjengelighet. Bare farger, ingen tekstendring. */
+body {
+  margin: 0;
+  padding: 24px 16px 48px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Ccircle cx='78' cy='228' r='1.2' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='65' cy='72' r='0.6' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='40' cy='106' r='1.0' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='119' cy='214' r='0.6' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='114' cy='206' r='0.8' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='178' cy='154' r='0.6' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='143' r='0.8' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='88' cy='160' r='0.7' fill='%23dfe8ff' fill-opacity='0.5'/%3E%3Ccircle cx='114' cy='199' r='1.0' fill='%23f6e7b8' fill-opacity='0.65'/%3E%3Ccircle cx='122' cy='125' r='0.8' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='40' cy='149' r='0.9' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='235' cy='23' r='1.2' fill='%23dfe8ff' fill-opacity='0.4'/%3E%3Ccircle cx='110' cy='63' r='1.0' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='205' cy='201' r='1.0' fill='%23fff' fill-opacity='0.5'/%3E%3Ccircle cx='58' cy='157' r='0.7' fill='%23f6e7b8' fill-opacity='0.5'/%3E%3Ccircle cx='69' cy='102' r='1.2' fill='%23fff' fill-opacity='0.5'/%3E%3C/svg%3E") , url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Ccircle cx='78' cy='228' r='1.2' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='65' cy='72' r='0.6' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='40' cy='106' r='1.0' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='119' cy='214' r='0.6' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='114' cy='206' r='0.8' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='178' cy='154' r='0.6' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='143' r='0.8' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='88' cy='160' r='0.7' fill='%23dfe8ff' fill-opacity='0.5'/%3E%3Ccircle cx='114' cy='199' r='1.0' fill='%23f6e7b8' fill-opacity='0.65'/%3E%3Ccircle cx='122' cy='125' r='0.8' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='40' cy='149' r='0.9' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='235' cy='23' r='1.2' fill='%23dfe8ff' fill-opacity='0.4'/%3E%3Ccircle cx='110' cy='63' r='1.0' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='205' cy='201' r='1.0' fill='%23fff' fill-opacity='0.5'/%3E%3Ccircle cx='58' cy='157' r='0.7' fill='%23f6e7b8' fill-opacity='0.5'/%3E%3Ccircle cx='69' cy='102' r='1.2' fill='%23fff' fill-opacity='0.5'/%3E%3C/svg%3E") , radial-gradient(ellipse 60% 38% at 50% 0%, rgba(255, 220, 140, 0.16), transparent 70%), radial-gradient(ellipse at 50% 20%, #2d4c96, #1a3270 55%, #0f2150);
+  background-size: 240px 240px, 420px 420px, auto, auto;
+  background-position: 0 0, 113px 71px, 0 0, 0 0;
+  background-attachment: fixed, fixed, fixed, fixed;
+  background-color: #0f2150;
+  color: #f3ead6;
+  font: 18px/1.5 Georgia, serif;
+}
+main { max-width: 640px; margin: 0 auto; overflow-wrap: break-word; }
+h1 { font-size: 1.6em; margin: 0 0 0.5em; color: #f0d38a; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 0 18px rgba(240, 211, 138, 0.25); }
+h1::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 10px;
+  margin: 8px 0 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10'%3E%3Cpath d='M0 5h50M70 5h50' stroke='%23cca64f' stroke-width='1.2'/%3E%3Cpath d='M60 1l4 4-4 4-4-4z' fill='%23cca64f'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+h2 { font-size: 1.15em; margin: 1.5em 0 0.4em; color: #f0d38a; }
+h3 { font-size: 1.05em; margin: 1.2em 0 0.3em; color: #f0d38a; }
+p, li { margin: 0.4em 0; }
+a { color: #ffe7a3; }
+:focus-visible { outline: 3px solid #ffd84a; outline-offset: 3px; }
+.card, .placeholder, .source { color: #d8c79c; }
+.source { border-left: 3px solid #d9b25c; padding-left: 12px; }
+.merke { border: 1px solid #d9b25c; padding: 0.8em 1em; margin: 1em 0; }
+
     </style>
   </head>
   <body>
