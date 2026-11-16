@@ -44,7 +44,8 @@
 .film--staaende { aspect-ratio: 9 / 16; width: min(100%, calc(72svh * 9 / 16)); margin: 0 auto; }
 .film--bred { aspect-ratio: 16 / 9; width: 100%; }
 @media (min-width: 880px) { .film--staaende { width: min(100%, 380px, calc(80svh * 9 / 16)); } }
-.film-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.film-video { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; display: block; }
 a.film-knapp { text-decoration: none; }
 .film-knapp { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
   display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 10px 22px 10px 12px;
@@ -53,9 +54,9 @@ a.film-knapp { text-decoration: none; }
 .film--bred .film-knapp { top: 50%; bottom: auto; transform: translate(-50%, -50%); }
 .film-knapp small { display: block; font-weight: 400; font-size: 0.8125rem; color: var(--muted); }
 .film-knapp > span:last-child { text-align: left; line-height: 1.2; }
-/* With a large text size the label ran out of the narrow trailer card («Se traileren med l…»); it may wrap instead. */
+/* With a large text size the label may wrap, but only at spaces, never mid-word («trailere n»). */
 .film-knapp { width: max-content; max-width: calc(100% - 16px); box-sizing: border-box; }
-.film-knapp > span:last-child { white-space: normal; }
+.film-knapp > span:last-child { white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; }
 .film-ikon { flex: none; }
 .film-ikon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
   background: var(--gold); color: #2b1d0c; font-size: 1.125rem; padding-left: 3px; }
@@ -338,4 +339,26 @@ header.top {
 }
 @media (max-width: 560px) {
   #hovedtittel::after { margin-left: 0; }
+}
+
+/* 16.11.2026 (Lars 12:22 og 12:29): overskrift på to linjer, strammere første skjerm og
+   plakat som fyller boksen. Gullstreken beholdes når knappene likevel får plass. */
+@media (max-width: 879px) and (orientation: portrait) {
+  main { padding-top: 8px; padding-bottom: 12px; }
+  .hero2:has(.hero2-film) { gap: 8px 12px; padding: 2px 0 20px; }
+  .hero2:has(.hero2-film) h1 { font-size: clamp(1.28rem, 5.55vw, 1.7rem); line-height: 1.15; }
+  .hero2:has(.hero2-film) .dato-linje { margin: 0 0 2px; line-height: 1.3; }
+  .hero2:has(.hero2-film) .eyebrow { margin-bottom: 2px; }
+  .hero2:has(.hero2-film) #hovedtittel::after { margin: 6px 0 0; height: 8px; }
+  .hero2:has(.hero2-film) .lead { font-size: 0.9375rem; line-height: 1.35; margin-bottom: 0; }
+  .hero2:has(.hero2-film) .alder { font-size: 0.9375rem; line-height: 1.35; margin: 0; }
+  .hero2:has(.hero2-film) .cta-row { margin-top: 0; }
+  .hero2:has(.hero2-film) .cta-row .btn.stor { min-height: 48px; padding: 8px 16px; }
+  .hero2:has(.hero2-film) .film-knapp { min-height: 44px; padding: 5px 8px 5px 4px; font-size: 0.75rem; gap: 4px; bottom: 6px; }
+  .hero2:has(.hero2-film) .film-ikon { width: 24px; height: 24px; font-size: 0.8125rem; }
+}
+
+/* Gullstreken skjules bare på svært korte stående telefoner, der knappene ellers faller ut. */
+@media (max-width: 879px) and (orientation: portrait) and (max-height: 620px) {
+  .hero2:has(.hero2-film) #hovedtittel::after { display: none; }
 }
