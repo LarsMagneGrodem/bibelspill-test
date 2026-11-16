@@ -57,6 +57,7 @@ a.film-knapp { text-decoration: none; }
 /* With a large text size the label may wrap, but only at spaces, never mid-word («trailere n»). */
 .film-knapp { width: max-content; max-width: calc(100% - 16px); box-sizing: border-box; }
 .film-knapp > span:last-child { white-space: normal; overflow-wrap: normal; word-break: normal; hyphens: none; }
+.hero2-film .film-knapp > span:last-child { white-space: nowrap; }
 .film-ikon { flex: none; }
 .film-ikon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
   background: var(--gold); color: #2b1d0c; font-size: 1.125rem; padding-left: 3px; }
