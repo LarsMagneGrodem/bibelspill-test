@@ -19,6 +19,24 @@
     column-gap: 40px; row-gap: 18px; padding-top: 32px; align-items: start; }
   .hero2-tittel { align-self: end; }
 }
+/* Stående telefon (Lars 16.11 kl. 10:58): traileren synlig i første skjerm, rett under tittelen,
+   ved siden av ingressen. Kompakt stående plakat, slik at «Prøv luke 1 gratis» og «Kjøp kode»
+   fortsatt når første skjerm. Kort liggende telefon beholder knappene først (regelen under). PC uendret. */
+@media (max-width: 879px) and (orientation: portrait) {
+  .hero2:has(.hero2-film) { display: grid; grid-template-columns: 1fr auto; gap: 12px 14px; align-items: start;
+    grid-template-areas: none; }
+  .hero2:has(.hero2-film) .hero2-tittel { grid-column: 1 / -1; grid-row: 1; }
+  .hero2:has(.hero2-film) .hero2-film { grid-column: 2; grid-row: 2 / 4; }
+  .hero2:has(.hero2-film) .hero2-tekst { display: contents; }
+  .hero2:has(.hero2-film) .lead { grid-column: 1; grid-row: 2; margin-bottom: 0; }
+  .hero2:has(.hero2-film) .alder { grid-column: 1; grid-row: 3; margin-bottom: 0; }
+  .hero2:has(.hero2-film) .cta-row { grid-column: 1 / -1; grid-row: 4; }
+  .hero2:has(.hero2-film) .gammel-ios, .hero2:has(.hero2-film) .cta-under,
+  .hero2:has(.hero2-film) .minn, .hero2:has(.hero2-film) .trygt-rad { grid-column: 1 / -1; }
+  .hero2:has(.hero2-film) .film--staaende { width: min(42vw, 168px, calc(34svh * 9 / 16)); }
+  .hero2:has(.hero2-film) .film-knapp { min-height: 44px; padding: 6px 10px 6px 6px; font-size: 0.875rem; gap: 6px; bottom: 8px; }
+  .hero2:has(.hero2-film) .film-ikon { width: 28px; height: 28px; font-size: 0.9375rem; }
+}
 
 /* Film frames: poster with one big play button; the button goes away while the film plays with sound. */
 .film { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid #89734f;
@@ -186,18 +204,15 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
   .top:has(.meny-knapp:not([hidden])) nav a.topp-kjop { padding: 4px 12px; }
   .meny-knapp:not([hidden])::before { display: none; }
 }
-/* «Du ser, spør og prøver selv» (Codex N6, Lars 16.11): tre trinn med utsnitt av spillets skjermbilder. */
+/* «Du ser, spør og prøver selv» (Codex N6, Lars 16.11): tre trinn med hele skjermbildet, som i Codex
+   (Lars 16.11 kl. 10:58). Ingen utsnitt. Maksbredde som en telefon, så bildet ikke blir svært høyt liggende. */
 .tre-steg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .steg-kort { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
-.steg-kort img { display: block; width: 100%; max-width: 320px; margin: 0 auto 12px; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
-  object-position: 50% 30%; border-radius: 10px; border: 1px solid var(--line); }
-.steg-kort img.bunn { object-position: 50% 100%; }
-.steg-kort img.topp { object-position: 50% 0%; }
-.steg-kort img.midt { object-position: 50% 22%; }
+.steg-kort img { display: block; width: 100%; max-width: 320px; margin: 0 auto 12px; height: auto;
+  border-radius: 10px; border: 1px solid var(--line); background: #0d0c0a; }
 .steg-kort .steg-nr { margin: 0; color: var(--gold); font-size: 0.9375rem; letter-spacing: .02em; }
 .steg-kort h3 { margin: 4px 0 6px; color: var(--gold); }
 .steg-kort p { margin: 0; color: var(--soft); }
-.steg-kort .steg-nr { color: var(--gold); }
 @media (max-width: 879px) { .tre-steg { grid-template-columns: 1fr; } }
 
 
