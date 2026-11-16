@@ -100,7 +100,7 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
 .dato-linje { margin: 0 0 6px; color: var(--paper); font-size: 0.9375rem; line-height: 1.4; }
 .dato-linje[hidden] { display: none; }
 .hero2 .dato-linje { border-left: 3px solid var(--gold); padding-left: 10px; }
-/* «📅 Minn meg på 1. desember»: en stille knapp som ser ut som en lenke; vises bare før 1. desember. */
+/* «Minn meg på 1. desember» (uten kalenderikon, forslag 1, Lars 16.11): en stille knapp som ser ut som en lenke; vises bare før 1. desember. */
 .minn { margin: -4px 0 12px; }
 .minn[hidden] { display: none; }
 .lenke-knapp { font: inherit; font-size: 1rem; color: var(--gold); background: none; border: 0; padding: 10px 0; min-height: 44px;
@@ -138,3 +138,29 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
 .film-pause { position: absolute; top: 10px; right: 10px; min-height: 44px; min-width: 44px; padding: 6px 14px; border-radius: 999px;
   border: 1px solid #f3d58a; background: #1b1a17cc; color: #f6efdf; font: inherit; font-size: 0.9375rem; cursor: pointer; }
 .film-pause[hidden], .film.spiller .film-pause { display: none; }
+/* Forslag 9 (Lars 16.11): hero-knappene synlige på kort liggende telefon.
+   Gjelder bare liggende skjerm med høyde inntil 430 px. Stående og nettbrett
+   er uendret. Ingen tekstendring. */
+@media (orientation: landscape) and (max-height: 430px) {
+  main { padding-top: 8px; padding-bottom: 8px; }
+  .hero2 { padding: 0 0 16px; gap: 8px; }
+  .hero2 h1 { font-size: clamp(1.35rem, 4.2vw, 1.85rem); }
+  .hero2 .dato-linje { margin: 0 0 2px; }
+  .hero2 .eyebrow { margin-bottom: 2px; }
+  .hero2 .lead { margin-bottom: 4px; }
+  .hero2 .alder { margin: 0 0 8px; }
+  .hero2-tekst { display: flex; flex-direction: column; }
+  .hero2-tekst .cta-row { order: -1; margin: 8px 0 10px; }
+  .hero2 .cta-row .btn { min-height: 44px; padding: 6px 16px; flex-basis: 180px; }
+}
+/* Forslag 11 (Lars 16.11): engelsk forside uten traileren i hero. Når .hero2-film mangler,
+   brukes én kolonne fra 880 px, slik at tittel og knapper får hele bredden
+   i stedet for at høyre kolonne står tom. Ingen tekstendring. Den norske
+   forsiden (som har film) er uendret. */
+@media (min-width: 880px) {
+  .hero2:not(:has(.hero2-film)) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "tittel" "tekst";
+    max-width: 46rem;
+  }
+}

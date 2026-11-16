@@ -99,7 +99,7 @@ const START = {
   },
 };
 
-/** «📅 Minn meg på 1. desember»: one event, Tuesday 1 December at 18.00, with the link to door 1. It has door 1's UID
+/** «Minn meg på 1. desember»: one event, Tuesday 1 December at 18.00, with the link to door 1. It has door 1's UID
  *  from the receipt's file, so the two never stand twice in the same calendar. */
 export function startIcs(lang = 'nb', now = new Date()) {
   const t = START[lang] ?? START.nb;

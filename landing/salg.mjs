@@ -1,4 +1,4 @@
-// The sales pages (nb and /en/): the line that changes with the date (dato.mjs), «📅 Minn meg på 1. desember» (one
+// The sales pages (nb and /en/): the line that changes with the date (dato.mjs), «Minn meg på 1. desember» (one
 // calendar event made here, nothing stored or sent, no e-mail), and the place for quotes from grown-ups who tried door 1.
 // The quotes stand in sitater.json and are shown only when there are real ones; until then the place is not on the page.
 import { forStart } from './dato.mjs';

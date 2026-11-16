@@ -425,10 +425,19 @@ if (oldSafari()) $('gammel-ios').hidden = false;
 // something after it.
 const emailLooksSent = (email) => /^[^@\s]+@[^@\s]+\.[^@\s.]{2,}$/.test(email) && !/\.\./.test(email.split('@')[1] ?? '');
 
+// Forslag 3 (Lars 16.11): «Sjekk e-postadressen.» står rett under e-postfeltet, så den ikke havner under skjermkanten
+// langt nede ved betalingsknappen. De andre meldingene står der de sto, under knappene.
+const errorHome = $('feil').previousElementSibling;
+const placeError = (underEmail) => {
+  if (underEmail) $('epost').after($('feil'));
+  else if (errorHome) errorHome.after($('feil'));
+};
+
 // Shared checks for the first step (product and e-mail).
 function readOrderFields(say) {
   const email = $('epost').value.trim();
   const bad = !$('epost').checkValidity() || !emailLooksSent(email);
+  placeError(bad);
   // Del 13 L9: a screen reader hears that the field is wrong, not only the message under it.
   $('epost').setAttribute('aria-invalid', String(bad));
   // Round 2 (keyboard): the field that is wrong gets the focus, so a keyboard or screen-reader user lands on it.

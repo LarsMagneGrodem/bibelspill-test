@@ -93,3 +93,34 @@
 .kasse .samtykke { margin-top: 8px; }
 .kasse .foer-betal { margin-top: 8px; }
 .kasse .gave-mer summary { font-size: 0.9375rem; }
+/* Forslag 2 (Lars 16.11): «Continue to payment» på den engelske siden fyller bredden, som «Betal med Vipps» på norsk. */
+.kasse a#betal { display: flex; width: 100%; box-sizing: border-box; text-align: center; }
+/* Forslag 10 (Lars 16.11): betalingsknappen synlig på kort liggende telefon.
+   Gjelder bare liggende skjerm med høyde inntil 430 px. Stående og nettbrett
+   er uendret. Ingen tekstendring. */
+@media (orientation: landscape) and (max-height: 430px) {
+  .kasse { padding-top: 6px; padding-bottom: 80px; }
+  .kasse h1 { font-size: 1.2rem; margin-bottom: 0; }
+  .kasse h1 + p { font-size: 0.875rem; line-height: 1.3; margin: 0 0 4px; }
+  .kasse .dato-linje { margin-bottom: 2px; font-size: 0.8125rem; line-height: 1.3; }
+  .kasse > section { padding-top: 2px; }
+  .kasse .valg { margin-top: 4px; padding: 2px 12px 6px; }
+  .kasse .valg label { margin-top: 6px; }
+  .kasse .per-luke, .kasse .merkelapp, .kasse .flere-hjem { font-size: 0.8125rem; }
+  .kasse .foer-betal { margin-top: 6px; }
+  .kasse .samtykke { margin-top: 6px; }
+  /* #betal på den engelske siden er betalingslenka; på norsk er #betal en
+     skjult banksidel, derfor a#betal og #kjop-vipps. */
+  .kasse #kjop-vipps,
+  .kasse a#betal {
+    position: fixed;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    width: min(40rem, calc(100% - 32px));
+    z-index: 6;
+    box-shadow: 0 -10px 24px #1b1a17, 0 4px 16px #0006;
+  }
+}
+/* Forslag 3 (Lars 16.11): e-postfeilen rett under feltet. */
+.kasse #epost + #feil { margin: 6px 0 0; }
