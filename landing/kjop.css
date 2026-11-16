@@ -124,3 +124,22 @@
 }
 /* Forslag 3 (Lars 16.11): e-postfeilen rett under feltet. */
 .kasse #epost + #feil { margin: 6px 0 0; }
+/* Kjøpsvalgene som store kort (Codex N8, Lars 16.11): hele kortet kan trykkes, og det valgte kortet er markert med gull
+   kant og lysere bakgrunn. Teksten og prisene er de samme. To kort side om side fra 600 px. */
+.kasse .valg { border: 0; padding: 0; }
+.kasse .valg legend { padding: 0; margin: 0; font-weight: 600; }
+.kasse .valg .flere-hjem { margin-top: 8px; }
+.kasse .valg label { margin-top: 6px; padding: 6px 12px; background: var(--card); border: 2px solid #89734f88; border-radius: 10px; cursor: pointer; }
+.kasse .valg label:hover { border-color: var(--line); }
+.kasse .valg label:has(input:checked) { background: #3a2a18; border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; }
+.kasse .valg label:has(input:focus-visible) { outline: 3px solid var(--gold); outline-offset: 2px; }
+.kasse .valg input { accent-color: var(--gold); }
+.kasse .valg label strong { color: var(--gold); }
+@media (min-width: 600px) {
+  .kasse .valg { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+  .kasse .valg legend, .kasse .valg .flere-hjem { grid-column: 1 / -1; }
+}
+@media (orientation: landscape) and (max-height: 430px) {
+  .kasse .valg { padding: 0; }
+  .kasse .valg label { margin-top: 4px; padding: 6px 10px; }
+}

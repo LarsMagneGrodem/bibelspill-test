@@ -164,3 +164,38 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
     max-width: 46rem;
   }
 }
+/* Meny på telefon (Codex N2, Lars 16.11). På PC står lenkene på rad som før; knappen vises bare under 720 px og bare
+   når skriptet har slått den på. Lenkene åpnes som en liste under toppfeltet. */
+.meny-lenker { display: contents; }
+.meny-knapp { display: none; }
+@media (max-width: 719px) {
+  .meny-knapp:not([hidden]) { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 4px 12px;
+    font: inherit; font-size: 0.9375rem; color: var(--paper); background: #ffffff10; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; }
+  .meny-knapp::before { content: '☰'; color: var(--gold); }
+  .meny-knapp[aria-expanded='true'] { border-color: var(--gold); }
+  .meny-lenker[data-open='true'] { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
+    padding: 4px 16px 10px; background: #1b1a17; box-shadow: 0 10px 20px #0008; border-bottom: 1px solid var(--line); white-space: normal; }
+  .meny-lenker[data-open='true'] a.nav-bred { display: flex; padding: 2px 0; font-size: 1rem; }
+  nav:has(.meny-knapp:not([hidden])) { gap: 0 8px; }
+  .top:has(.meny-knapp:not([hidden])) .brand { letter-spacing: .04em; }
+  .meny-knapp:not([hidden]) { padding: 4px 10px; }
+}
+@media (max-width: 374px) {
+  .top:has(.meny-knapp:not([hidden])) { padding: 6px 10px; gap: 6px 8px; }
+  .top:has(.meny-knapp:not([hidden])) .brand { font-size: 0.8125rem; letter-spacing: .02em; }
+  .top:has(.meny-knapp:not([hidden])) nav a.topp-kjop { padding: 4px 12px; }
+  .meny-knapp:not([hidden])::before { display: none; }
+}
+/* «Du ser, spør og prøver selv» (Codex N6, Lars 16.11): tre trinn med utsnitt av spillets skjermbilder. */
+.tre-steg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.steg-kort { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.steg-kort img { display: block; width: 100%; max-width: 320px; margin: 0 auto 12px; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+  object-position: 50% 30%; border-radius: 10px; border: 1px solid var(--line); }
+.steg-kort img.bunn { object-position: 50% 100%; }
+.steg-kort img.topp { object-position: 50% 0%; }
+.steg-kort img.midt { object-position: 50% 22%; }
+.steg-kort .steg-nr { margin: 0; color: var(--gold); font-size: 0.9375rem; letter-spacing: .02em; }
+.steg-kort h3 { margin: 4px 0 6px; color: var(--gold); }
+.steg-kort p { margin: 0; color: var(--soft); }
+.steg-kort .steg-nr { color: var(--gold); }
+@media (max-width: 879px) { .tre-steg { grid-template-columns: 1fr; } }

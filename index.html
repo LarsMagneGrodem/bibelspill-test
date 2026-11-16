@@ -43,11 +43,15 @@
   <header class="top">
     <p class="brand">Reisen med Lukas</p>
     <nav aria-label="Hovedmeny">
-      <a class="nav-bred" href="#opplevelse">Hva barna gjør</a>
-      <a class="nav-bred" href="#pris">Pris</a>
-      <a class="nav-bred" href="#gave">Gavekort</a>
-      <a class="nav-bred" href="#introfilm">Introfilmen</a>
-      <a class="nav-bred" href="#faq">Spørsmål</a>
+      <!-- Meny på telefon (Codex N2, Lars 16.11): knappen vises av salgsside.js; uten skript er menyen som før. -->
+      <button class="meny-knapp" type="button" aria-expanded="false" aria-controls="meny-lenker" hidden>Meny</button>
+      <span class="meny-lenker" id="meny-lenker">
+        <a class="nav-bred" href="#opplevelse">Hva barna gjør</a>
+        <a class="nav-bred" href="#pris">Pris</a>
+        <a class="nav-bred" href="#gave">Gavekort</a>
+        <a class="nav-bred" href="#introfilm">Introfilmen</a>
+        <a class="nav-bred" href="#faq">Spørsmål</a>
+      </span>
       <a href="https://reisenmedlukas.no/en/" lang="en" hreflang="en">English</a>
       <a class="btn gull topp-kjop" href="til/kjop/">Kjøp</a>
     </nav>
@@ -101,45 +105,30 @@
       </div>
     </section>
 
+    <!-- «Du ser, spør og prøver selv» (Codex 16.11, Lars 16.11 kl. 09:24: erstatter «Dette får barna oppleve»). Bildene er
+         utsnitt av spillets egne skjermbilder, så de ikke blir svært høye på telefon. -->
     <section id="opplevelse" aria-labelledby="opplevelse-tittel">
-      <h2 id="opplevelse-tittel">Dette får barna oppleve</h2>
-      <p class="ingress">Hver luke er en liten sak å løse. Dagens oppdrag tar vanligvis 5–15 minutter, og den som vil mer, kan bli lenger.</p>
-      <div class="tre">
-        <article class="kort-bilde">
-          <img src="landing/assets/brett-desk-folk.webp" width="1280" height="800" loading="lazy" decoding="async"
-            alt="Et malt spillbrett sett ovenfra: et verksted med hyller, krukker og folk, og en snakkeboble fra en av dem." />
-          <h3>Spillbrett å gå rundt på</h3>
-          <p>Malte steder fra Nasaret til Betlehem. Barnet går rundt, snakker med folk og samler spor sammen med Lukas.</p>
+      <h2 id="opplevelse-tittel">Du ser, spør og prøver selv</h2>
+      <div class="tre-steg">
+        <article class="steg-kort">
+          <img class="bunn" src="landing/assets/spill-samtale.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et malt landsbytorg i Nasaret sett ovenfra. Nederst sier Lukas: Hva spurte Maria om da engelen kom?" />
+          <p class="steg-nr">1 · Møt noen</p>
+          <h3>Hør hva de forteller</h3>
+          <p>Du får ett oppdrag om gangen. Neste steg hjelper deg videre.</p>
         </article>
-        <article class="kort-bilde">
-          <img src="landing/assets/smaaspill-puslespill.webp" width="390" height="844" loading="lazy" decoding="async" class="midt"
-            alt="Et småspill der bitene i et malt bilde skal settes tilbake på plass." />
-          <h3>Småspill underveis</h3>
-          <p>Puslespill og små oppgaver gir pauser i fortellingen og belønner dem som følger med.</p>
+        <article class="steg-kort">
+          <img class="topp" src="landing/assets/spill-sak.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et saksark med spørsmålet Hva spurte Maria om? Over står det en kilde kan fortelle, og under velger barnet hva som passer i Lukas' notat." />
+          <p class="steg-nr">2 · Undersøk spor</p>
+          <h3>Finn ut hvor vi vet det fra</h3>
+          <p>Sporene følger deg inn i boka. Du trenger ikke huske alt.</p>
         </article>
-        <article class="kort-bilde">
-          <img src="landing/assets/dag-01.webp" width="596" height="842" loading="lazy" decoding="async" class="beskaar"
-            alt="Et aktivitetsark for dag 1 med tittelen Sporjakt på torget, et bilde av et esel ved en veltet kjerre og små oppgaver." />
-          <h3>Aktiviteter for hele familien</h3>
-          <p>Ark til utskrift for hver dag: let etter ord, løs koder, finn forskjeller og snakk sammen om dagens fortelling.</p>
+        <article class="steg-kort">
+          <img class="midt" src="landing/assets/smaaspill-puslespill.webp" width="390" height="844" loading="lazy" decoding="async" alt="Et småspill der bitene i et malt bilde skal settes tilbake på plass." />
+          <p class="steg-nr">3 · Lek litt til</p>
+          <h3>Oppdag småspill</h3>
+          <p>Spillkista samler lekene du finner. Prøv igjen når du vil.</p>
         </article>
       </div>
-
-      <ol class="steps steg2">
-        <li><strong>Åpne dagens luke</strong> på kartet over landet.</li>
-        <li><strong>Snakk med folk og samle spor.</strong> Den første saken begynner på torget i Cæsarea, der en kjerre har veltet.</li>
-        <li><strong>Fyll vitneboka.</strong> Barnet ser kildene selv og bestemmer hva sporene peker på.</li>
-        <li><strong>Snakk sammen etter hver luke.</strong> Når luka er løst, får en voksen to spørsmål å snakke om rundt bordet.</li>
-        <li><strong>Samle dagskortene.</strong> På julaften kan en voksen lage et diplom med barnets navn.</li>
-      </ol>
-
-      <h3>Slik ser det ut på telefonen</h3>
-      <ul class="phones" tabindex="0" aria-label="Bilder fra spillet på telefon">
-        <li><figure><img src="landing/assets/spill-samtale.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et malt landsbytorg i Nasaret sett ovenfra. Nederst sier Lukas: Hva spurte Maria om da engelen kom?" /><figcaption>Lukas gir dagens spørsmål, og barnet går rundt og snakker med folk.</figcaption></figure></li>
-        <li><figure><img src="landing/assets/spill-sak.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Et saksark med spørsmålet Hva spurte Maria om? Over står det en kilde kan fortelle, og under velger barnet hva som passer i Lukas' notat." /><figcaption>I saken velger barnet selv hva kildene faktisk sier.</figcaption></figure></li>
-        <li><figure><img src="landing/assets/spill-pastand.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Kortet Dagens sjekk: Jesus vokste opp i Nasaret. Barnet har valgt Sterke spor, og under står hvorfor historikerne sier det samme." /><figcaption>Dagens sjekk: barnet vurderer hvor gode spor historikerne har, og får se hvorfor.</figcaption></figure></li>
-        <li><figure><img src="landing/assets/spill-dagskort.webp" width="480" height="1039" loading="lazy" decoding="async" alt="Sluttkortet for luke 4 med dagskortet, morgendagens spørsmål på en forseglet lapp og knappen Neste luke." /><figcaption>Sluttkortet med dagskortet og en forseglet lapp om neste luke.</figcaption></figure></li>
-      </ul>
     </section>
 
     <!-- «Hele reisen, luke for luke»: lista er laget fra chapters/*/chapter.json (tittel, sted, bibelhenvisning; ingen

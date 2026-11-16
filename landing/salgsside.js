@@ -148,3 +148,21 @@ document.querySelectorAll('.epost').forEach(function (s) {
   if (!old) return;
   document.querySelectorAll('[data-gammel-ios]').forEach(function (p) { p.hidden = false; });
 })();
+
+// Meny på telefon (Codex N2, Lars 16.11): «Meny» viser lenkene til delene av siden. Escape lukker, og et trykk på en
+// lenke lukker. «English» og «Kjøp» står alltid i toppen. Uten denne knappen (engelsk side, uten skript) er alt som før.
+(function () {
+  var button = document.querySelector('.meny-knapp');
+  var links = button && document.getElementById(button.getAttribute('aria-controls'));
+  if (!links) return;
+  button.hidden = false;
+  function set(open) {
+    button.setAttribute('aria-expanded', String(open));
+    links.dataset.open = String(open);
+  }
+  button.addEventListener('click', function () { set(button.getAttribute('aria-expanded') !== 'true'); });
+  links.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') { set(false); button.focus(); }
+  });
+})();
