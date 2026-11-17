@@ -194,7 +194,7 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
   .meny-knapp::before { content: '☰'; color: var(--gold); }
   .meny-knapp[aria-expanded='true'] { border-color: var(--gold); }
   .meny-lenker[data-open='true'] { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0;
-    padding: 4px 16px 10px; background: #1b1a17; box-shadow: 0 10px 20px #0008; border-bottom: 1px solid var(--line); white-space: normal; }
+    padding: 4px 16px 10px; background: #0f2150; box-shadow: 0 10px 20px rgba(8, 16, 40, 0.55); border-bottom: 1px solid var(--line); white-space: normal; }
   .meny-lenker[data-open='true'] a.nav-bred { display: flex; padding: 2px 0; font-size: 1rem; }
   nav:has(.meny-knapp:not([hidden])) { gap: 0 8px; }
   .top:has(.meny-knapp:not([hidden])) .brand { letter-spacing: .04em; }
@@ -325,9 +325,10 @@ header.top {
   border-color: #f0d38a;
   color: #f3ead6;
 }
-@media (max-width: 720px) {
-  .meny-lenker {
+@media (max-width: 719px) {
+  .meny-lenker[data-open='true'] {
     background: #0f2150;
+    box-shadow: 0 10px 20px rgba(8, 16, 40, 0.55);
   }
 }
 #hovedtittel::after {
