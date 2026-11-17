@@ -23,6 +23,12 @@
   <meta property="og:image:alt" content="The painted map of the land where Jesus lived, with the words: The Journey with Luke. Online Advent calendar, 1–24 December. Door 1 is free." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://reisenmedlukas.no/en/assets/delingskort-en.jpg?v=e97c5ffd" />
+  <meta property="og:video" content="https://reisenmedlukas.no/en/assets/film/trailer.mp4?v=ad6bc175" />
+  <meta property="og:video:secure_url" content="https://reisenmedlukas.no/en/assets/film/trailer.mp4?v=ad6bc175" />
+  <meta property="og:video:type" content="video/mp4" />
+  <meta property="og:video:width" content="720" />
+  <meta property="og:video:height" content="1280" />
+  <link rel="preload" as="image" href="assets/film/trailer-plakat.webp?v=f01fc3b5" fetchpriority="high" />
   <link rel="icon" type="image/png" sizes="32x32" href="https://reisenmedlukas.no/landing/assets/icon-32.png" />
   <link rel="apple-touch-icon" href="https://reisenmedlukas.no/spill/icon-192.png" />
   <link rel="privacy-policy" href="personvern.html" />
@@ -51,6 +57,21 @@
         <p class="eyebrow">An online Advent calendar · 1–24 December</p>
         <h1 id="hovedtittel">One door a day with Luke – all the way to Christmas Eve</h1>
       </div>
+
+      <figure class="hero2-film">
+        <div class="film film--staaende" data-film>
+          <video id="trailer" class="film-video" playsinline preload="none"
+            poster="assets/film/trailer-plakat.webp?v=f01fc3b5"
+            width="720" height="1280"
+            aria-label="Trailer for The Journey with Luke, 48 seconds">
+            <source src="assets/film/trailer.mp4?v=ad6bc175" type="video/mp4" />
+          </video>
+          <button class="film-knapp" type="button" data-play-sound aria-label="Play the trailer with sound">
+            <span class="film-ikon" aria-hidden="true">▶</span>
+            <span>Trailer <small>48 sec</small></span>
+          </button>
+        </div>
+      </figure>
 
       <div class="hero2-tekst">
         <p class="lead">An Advent calendar with Christian content, built on the Christmas story in Luke’s Gospel. You become the apprentice of Luke the physician, talk with people who were there, and solve one short case a day, 5–15 minutes.</p>
@@ -334,10 +355,12 @@
     <p>The game is provided by Rygard Holding AS, organisation no. 938 118 132, Vestre Fognavegen 126, 4164 Fogn, Norway. Email: <span class="epost" data-u="lars.magne" data-d="outlook.com">lars.magne (at) outlook.com</span>. Phone: <a href="tel:+4795145892">+47 951 45 892</a>.</p>
     <p>Purchases on this English site are sold by Stripe (“Sold through Link”). Stripe sends the payment receipt. We send the code.</p>
     <p><a href="kontakt.html">Contact</a> · <a href="vilkar.html">Terms of sale</a> · <a href="personvern.html">Privacy</a> · <a href="https://reisenmedlukas.no/tilgjengelighet.html">Accessibility</a> · <a href="https://reisenmedlukas.no/spill/filmer.html">Films from BibleProject</a> · Visit counts without cookies; see the privacy policy.</p>
+    <p class="credit">Music in the trailer: «Born Of The Sky» by Scott Buckley, <a href="https://www.scottbuckley.com.au/library/born-of-the-sky/">scottbuckley.com.au</a>, licence <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Changes: excerpted and edited with EQ, fades and volume changes; mixed with narration and sound effects.</p>
   </footer>
   <script src="epost.js" defer></script>
   <script type="module" src="valuta.js"></script>
   <script type="module" src="../landing/salg.mjs"></script>
+  <script src="../landing/salgsside.js" defer></script>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"d5b09c79325d4c4abc9d2dac1d627fce"}'></script>
 </body>
 </html>
