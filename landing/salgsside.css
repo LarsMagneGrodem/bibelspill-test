@@ -206,6 +206,11 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
   .top:has(.meny-knapp:not([hidden])) nav a.topp-kjop { padding: 4px 12px; }
   .meny-knapp:not([hidden])::before { display: none; }
 }
+/* 320 px (Lars 17.11): the English name «The Journey with Luke» wrapped onto two lines beside Norsk and Buy,
+   because the tighter brand size only applied when the Norwegian menu button was in the header. */
+@media (max-width: 360px) {
+  header.top .brand { font-size: 0.8125rem; letter-spacing: .02em; }
+}
 /* «Du ser, spør og prøver selv» (Codex N6, Lars 16.11): tre trinn med hele skjermbildet, som i Codex
    (Lars 16.11 kl. 10:58). Ingen utsnitt. Maksbredde som en telefon, så bildet ikke blir svært høyt liggende. */
 .tre-steg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
