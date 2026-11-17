@@ -451,11 +451,21 @@ $('epost').addEventListener('input', () => $('epost').removeAttribute('aria-inva
 // Finpuss r3: an unticked consent box is marked as wrong for a screen reader and gets the focus, as the email field does;
 // ticking it clears the mark.
 function consentMissing(id, say) {
-  $(id).setAttribute('aria-invalid', 'true');
-  $(id).focus();
-  return say('consent');
+  const box = $(id);
+  const label = box.closest('label') || box;
+  const message = id === 'samtykke' ? $('feil-betal') : $('feil');
+  box.setAttribute('aria-invalid', 'true');
+  label.classList.add('samtykke-mangler');
+  if (message) label.after(message);
+  box.focus();
+  const result = say('consent');
+  label.scrollIntoView({ block: 'center' });
+  return result;
 }
-for (const id of ['samtykke-bestill', 'samtykke']) $(id)?.addEventListener('change', () => $(id).removeAttribute('aria-invalid'));
+for (const id of ['samtykke-bestill', 'samtykke']) $(id)?.addEventListener('change', () => {
+  $(id).removeAttribute('aria-invalid');
+  $(id).closest('label')?.classList.remove('samtykke-mangler');
+});
 
 // Del 13 L1: a button waiting for the worker says so to a screen reader too (the look is in kjop.css).
 const busy = (id, on) => {

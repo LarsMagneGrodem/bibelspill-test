@@ -1,10 +1,11 @@
 // The English sales and buy pages: show the visitor's currency first (€24.99 / £19.99 / $24.99,
 // and the family and per-door lines). The amounts are the ones the Stripe Payment Links already
 // charge (kasse r48, STRIPE_AMOUNTS_*). The pages are static on GitHub Pages, so the country is
-// read only from the browser: language region (en-GB, en-US) and, if that is missing, the
-// time zone (Europe/London, America/*). There is no currency parameter on a Payment Link, so
-// the checkout link itself is unchanged; Stripe already picks a currency (fixed EUR/GBP/USD
-// prices, or Adaptive Pricing for other currencies).
+// read only from the browser: the time zone first (America/* is USD, UK zones are GBP, any
+// other known zone is EUR), and the language region (en-GB, en-US) only when the time zone is
+// missing. There is no currency parameter on a Payment Link, so the checkout link itself is
+// unchanged; Stripe already picks a currency (fixed EUR/GBP/USD prices, or Adaptive Pricing
+// for other currencies).
 export var ORDER = ['eur', 'gbp', 'usd'];
 
 export var REKKER = {
@@ -29,15 +30,25 @@ export function currencyFromLanguages(langs) {
   return '';
 }
 
+var UK_ZONES = {
+  'Europe/London': 1,
+  'Europe/Guernsey': 1,
+  'Europe/Jersey': 1,
+  'Europe/Isle_of_Man': 1,
+};
+
 export function currencyFromTimeZone(tz) {
   var zone = String(tz || '');
-  if (zone === 'Europe/London') return 'gbp';
+  if (!zone) return '';
+  if (UK_ZONES[zone]) return 'gbp';
   if (zone.indexOf('America/') === 0) return 'usd';
-  return '';
+  return 'eur';
 }
 
 export function visitorCurrency(langs, tz) {
-  return currencyFromLanguages(langs) || currencyFromTimeZone(tz) || 'eur';
+  var zone = String(tz || '');
+  if (zone) return currencyFromTimeZone(zone);
+  return currencyFromLanguages(langs) || 'eur';
 }
 
 export function formatRekke(parts, first) {
