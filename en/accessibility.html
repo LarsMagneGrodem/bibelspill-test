@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="/en/flytt.js" data-com></script>
+  <meta http-equiv="refresh" content="0; url=https://thejourneywithluke.com/accessibility.html" data-com />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accessibility – The Journey with Luke</title>
+  <meta name="description" content="What works in The Journey with Luke for children who see poorly, use a keyboard or a screen reader, or need less movement on screen, and what does not work yet." />
+  <link rel="canonical" href="https://thejourneywithluke.com/accessibility.html" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://reisenmedlukas.no/icon-32.png" />
+  <meta name="theme-color" content="#1b1a17" />
+  <style>
+/* Forslag 16.11.2026: stjernehimmel B på vilkår, personvern, filmer og tilgjengelighet. Bare farger, ingen tekstendring. */
+body {
+  margin: 0;
+  padding: 24px 16px 48px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Ccircle cx='78' cy='228' r='1.2' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='65' cy='72' r='0.6' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='40' cy='106' r='1.0' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='119' cy='214' r='0.6' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='114' cy='206' r='0.8' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='178' cy='154' r='0.6' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='143' r='0.8' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='88' cy='160' r='0.7' fill='%23dfe8ff' fill-opacity='0.5'/%3E%3Ccircle cx='114' cy='199' r='1.0' fill='%23f6e7b8' fill-opacity='0.65'/%3E%3Ccircle cx='122' cy='125' r='0.8' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='40' cy='149' r='0.9' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='235' cy='23' r='1.2' fill='%23dfe8ff' fill-opacity='0.4'/%3E%3Ccircle cx='110' cy='63' r='1.0' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='205' cy='201' r='1.0' fill='%23fff' fill-opacity='0.5'/%3E%3Ccircle cx='58' cy='157' r='0.7' fill='%23f6e7b8' fill-opacity='0.5'/%3E%3Ccircle cx='69' cy='102' r='1.2' fill='%23fff' fill-opacity='0.5'/%3E%3C/svg%3E") , url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Ccircle cx='78' cy='228' r='1.2' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='65' cy='72' r='0.6' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='40' cy='106' r='1.0' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='119' cy='214' r='0.6' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='114' cy='206' r='0.8' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='178' cy='154' r='0.6' fill='%23dfe8ff' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='143' r='0.8' fill='%23fff' fill-opacity='0.4'/%3E%3Ccircle cx='88' cy='160' r='0.7' fill='%23dfe8ff' fill-opacity='0.5'/%3E%3Ccircle cx='114' cy='199' r='1.0' fill='%23f6e7b8' fill-opacity='0.65'/%3E%3Ccircle cx='122' cy='125' r='0.8' fill='%23f6e7b8' fill-opacity='0.25'/%3E%3Ccircle cx='40' cy='149' r='0.9' fill='%23fff' fill-opacity='0.3'/%3E%3Ccircle cx='235' cy='23' r='1.2' fill='%23dfe8ff' fill-opacity='0.4'/%3E%3Ccircle cx='110' cy='63' r='1.0' fill='%23fff' fill-opacity='0.25'/%3E%3Ccircle cx='205' cy='201' r='1.0' fill='%23fff' fill-opacity='0.5'/%3E%3Ccircle cx='58' cy='157' r='0.7' fill='%23f6e7b8' fill-opacity='0.5'/%3E%3Ccircle cx='69' cy='102' r='1.2' fill='%23fff' fill-opacity='0.5'/%3E%3C/svg%3E") , radial-gradient(ellipse 60% 38% at 50% 0%, rgba(255, 220, 140, 0.16), transparent 70%), radial-gradient(ellipse at 50% 20%, #2d4c96, #1a3270 55%, #0f2150);
+  background-size: 240px 240px, 420px 420px, auto, auto;
+  background-position: 0 0, 113px 71px, 0 0, 0 0;
+  background-attachment: fixed, fixed, fixed, fixed;
+  background-color: #0f2150;
+  color: #f3ead6;
+  font: 18px/1.5 Georgia, serif;
+}
+main { max-width: 640px; margin: 0 auto; overflow-wrap: break-word; }
+h1 { font-size: 1.6em; margin: 0 0 0.5em; color: #f0d38a; text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 0 18px rgba(240, 211, 138, 0.25); }
+h1::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 10px;
+  margin: 8px 0 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10'%3E%3Cpath d='M0 5h50M70 5h50' stroke='%23cca64f' stroke-width='1.2'/%3E%3Cpath d='M60 1l4 4-4 4-4-4z' fill='%23cca64f'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+h2 { font-size: 1.15em; margin: 1.5em 0 0.4em; color: #f0d38a; }
+h3 { font-size: 1.05em; margin: 1.2em 0 0.3em; color: #f0d38a; }
+p, li { margin: 0.4em 0; }
+a { color: #ffe7a3; }
+:focus-visible { outline: 3px solid #ffd84a; outline-offset: 3px; }
+.card, .placeholder, .source { color: #d8c79c; }
+.source { border-left: 3px solid #d9b25c; padding-left: 12px; }
+.merke { border: 1px solid #d9b25c; padding: 0.8em 1em; margin: 1em 0; }
+
+    </style>
+</head>
+<body>
+  <main>
+    <p><a href="./">Back to the front page</a></p>
+    <h1>Accessibility</h1>
+    <p>This page says what works in <strong>The Journey with Luke</strong> (Reisen med Lukas) for children who see poorly, use a keyboard or a screen reader, or need less movement on screen. It also says what does not work yet. This is a translation of the <a href="https://reisenmedlukas.no/tilgjengelighet.html" hreflang="nb" lang="nb">Norwegian accessibility statement</a>.</p>
+    <p>We have tried the game ourselves with a keyboard, magnification and an automatic accessibility tool (axe). We have not gone through the game point by point against a standard such as WCAG, and we have not tried it with NVDA, VoiceOver or TalkBack. We therefore do not say that the game meets a standard.</p>
+
+    <h2>What works</h2>
+    <ul>
+      <li><strong>Keyboard.</strong> The whole of the day’s mission can be solved with Tab, Enter, space, the arrow keys and Esc. Esc always closes the card that is open, and focus goes back to where you were. What you have chosen with the keyboard gets a clear ring around it.</li>
+      <li><strong>Read aloud and text.</strong> The lines are read aloud with recorded voices, and everything that is said is also written as text. Items and the notebook have a button that reads aloud. The introduction film has subtitles, and it can be swapped for reading cards you page through at your own pace.</li>
+      <li><strong>Magnification.</strong> You can pinch to zoom in on cards and text. The game follows the text size you have chosen in the browser or on the phone. “Big text” in the settings (⚙) makes the text one and a half times as large. When the top bar would cover too much of the screen, it folds into one line, and the arrow button shows the rest.</li>
+      <li><strong>Less movement.</strong> If the device is set to reduce motion, reading cards are shown instead of the film, the lines appear already written, and the camera glides calmly.</li>
+      <li><strong>Large buttons.</strong> All buttons in the game are at least 44 × 44 points.</li>
+      <li><strong>The day cards in the notebook.</strong> The cards are pictures, but the screen reader reads the door, the title and the day’s question, the same as stands on the card.</li>
+      <li><strong>Without seeing the shapes.</strong> The fitting puzzles say in words whether the answer fits.</li>
+    </ul>
+
+    <h2>What does not work yet</h2>
+    <ul>
+      <li><strong>The map cannot be read by a screen reader.</strong> The board is a painted picture. You can still play: “Next step” at the top goes to the next goal, the compass points there and can be tapped, the action button at the bottom says what you can do where you stand, and the notebook has all clues and items as text. With a keyboard, the arrow keys move the child.</li>
+      <li><strong>The introduction film</strong> is large (about 24 MB). On a slow connection it may stall. You can skip it or read the reading cards instead. While the voice in the film is speaking, the screen reader may read the subtitles at the same time.</li>
+      <li><strong>Magnified on a narrow phone,</strong> “Next step” gets only one line in the folded top bar. Tap the arrow to see the whole top bar.</li>
+      <li><strong>Short notices</strong> disappear after a few seconds. What they say can also be found in the notebook.</li>
+      <li><strong>The diploma and the day card on the end card</strong> are pictures. There the screen reader only says what kind of card it is, not what is written on it. The day card can be read in the notebook.</li>
+      <li><strong>Some mini-games have a time limit</strong>, and the flock and the fish have no calm version. If you lose, you get a little more time next time. The lamp game can be played with lamps that stay lit longer. If a mini-game with a time limit is needed for the day’s mission, Luke can help you on after two tries, without points for the mini-game.</li>
+    </ul>
+
+    <h2>Tell us</h2>
+    <p>Are you stuck, or does something work differently from what is written here? Tell us, and we will fix it.</p>
+    <p>Email: <span class="epost" data-u="hello" data-d="thejourneywithluke.com">hello (at) thejourneywithluke.com</span></p>
+    <p>Last updated: 19 November 2026 (translation of the Norwegian statement of 7 November 2026).</p>
+
+    <p><a href="./">Front page</a> · <a href="personvern.html">Privacy</a></p>
+  </main>
+  <script>
+    document.querySelectorAll('.epost').forEach(function (s) {
+      var e = s.dataset.u + '\u0040' + s.dataset.d;
+      var a = document.createElement('a');
+      a.href = 'mail' + 'to:' + e;
+      a.textContent = e;
+      s.replaceWith(a);
+    });
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"d5b09c79325d4c4abc9d2dac1d627fce"}'></script>
+</body>
+</html>
