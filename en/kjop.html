@@ -45,6 +45,16 @@
           <summary>Buying it as a gift?</summary>
           <p>The email with the code has a printable gift card (PDF) with the code filled in. Print it or send it on. Or <a href="/en/gift-card.pdf">download a blank card</a>.</p>
         </details>
+        <!-- Lars 18.11 19:03 «gi gass»: a known code points the button at its own Stripe links (rabatt.js). -->
+        <details id="rabatt" class="gave-mer gave-mer--en rabatt">
+          <summary>Have a discount code?</summary>
+          <div class="rabatt-rad">
+            <label for="rabattkode">Discount code</label>
+            <input id="rabattkode" name="rabattkode" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" />
+            <button type="button" id="rabatt-bruk" class="btn">Apply</button>
+          </div>
+          <p id="rabatt-svar" class="small rabatt-svar" role="status" aria-live="polite"></p>
+        </details>
         <p class="small">Sold through Stripe (“Link”). Euro and pound prices include VAT; US sales tax is added where it applies.</p>
         <ul id="foer-betal" class="foer-betal">
           <li>Door 1 is free: <a href="../spill/?lang=en">try it first</a>. Made by Rygard Holding AS in Norway (<a href="kontakt.html">contact</a>).</li>
@@ -72,6 +82,7 @@
   </main>
   <script src="kjop.js"></script>
   <script type="module" src="valuta.js"></script>
+  <script type="module" src="rabatt.js"></script>
   <script type="module" src="../landing/dato.mjs"></script>
 </body>
 </html>
