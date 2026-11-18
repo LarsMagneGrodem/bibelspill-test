@@ -369,3 +369,11 @@ header.top {
 @media (max-width: 879px) and (orientation: portrait) and (max-height: 620px) {
   .hero2:has(.hero2-film) #hovedtittel::after { display: none; }
 }
+
+/* Full sjekk 18.11: on a PC the four «Ingen …» chips stand on one row beside the trailer at 1280–1440 px, instead of
+   «Ingen konto» alone on the next row. Narrower windows still wrap. */
+@media (min-width: 880px) {
+  .hero2 .trygt-rad { gap: 6px; }
+  .hero2 .trygt-rad li { padding: 5px 10px 5px 25px; font-size: 0.875rem; }
+  .hero2 .trygt-rad li::before { left: 9px; }
+}
