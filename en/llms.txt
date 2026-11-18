@@ -1,0 +1,25 @@
+# The Journey with Luke (Reisen med Lukas)
+
+> An online Christian Advent calendar game built on the Christmas story in Luke. One door a day, 1–24 December, 5–15 minutes. Ages 8 and up, into the teens. Door 1 is free, with no account.
+
+## Facts
+- Price: personal code €24.99 / £19.99 / $24.99, family code €49.99 / £39.99 / $49.99. Prices in euro and pounds include VAT. The price in dollars does not include US sales tax, which Stripe adds where it applies.
+- You pay in Stripe Checkout with a card, or with Apple Pay or Google Pay where those are offered. Stripe is the merchant of record for the payment. Stripe sends the payment receipt. We send the code and provide the game.
+- No in-app purchases. No ads. No tracking in the game. No account.
+- The game runs in the browser on a phone, a tablet and a computer, with nothing to install. On iPhone and iPad, iOS 16.4 or later is needed.
+- The doors open on their day in December, and after Christmas Eve they are all open. The game stays open for everyone who has bought a code at least until and including 31 January 2027.
+- The printable activity sheets are also in English.
+- The game is provided by Rygard Holding AS, organisation no. 938 118 132, Vestre Fognavegen 126, 4164 Fogn, Norway.
+
+## Pages
+- [Front page](https://thejourneywithluke.com/)
+- [As a gift](https://thejourneywithluke.com/gift/)
+- [For grandchildren](https://thejourneywithluke.com/grandchildren/)
+- [Homeschool Advent](https://thejourneywithluke.com/homeschool/)
+- [For older kids](https://thejourneywithluke.com/older-kids/)
+- [Activity workshop](https://reisenmedlukas.no/spill/activities/)
+- [Films](https://thejourneywithluke.com/films.html)
+- [Terms of sale](https://thejourneywithluke.com/vilkar.html)
+- [Privacy policy](https://thejourneywithluke.com/personvern.html)
+- [Contact](https://thejourneywithluke.com/kontakt.html)
+- [Reisen med Lukas (Norwegian)](https://reisenmedlukas.no/)
