@@ -30,6 +30,10 @@ export function currencyFromLanguages(langs) {
   return '';
 }
 
+// Salg 19.11: «$» alone reads as the local dollar in Canada, Australia, New Zealand, Singapore and elsewhere, where the
+// amount is US dollars. Outside the United States the dollar price is written «US$» (the same amount).
+var US_ZONES = /^(America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Adak|Boise|Detroit|Juneau|Sitka|Yakutat|Nome|Metlakatla|Menominee|Puerto_Rico|Indiana\/.+|Kentucky\/.+|North_Dakota\/.+|Indianapolis|Louisville)|Pacific\/(Honolulu|Guam|Saipan|Pago_Pago)|US\/.+)$/;
+
 var UK_ZONES = {
   'Europe/London': 1,
   'Europe/Guernsey': 1,
@@ -41,7 +45,7 @@ export function currencyFromTimeZone(tz) {
   var zone = String(tz || '');
   if (!zone) return '';
   if (UK_ZONES[zone]) return 'gbp';
-  if (zone.indexOf('America/') === 0) return 'usd';
+  if (zone.indexOf('America/') === 0 || US_ZONES.test(zone)) return 'usd';
   return 'eur';
 }
 
@@ -60,14 +64,26 @@ export function formatRekke(parts, first) {
   return out.join(' / ');
 }
 
-export function applyPrices(root, currency) {
-  if (!root || currency === 'eur') return;
+export function plainDollar(langs, tz) {
+  var zone = String(tz || '');
+  if (zone) return US_ZONES.test(zone);
+  return currencyFromLanguages(langs) === 'usd';
+}
+
+export function usLabel(text) {
+  return text.replace(/(^|[^A-Z])\$(?=\d)/g, '$1US$$');
+}
+
+export function applyPrices(root, currency, plain) {
+  var usPlain = plain !== false;
+  if (!root || (currency === 'eur' && usPlain)) return;
   var names = Object.keys(REKKER);
   var from = [];
   var to = [];
   for (var i = 0; i < names.length; i++) {
     from.push(formatRekke(REKKER[names[i]], 'eur'));
-    to.push(formatRekke(REKKER[names[i]], currency));
+    var line = formatRekke(REKKER[names[i]], currency);
+    to.push(usPlain ? line : usLabel(line));
   }
   var showText = (typeof NodeFilter !== "undefined" && NodeFilter.SHOW_TEXT) || 4;
   var walk = root.createTreeWalker(root, showText);
@@ -100,5 +116,5 @@ export function timeZoneOf() {
 }
 
 if (typeof document !== 'undefined') {
-  applyPrices(document, visitorCurrency(languagesOf(navigator), timeZoneOf()));
+  applyPrices(document, visitorCurrency(languagesOf(navigator), timeZoneOf()), plainDollar(languagesOf(navigator), timeZoneOf()));
 }

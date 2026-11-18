@@ -5,7 +5,7 @@
 // the checkout itself only accepts each discounted amount on its own link. Nothing is sent or stored. ?code=CHESSLUKE
 // fills the field in and applies it. A code stops working here after its last moment (Oslo time); the Stripe links are
 // switched off then as well.
-import { languagesOf, timeZoneOf, visitorCurrency } from './valuta.js';
+import { languagesOf, plainDollar, timeZoneOf, usLabel, visitorCurrency } from './valuta.js';
 
 // More codes later: one more entry, with its own two Payment Links and the prices those links charge.
 export var KODER = {
@@ -70,7 +70,8 @@ if (typeof document !== 'undefined') {
       if (hit.ok) {
         links(hit.offer.personal, hit.offer.family);
         input.value = hit.code;
-        answer.textContent = appliedText(hit.offer, currency);
+        var said = appliedText(hit.offer, currency);
+        answer.textContent = plainDollar(languagesOf(navigator), timeZoneOf()) ? said : usLabel(said);
         answer.className = 'small rabatt-svar rabatt-svar--ok';
         box.dataset.code = hit.code;
         return;
