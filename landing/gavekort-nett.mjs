@@ -11,6 +11,11 @@ import { cardName, escape, winAnsi } from './gavekort.mjs';
 
 export const SITE = 'https://reisenmedlukas.no';
 export const PAGES = { utside: 'nettkort/utside.jpg', personal: 'nettkort/innside-personlig.jpg', family: 'nettkort/innside-familie.jpg' };
+// The red Christmas card «Et spill med 24 brett» (Lars 18.11 21:12: both cards with every purchase), the same card as
+// the worker's (lukas-kasse-kilde, src/julekort.js): the same sheet, folds, Til and Fra lines, code field and QR box as
+// the card above, so only the pictures and the code's ink (the red card's dark wine, #2B0A10) differ.
+export const PAGES_24 = { utside: 'nettkort-24/utside.jpg', personal: 'nettkort-24/innside-personlig.jpg', family: 'nettkort-24/innside-familie.jpg' };
+const WINE_INK = '0.169 0.039 0.063';
 
 // The serial sits in the code's first four characters, stirred by a public number (shared/unlock-code.mjs); reading it
 // back needs no secret. Web serials start at 10001.
@@ -38,8 +43,8 @@ export function webCardQr(code) {
 
 const f2 = (v) => Number(v.toFixed(2));
 
-function codeOps(code) {
-  const { cx, baseline, size, colour, upm } = LAYOUT.code;
+function codeOps(code, colour = LAYOUT.code.colour) {
+  const { cx, baseline, size, upm } = LAYOUT.code;
   const s = size / upm;
   const width = [...code].reduce((w, ch) => w + LAYOUT.glyphs[ch].w, 0) * s;
   let x = cx - width / 2;
@@ -134,12 +139,13 @@ export function cardPrefix(product, lengths) {
   return prefix;
 }
 
-/** The suffix of one card: its two page drawings, the cross-reference table and the trailer. */
-export function cardSuffix({ code, name = '', from = '' }, prefix) {
+/** The suffix of one card: its two page drawings, the cross-reference table and the trailer. `variant` '24-brett' is
+ * the red Christmas card (its pictures come with the prefix): the code in its wine ink. */
+export function cardSuffix({ code, name = '', from = '', variant = 'advent' }, prefix) {
   const kode = webCode(code);
   if (!kode) throw new Error('not a web code');
   const draw = (turn, extra) => `q ${turn}\nq ${page.w} 0 0 ${page.h} 0 0 cm /Im Do Q\n${extra}\nQ`;
-  const contents = [draw(TURN.outside, [nameOps(name), nameOps(from, FRA)].filter(Boolean).join('\n')), draw(TURN.inside, `${codeOps(kode)}\n${qrOps(webCardQr(kode))}`)];
+  const contents = [draw(TURN.outside, [nameOps(name), nameOps(from, FRA)].filter(Boolean).join('\n')), draw(TURN.inside, `${codeOps(kode, variant === '24-brett' ? WINE_INK : undefined)}\n${qrOps(webCardQr(kode))}`)];
   const offsets = prefix.offsets.slice();
   let out = '';
   let at = prefix.length;

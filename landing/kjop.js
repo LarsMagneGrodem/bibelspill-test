@@ -6,7 +6,7 @@
 // The bank step is one block (#bank). Vipps posts to /vipps/start and sends the buyer to Vipps.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the names on it never leave the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
-import { PAGES, cardPdf } from './gavekort-nett.mjs';
+import { PAGES, PAGES_24, cardPdf } from './gavekort-nett.mjs';
 import { qrCode } from './qr.mjs';
 // Natt 15.–16.11: the line that changes with the date (filled on import), and the calendar file on the receipt.
 import './dato.mjs';
@@ -74,25 +74,31 @@ function download(bytes, name) {
 // The web card (gavekort-nett.mjs): its two pictures come from this site; the name stays in the browser.
 // G13: the pictures are fetched as soon as the receipt shows, so the tap can build the PDF at once and hand it to the
 // share sheet while the tap still counts (iPhone: «Skriv ut», «Arkiver i Filer», Mail, AirDrop). Elsewhere it downloads.
-let pictures = null;
-function fetchPictures(order) {
+// Lars 18.11 21:12: two cards to choose from, the Advent card (#gavekort) and the red Christmas card «Et spill med 24
+// brett» (#gavekort24), the same code on both. Each has its own pictures, fetched once.
+const CARDS = { advent: { pages: PAGES, button: 'gavekort', file: (code) => `gavekort-${code}.pdf` }, '24-brett': { pages: PAGES_24, button: 'gavekort24', file: (code) => `gavekort-24-brett-${code}.pdf` } };
+const pictures = {};
+function fetchPictures(order, variant = 'advent') {
   const get = async (path) => {
     const res = await fetch(path);
     if (!res.ok) throw new Error(String(res.status));
     return new Uint8Array(await res.arrayBuffer());
   };
-  pictures = Promise.all([get(PAGES.utside), get(PAGES[order.product])]);
-  pictures.catch(() => { pictures = null; });
-  return pictures;
+  const { pages } = CARDS[variant];
+  const got = Promise.all([get(pages.utside), get(pages[order.product])]);
+  pictures[variant] = got;
+  got.catch(() => { pictures[variant] = null; });
+  return got;
 }
 
-async function webCard(order) {
+async function webCard(order, variant = 'advent') {
+  const card = CARDS[variant];
   $('kortfeil').textContent = '';
-  $('gavekort').disabled = true;
+  $(card.button).disabled = true;
   try {
-    const [utside, innside] = await (pictures ?? fetchPictures(order));
-    const pdf = cardPdf({ code: order.code, product: order.product, name: $('navn').value, from: $('fra').value }, { utside, [order.product]: innside });
-    const name = `gavekort-${order.code}.pdf`;
+    const [utside, innside] = await (pictures[variant] ?? fetchPictures(order, variant));
+    const pdf = cardPdf({ code: order.code, product: order.product, variant, name: $('navn').value, from: $('fra').value }, { utside, [order.product]: innside });
+    const name = card.file(order.code);
     let file = null;
     try { file = new File([pdf], name, { type: 'application/pdf' }); } catch { /* old browser */ }
     if (IOS && file && navigator.canShare?.({ files: [file] })) {
@@ -107,10 +113,10 @@ async function webCard(order) {
       if (IOS) $('filer').hidden = false;
     }
   } catch {
-    pictures = null;
+    pictures[variant] = null;
     $('kortfeil').textContent = 'Fikk ikke laget gavekortet. Sjekk at du er på nett, og prøv igjen.';
   } finally {
-    $('gavekort').disabled = false;
+    $(card.button).disabled = false;
   }
 }
 
@@ -226,6 +232,7 @@ function show(order) {
   $('sender').hidden = order.receipt !== 'sending';
   $('senere').hidden = order.receipt === 'sent' || order.receipt === 'sending';
   $('gavekort').onclick = () => void webCard(order);
+  $('gavekort24').onclick = () => void webCard(order, '24-brett');
   // feilliste M3: the address the receipt goes to, so a typo shows now. feilliste M4: one tap into the game, unlocked.
   $('til').hidden = !order.email;
   $('til-epost').textContent = order.email ?? '';
@@ -238,8 +245,10 @@ function show(order) {
   $('gave-forst').hidden = !order.gave;
   offerCalendar();
   offerTip();
-  pictures = null;
-  void fetchPictures(order).catch(() => {});
+  for (const variant of Object.keys(CARDS)) {
+    pictures[variant] = null;
+    void fetchPictures(order, variant).catch(() => {});
+  }
   $('kvittering').focus();
 }
 

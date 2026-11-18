@@ -139,8 +139,8 @@
       </details>
       <p id="husstand" hidden>Familiekoden kan tastes inn på alle enhetene i husstanden.</p>
       <p id="til" hidden>Vi sender kvitteringen til <strong id="til-epost"></strong>. Er adressen feil? Skriv koden ned nå.</p>
-      <p id="sendt" hidden>Koden, betalingsinformasjonen og gavekortet er også sendt til e-posten din.</p>
-      <p id="sender" hidden>Koden, betalingsinformasjonen og gavekortet sendes også til e-posten din. Kommer ikke e-posten med en gang, sender vi den innen en dag.</p>
+      <p id="sendt" hidden>Koden, betalingsinformasjonen og begge gavekortene er også sendt til e-posten din.</p>
+      <p id="sender" hidden>Koden, betalingsinformasjonen og begge gavekortene sendes også til e-posten din. Kommer ikke e-posten med en gang, sender vi den innen en dag.</p>
       <p id="senere" hidden>Kvitteringen med koden og betalingsinformasjonen kommer på e-post innen en dag. Gavekortet kan du laste ned her.</p>
       <p class="small">Finner du ikke e-posten fra kvittering@reisenmedlukas.no, så sjekk søppelpost eller reklame. Koden står også her på siden.</p>
       <!-- Natt 15.–16.11: én påminnelse om dagen i kalenderen, laget her på enheten som spillets egen fil (kalender.mjs). -->
@@ -152,13 +152,14 @@
         <p id="kalender-status" class="small" role="status"></p>
       </div>
       <h2 id="gavekort-tittel">Gavekort</h2>
-      <p>Gavekortet har koden ferdig påtrykt. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Bor barnet et annet sted? Send PDF-en på e-post eller melding til foreldrene. De kan skrive den ut, eller skanne QR-koden rett fra skjermen. Del kortet bare med den som skal ha gaven.</p>
+      <p>Du får to gavekort å velge mellom: julekalenderen (1.–24. desember) og «Et spill med 24 brett» (jul og romjul). Begge har den samme koden ferdig påtrykt, så velg det ene du vil gi. Skriv det ut på begge sider av arket (vend på langsiden) og brett det i tre. QR-koden på kortet låser opp spillet på den enheten som skanner den. Bor barnet et annet sted? Send PDF-en på e-post eller melding til foreldrene. De kan skrive den ut, eller skanne QR-koden rett fra skjermen. Del kortet bare med den som skal ha gaven.</p>
       <label for="navn">Til (kan stå tomt)</label>
       <input id="navn" type="text" maxlength="40" autocomplete="off" aria-describedby="navn-hjelp" />
       <label for="fra">Fra (kan stå tomt)</label>
       <input id="fra" type="text" maxlength="40" autocomplete="off" aria-describedby="navn-hjelp" />
       <p id="navn-hjelp" class="small">Bokstaver og tall kommer med på kortet. Emoji kommer ikke med.</p>
-      <p><button id="gavekort" class="btn primary" type="button">Last ned gavekortet (PDF)</button></p>
+      <p><button id="gavekort" class="btn primary" type="button">Gavekort: julekalender (1.–24. des)</button></p>
+      <p><button id="gavekort24" class="btn primary" type="button">Gavekort: spillet med 24 brett (jul og romjul)</button></p>
       <p id="filer" class="small" hidden>Finner du ikke kortet? Se i Filer-appen under Nedlastinger.</p>
       <p id="kortfeil" role="status"></p>
       <!-- Natt 15.–16.11: en ferdig tekst kjøperen sender selv, fra voksen til voksen, uten belønning. Ingenting sendes fra oss. -->
