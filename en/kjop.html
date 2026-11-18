@@ -29,38 +29,42 @@
 
     <section id="bestill" aria-labelledby="bestill-tittel">
       <!-- Changes with the date on the device (landing/dato.mjs); November's line stays here without a script. -->
-      <p class="dato-linje" data-dato="kjop">The calendar starts on Tuesday 1 December. Buy now, and everything is ready when it begins.</p>
+      <p class="dato-linje" data-dato="kjop">The calendar starts on Tuesday 1 December.</p>
       <h1 id="bestill-tittel">Buy The Journey with Luke</h1>
-      <p>An Advent calendar for ages 8 and up, well into the teens, to be bought by an adult. Door 1 is free. A code unlocks doors 2–24.</p>
+      <p>Door 1 is free. A code opens doors 2–24.</p>
 
       <form id="skjema" novalidate>
         <fieldset class="valg">
           <legend>Choose a code</legend>
-          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personal code – €24.99 / £19.99 / $24.99</strong><br />For one person. <span class="per-luke">Less than €1.10 / 87p / $1.10 a door.</span></span></label>
-          <label><input type="radio" name="product" value="family" /> <span><strong>Family code – €49.99 / £39.99 / $49.99</strong><br />For everyone who lives in the same home. <span class="per-luke">Less than €2.20 / £1.75 / $2.20 a door.</span><br /><span class="merkelapp">The same price as two personal codes.</span></span></label>
-          <p class="small flere-hjem">Giving to children, grandchildren or someone you know in more than one home? Each home needs its own code.</p>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personal code – €24.99 / £19.99 / $24.99</strong><br />One person.</span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Family code – €49.99 / £39.99 / $49.99</strong><br />Everyone in the same home.</span></label>
+          <p class="small flere-hjem">Each home needs its own code.</p>
         </fieldset>
         <!-- ?gave=1 (the gift's own way from the front page) opens this. Nothing about the gift is sent anywhere. -->
         <details id="gave-mer" class="gave-mer gave-mer--en">
           <summary>Buying it as a gift?</summary>
-          <p>A printable gift card, already filled in with the code, is attached to the email with the code. Does the child live somewhere else? Send the PDF to the parents by email or message. They can print it, or scan the QR code straight from the screen. If you would rather write the code yourself, you can <a href="/en/gift-card.pdf">download a blank gift card (PDF)</a>.</p>
+          <p>The email with the code has a printable gift card (PDF) with the code filled in. Print it or send it on. Or <a href="/en/gift-card.pdf">download a blank card</a>.</p>
         </details>
-        <p class="small">Payment on this English site is sold by Stripe (“Sold through Link”). Prices in euro and pounds include VAT. The price in dollars does not include US sales tax, which Stripe adds where it applies. The checkout will show the amount you pay.</p>
+        <p class="small">Sold through Stripe (“Link”). Euro and pound prices include VAT; US sales tax is added where it applies.</p>
         <ul id="foer-betal" class="foer-betal">
-          <li>Door 1 is free. <a href="../spill/?lang=en">Try it first.</a></li>
-          <li>Doors open one a day from 1 December.</li>
-          <li>Made by Rygard Holding AS in Norway. <a href="kontakt.html">Contact</a>.</li>
+          <li>Door 1 is free: <a href="../spill/?lang=en">try it first</a>. Made by Rygard Holding AS in Norway (<a href="kontakt.html">contact</a>).</li>
         </ul>
         <p>
           <a id="betal" class="btn primary stor" href="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-personal="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-family="https://buy.stripe.com/cNi7sNeH7aFb7KS0MngnK01">Continue to payment</a>
         </p>
-        <p class="trygg-linje">You pay in Stripe Checkout. The code is shown on the page after payment, and sent by email.</p>
-        <p class="small">By continuing you agree to the <a href="vilkar.html">terms of sale</a>. Refunds and payment questions are explained there. Read the <a href="personvern.html">privacy policy</a> too.</p>
+        <p class="trygg-linje">Stripe asks for your email (required, we send the code there). The code is also shown after payment.</p>
+        <!-- Salg 18.11 (Lars 14:55 «Ja til trygghetspunktene»). -->
+        <ul class="trygt-under" aria-label="Safe to buy">
+          <li>One-time purchase, no subscription</li>
+          <li>No in-app purchases</li>
+          <li>No ads</li>
+        </ul>
+        <p class="small">By continuing you agree to the <a href="vilkar.html">terms of sale</a> (refunds are explained there) and the <a href="personvern.html">privacy policy</a>.</p>
 
         <h2>How you pay</h2>
-        <p>You pay in Stripe Checkout with a card, or with Apple Pay or Google Pay where those are offered. The purchase is shown as “Sold through Link”. You receive the code when the payment has gone through, by email and on the page after payment. We never see your card number. Stripe sends the payment receipt in a separate email.</p>
-        <p class="small">If you cannot find the email with the code from kvittering@reisenmedlukas.no, check the junk or promotions folder. Stripe sends the payment receipt from Link.</p>
-        <p class="small">For the Advent calendar 1–24 December 2026. All doors are open after Christmas, and the game stays open at least until 31 January 2027. There are no in-app purchases, no ads and no tracking in the game. Customers in Norway can still pay on the <a href="https://reisenmedlukas.no/landing/kjop.html">Norwegian checkout</a>.</p>
+        <p>Card, Apple Pay or Google Pay. We never see your card number. Stripe sends the receipt separately.</p>
+        <p class="small">No email from kvittering@reisenmedlukas.no? Check junk.</p>
+        <p class="small">In Norway? Use the <a href="https://reisenmedlukas.no/landing/kjop.html">Norwegian checkout</a>.</p>
       </form>
     </section>
 

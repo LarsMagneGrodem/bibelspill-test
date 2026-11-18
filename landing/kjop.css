@@ -264,3 +264,29 @@ header.top {
   }
 }
 /* Den røde gaveeska på kvitteringen beholder sitt eget utseende. */
+
+/* Salg 18.11 (Lars 14:55 «Ja til trygghetspunktene»): three small points under the pay button, as on the front page. */
+.trygt-under { list-style: none; padding: 0; margin: 10px 0 4px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.trygt-under li { position: relative; padding: 5px 10px 5px 25px; border-radius: 999px; border: 1px solid #ffffff33;
+  background: #ffffff0d; font-size: 0.875rem; line-height: 1.3; }
+.trygt-under li::before { content: "✓"; position: absolute; left: 9px; color: #f3d58a; font-weight: 700; }
+
+/* Lars 18.11 kl. 15:07 «ting som nesten går inn på en linje, inn på en linje»: på telefon brytes ikke «Under 22 kr per
+   luke» og prisene per luke midt i; valgboksen får litt mer bredde; trygghetspunktene brytes aldri inni et punkt; korte
+   linjer som så vidt brakk på 320 px står på én linje. Bare CSS, ingen ny tekst. */
+html:lang(nb) .kasse .valg { padding: 8px 12px 12px; }
+html:lang(nb) .kasse .valg label { gap: 8px; }
+html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
+.kasse .valg .merkelapp { font-size: 0.875rem; }
+.kasse .gave-mer summary { text-wrap: balance; }
+.kasse .samtykke span, .kasse .flere-hjem, .kasse .trygg-linje, .kasse .dato-linje { text-wrap: pretty; }
+.trygt-under { gap: 4px 6px; }
+.trygt-under li { white-space: nowrap; font-size: 0.8125rem; padding: 4px 9px 4px 22px; }
+.trygt-under li::before { left: 8px; }
+@media (max-width: 360px) {
+  .kasse { padding-left: 12px; padding-right: 12px; }
+  .kasse .foer-betal li { font-size: 0.9375rem; }
+  .kasse .valg .merkelapp { font-size: 0.8125rem; }
+}
+/* Trygghetspunktene står alltid som én linje + to (ikke to + ett alene), på telefon og PC. */
+.trygt-under { max-width: 18rem; margin-left: auto; margin-right: auto; }

@@ -55,7 +55,7 @@ const KVITTERING_FOR = 'Koden virker nå. Luke 1 kan spilles med en gang, og luk
 const TEKST = {
   nb: {
     topp: TOPP_NB,
-    kjop: { ...TOPP_NB, for: 'Kalenderen starter tirsdag 1. desember. Kjøp nå, så er alt klart når kalenderen starter.' },
+    kjop: { ...TOPP_NB, for: 'Kalenderen starter tirsdag 1. desember.' },
     gave: like('Gavekortet er en PDF du kan skrive ut og gi med en gang.', {
       for: 'Gi gavekortet første søndag i advent, 29. november. Da er alt klart når kalenderen starter tirsdag 1. desember.',
       romjul: '', januar: '', slutt: '',
@@ -64,7 +64,7 @@ const TEKST = {
   },
   en: {
     topp: TOPP_EN,
-    kjop: { ...TOPP_EN, for: 'The calendar starts on Tuesday 1 December. Buy now, and everything is ready when it begins.' },
+    kjop: { ...TOPP_EN, for: 'The calendar starts on Tuesday 1 December.' },
     gave: like('The gift card is a PDF you can print and give straight away.', {
       for: 'Give the gift card on the first Sunday of Advent, 29 November. Then everything is ready when the calendar starts on Tuesday 1 December.',
       romjul: '', januar: '', slutt: '',
