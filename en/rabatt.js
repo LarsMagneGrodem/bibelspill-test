@@ -3,8 +3,8 @@
 // Payment Links with Managed Payments, so a known code sends the buyer to its own Payment Links instead, where the
 // discount is already in the price (kasse r50, STRIPE_CAMPAIGNS). Matching is here, in the page, and case-insensitive;
 // the checkout itself only accepts each discounted amount on its own link. Nothing is sent or stored. ?code=CHESSLUKE
-// fills the field in and applies it. A code stops working here after its last moment (Oslo time); the Stripe links are
-// switched off then as well.
+// fills the field in and applies it. A code works here from its first moment (validFrom, if it has one) to its last
+// (validUntil), both in Oslo time; the Stripe links are switched on and off at those times as well.
 import { languagesOf, plainDollar, timeZoneOf, usLabel, visitorCurrency } from './valuta.js';
 
 // More codes later: one more entry, with its own two Payment Links and the prices those links charge.
@@ -19,6 +19,20 @@ export var KODER = {
       family: { eur: '€37.49', gbp: '£29.99', usd: '$37.49' },
     },
   },
+  // Lars 19.11 01:24 «ADVENT20 og TRY1 hvis den første virker»: public, 20 %, Friday 28 to Sunday 30 November (Oslo).
+  // Not combined with CHESSLUKE: one code in the field, and each code has its own links with no code field.
+  ADVENT20: {
+    percent: 20,
+    validFrom: '2026-11-28T00:00:00.000+01:00',
+    validUntil: '2026-11-30T23:59:59.999+01:00',
+    notYet: 'This code works 28–30 November.',
+    personal: 'https://buy.stripe.com/9B628taqR3cJgho66HgnK04',
+    family: 'https://buy.stripe.com/28EaEZ56x28FaX42UvgnK05',
+    prices: {
+      personal: { eur: '€19.99', gbp: '£15.99', usd: '$19.99' },
+      family: { eur: '€39.99', gbp: '£31.99', usd: '$39.99' },
+    },
+  },
 };
 
 export var TEKST = {
@@ -31,15 +45,17 @@ export function normalise(code) {
   return String(code || '').replace(/\s+/g, '').toUpperCase();
 }
 
-/** { ok: true, code, offer } or { ok: false, why: 'unknown' | 'expired' | 'empty' }. */
+/** { ok: true, code, offer } or { ok: false, why: 'unknown' | 'expired' | 'empty' | 'notYet', code?, offer? }. */
 export function lookUp(code, now, list) {
   var codes = list || KODER;
   var key = normalise(code);
   if (!key) return { ok: false, why: 'empty' };
   if (!Object.prototype.hasOwnProperty.call(codes, key)) return { ok: false, why: 'unknown' };
   var offer = codes[key];
+  var t = now instanceof Date ? now.getTime() : Number(now);
+  if (offer.validFrom && !(Date.parse(offer.validFrom) <= t)) return { ok: false, why: 'notYet', code: key, offer: offer };
   var end = Date.parse(offer.validUntil);
-  if (!(end >= (now instanceof Date ? now.getTime() : Number(now)))) return { ok: false, why: 'expired' };
+  if (!(end >= t)) return { ok: false, why: 'expired' };
   return { ok: true, code: key, offer: offer };
 }
 
@@ -78,7 +94,7 @@ if (typeof document !== 'undefined') {
       }
       links(full.personal, full.family);
       delete box.dataset.code;
-      answer.textContent = hit.why === 'empty' ? '' : TEKST[hit.why];
+      answer.textContent = hit.why === 'empty' ? '' : hit.why === 'notYet' ? hit.offer.notYet || TEKST.unknown : TEKST[hit.why];
       answer.className = 'small rabatt-svar';
     }
     apply.addEventListener('click', run);
