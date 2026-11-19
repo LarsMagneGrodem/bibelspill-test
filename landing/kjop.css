@@ -302,3 +302,11 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
 .kasse .rabatt-svar { margin: 8px 0; text-wrap: pretty; }
 .kasse .rabatt-svar:empty { margin: 0; }
 .kasse .rabatt-svar--ok { color: var(--gold); }
+
+/* Listed on Faithful Kids: same mark as on the front, near the English pay button and in the Norwegian footer. */
+.fk-merke { margin: 14px 0 0; }
+.fk-merke a { display: inline-block; line-height: 0; }
+.fk-merke img { width: 200px; max-width: 100%; height: auto; }
+.fk-merke--fot { margin: 12px 0 8px; opacity: 0.92; }
+.fk-merke--fot img { width: 140px; }
+.kasse .fk-merke--fot { margin: 16px 0 8px; text-align: center; }
