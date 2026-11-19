@@ -5,11 +5,31 @@
 (function () {
   var lessMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function setPoster(video) {
+    var src = video.getAttribute('data-poster');
+    if (src && !video.getAttribute('poster')) video.setAttribute('poster', src);
+  }
+
+  // The intro poster sits below the first screen. Load it only when the film is near, so it does not
+  // share the first request with the trailer poster. A tap on play still sets it at once (the top
+  // link «Se introfilmen» can start it without scrolling first).
+  document.querySelectorAll('video[data-poster]').forEach(function (video) {
+    if (!window.IntersectionObserver) { setPoster(video); return; }
+    var io = new window.IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) {
+        setPoster(video);
+        io.disconnect();
+      }
+    }, { rootMargin: '200px' });
+    io.observe(video);
+  });
+
   document.querySelectorAll('[data-film]').forEach(function (box) {
     var video = box.querySelector('video');
     var button = box.querySelector('[data-play-sound]');
 
     button.addEventListener('click', function () {
+      setPoster(video);
       document.querySelectorAll('[data-film] video').forEach(function (other) {
         if (other !== video) other.pause();
       });

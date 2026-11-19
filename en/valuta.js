@@ -11,7 +11,7 @@ export var ORDER = ['eur', 'gbp', 'usd'];
 export var REKKER = {
   personlig: { eur: '€24.99', gbp: '£19.99', usd: '$24.99' },
   familie: { eur: '€49.99', gbp: '£39.99', usd: '$49.99' },
-  'per-personlig': { eur: '€1.10', gbp: '87p', usd: '$1.10' },
+  'per-personlig': { eur: '€1.10', gbp: '£0.87', usd: '$1.10' },
   'per-familie': { eur: '€2.20', gbp: '£1.75', usd: '$2.20' },
 };
 

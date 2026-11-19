@@ -386,3 +386,11 @@ header.top {
 
 /* Salg 18.11 (Lars 14:55 «Ja til gavelinjen»): the gift line under the price, a little closer to it. */
 .gave-linje { margin-top: -4px; }
+
+
+/* Faithful Kids-merke (Lars 19.11 19:02 «ja legg til merket»): statisk SVG, ingen ekstern skript. */
+.fk-merke { margin: 14px 0 0; }
+.fk-merke a { display: inline-block; line-height: 0; }
+.fk-merke img { width: 200px; max-width: 100%; height: auto; }
+.fk-merke--fot { margin: 12px 0 8px; opacity: 0.92; }
+.fk-merke--fot img { width: 140px; }
