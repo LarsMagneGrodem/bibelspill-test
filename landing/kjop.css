@@ -281,7 +281,9 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
 .kasse .gave-mer summary { text-wrap: balance; }
 .kasse .samtykke span, .kasse .flere-hjem, .kasse .trygg-linje, .kasse .dato-linje { text-wrap: pretty; }
 .trygt-under { gap: 4px 6px; }
-.trygt-under li { white-space: nowrap; font-size: 0.8125rem; padding: 4px 9px 4px 22px; }
+/* Salg 19.11: med stor tekst (200 %) på telefon var «Engangskjøp, ingen abonnement» bredere enn skjermen (sidelengs rulling).
+   Et punkt brytes nå bare når det alene ikke får plass på en linje; ellers flyttes det ned som før (likt på 320–1280 med vanlig tekst). */
+.trygt-under li { white-space: normal; font-size: 0.8125rem; padding: 4px 9px 4px 22px; }
 .trygt-under li::before { left: 8px; }
 @media (max-width: 360px) {
   .kasse { padding-left: 12px; padding-right: 12px; }
