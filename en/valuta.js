@@ -98,6 +98,21 @@ export function applyPrices(root, currency, plain) {
   }
 }
 
+/** Salg 19.11 (Lars 01:12 «Vi vil ha pris på den engelske knappen»): the main «Buy a code – €24.99» button shows the
+ *  personal price in the visitor's currency, with «US$» outside the United States, as the lines above. */
+export function priceLabel(currency, plain) {
+  var p = REKKER.personlig[currency] || REKKER.personlig.eur;
+  return plain === false ? usLabel(p) : p;
+}
+export function applyButtons(root, currency, plain) {
+  if (!root || !root.querySelectorAll) return;
+  var list = root.querySelectorAll('[data-pris="personlig"]');
+  for (var i = 0; i < list.length; i++) {
+    var el = list[i];
+    el.textContent = el.textContent.replace(/ – [^ ]+$/, ' – ' + priceLabel(currency, plain));
+  }
+}
+
 export function languagesOf(nav) {
   var list = [];
   if (nav && nav.languages && nav.languages.length) {
@@ -117,4 +132,5 @@ export function timeZoneOf() {
 
 if (typeof document !== 'undefined') {
   applyPrices(document, visitorCurrency(languagesOf(navigator), timeZoneOf()), plainDollar(languagesOf(navigator), timeZoneOf()));
+  applyButtons(document, visitorCurrency(languagesOf(navigator), timeZoneOf()), plainDollar(languagesOf(navigator), timeZoneOf()));
 }

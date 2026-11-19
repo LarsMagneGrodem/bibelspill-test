@@ -1,3 +1,4 @@
+/* global URLSearchParams */
 /* global window */
 // Calendar files (RFC 5545) made here on the device and saved like any download: nothing is stored and nothing is sent.
 // The same rules as the game's own file (src/engine/ics.ts; tests/salg-v2.test.mjs checks that the two give the same
@@ -108,6 +109,23 @@ export function startIcs(lang = 'nb', now = new Date()) {
     ...event({ uid: `luke-1-${YEAR}@reisen-med-lukas`, stamp: utc(now), start: t.start, duration: 'PT30M', title: t.title, about: `${t.about} ${t.url}`, url: t.url }),
     'END:VCALENDAR',
   ]);
+}
+
+/** Salg 19.11 (Lars 01:07: the file was only downloaded in the Facebook app): the same event as startIcs, as a Google
+ *  Calendar template link. It is a plain address made from the event's own text; opening it is the visitor's own tap,
+ *  and the page itself sends and stores nothing. Norwegian 18.00 Oslo time (17.00 UTC); English 18.00 by the calendar's
+ *  own clock, as in the file. */
+export function startGoogle(lang = 'nb') {
+  const t = START[lang] ?? START.nb;
+  const end = t.start.replace(/T(\d\d)0000/, (m, h) => `T${h}3000`);
+  const q = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: t.title,
+    dates: `${t.start}/${end}`,
+    details: `${t.about} ${t.url}`,
+    location: lang === 'en' ? 'https://thejourneywithluke.com/' : 'https://reisenmedlukas.no/',
+  });
+  return `https://calendar.google.com/calendar/render?${q.toString()}`;
 }
 
 /** Saves `text` as a calendar file, the way the game does (a link to a Blob made on the device). */

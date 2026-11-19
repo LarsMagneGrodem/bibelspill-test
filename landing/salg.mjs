@@ -2,7 +2,7 @@
 // calendar event made here, nothing stored or sent, no e-mail), and the place for quotes from grown-ups who tried door 1.
 // The quotes stand in sitater.json and are shown only when there are real ones; until then the place is not on the page.
 import { forStart } from './dato.mjs';
-import { saveIcs, startIcs } from './kalender.mjs';
+import { saveIcs, startGoogle, startIcs } from './kalender.mjs';
 
 const lang = typeof document !== 'undefined' && document.documentElement.lang.startsWith('en') ? 'en' : 'nb';
 const SAVED = {
@@ -10,8 +10,36 @@ const SAVED = {
   en: 'The calendar file is downloaded. Open it to put the reminder in your calendar. The file was made here on the device, and nothing was sent.',
 };
 
-for (const button of typeof document !== 'undefined' ? document.querySelectorAll('[data-minn]') : []) {
+// Salg 19.11: the reminder is a real button. Its first choice is Google Calendar (a link made from the same event, opened
+// in a new tab, which works in the Facebook and Instagram apps' browsers too), with the calendar file as the other choice.
+// On an iPhone or iPad outside those apps, Safari puts the file straight into the calendar, so there the file comes first.
+const LABEL = {
+  nb: { main: 'Minn meg på 1. desember', file: 'eller last ned kalenderfil', google: 'eller bruk Google Kalender' },
+  en: { main: 'Remind me on 1 December', file: 'or download a calendar file', google: 'or use Google Calendar' },
+};
+export const inAppBrowser = (ua) => /FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(ua ?? '');
+export const appleTouch = (ua, touchPoints = 0) => /iPhone|iPad|iPod/.test(ua ?? '') || (/Macintosh/.test(ua ?? '') && touchPoints > 1);
+/** Which choice comes first: the calendar file only on an iPhone or iPad outside the apps' own browsers. */
+export const fileFirst = (ua, touchPoints = 0) => appleTouch(ua, touchPoints) && !inAppBrowser(ua);
+
+for (const box of typeof document !== 'undefined' ? document.querySelectorAll('p.minn') : []) {
+  const google = box.querySelector('[data-minn-google]');
+  const button = box.querySelector('[data-minn]');
+  if (!button) continue;
   button.hidden = !forStart();
+  if (google) {
+    google.hidden = !forStart();
+    google.href = startGoogle(lang);
+    if (fileFirst(navigator.userAgent, navigator.maxTouchPoints)) {
+      const t = LABEL[lang];
+      button.className = 'btn minn-knapp';
+      button.innerHTML = '<span aria-hidden="true">📅</span> ';
+      button.append(t.main);
+      google.className = 'lenke-knapp minn-alt';
+      google.textContent = t.google;
+      box.insertBefore(button, google);
+    }
+  }
   button.addEventListener('click', () => {
     saveIcs(startIcs(lang), lang === 'en' ? 'journey-with-luke-1-december.ics' : 'reisen-med-lukas-1-desember.ics');
     const status = document.getElementById(button.dataset.minn);
