@@ -425,7 +425,6 @@ else if (kept) {
 }
 
 if (!api) {
-  $('stengt').hidden = false;
   $('skjema').hidden = true;
 }
 if (oldSafari()) $('gammel-ios').hidden = false;
