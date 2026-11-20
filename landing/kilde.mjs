@@ -1,4 +1,4 @@
-/* global URLSearchParams, location */
+/* global URLSearchParams, location, atob */
 // First-party buy attribution (Lars via Markedsføring 20.11 «fiks resten»): utm_source, utm_medium, utm_campaign,
 // ?fra= and the referring host. No cookies, no third-party tools. Values live in the URL and, for the same tab
 // session only, in sessionStorage so a click from the front page to the buy page still carries them.
@@ -59,8 +59,8 @@ export function saveAttribution(attr, storage) {
   } catch { /* private mode */ }
 }
 
-/** Compact string for Stripe Payment Link client_reference_id (max 200). */
-export function stripeClientReference(attr) {
+/** The plain form «s=…|m=…|c=…|f=…|r=…». */
+function plainReference(attr) {
   if (!attr) return '';
   const parts = [];
   if (attr.utm_source) parts.push(`s=${attr.utm_source}`);
@@ -68,12 +68,29 @@ export function stripeClientReference(attr) {
   if (attr.utm_campaign) parts.push(`c=${attr.utm_campaign}`);
   if (attr.fra) parts.push(`f=${attr.fra}`);
   if (attr.referrer_host) parts.push(`r=${attr.referrer_host}`);
-  return parts.join('|').slice(0, 200);
+  return parts.join('|');
+}
+
+/** Stripe Payment Link client_reference_id. Stripe keeps it only when it is letters, digits, «-» and «_» (max 200) and
+ *  drops anything else without a word (checked live 20.11), so the plain form goes as «k1» + base64url (kasse r61). */
+export function stripeClientReference(attr) {
+  const plain = plainReference(attr).slice(0, 147);
+  if (!plain) return '';
+  return 'k1' + btoa(plain).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 export function parseStripeClientReference(raw) {
   const out = { utm_source: '', utm_medium: '', utm_campaign: '', fra: '', referrer_host: '' };
   if (typeof raw !== 'string' || !raw) return out;
+  const k1 = /^k1([A-Za-z0-9_-]{1,198})$/.exec(raw);
+  if (k1) {
+    try {
+      const b64 = k1[1].replace(/-/g, '+').replace(/_/g, '/');
+      raw = atob(b64 + '='.repeat((4 - (b64.length % 4)) % 4));
+    } catch {
+      return out;
+    }
+  }
   for (const part of raw.slice(0, 200).split('|')) {
     const i = part.indexOf('=');
     if (i < 1) continue;
