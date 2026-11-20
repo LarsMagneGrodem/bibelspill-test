@@ -310,3 +310,11 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
 .fk-merke--fot { margin: 12px 0 8px; opacity: 0.92; }
 .fk-merke--fot img { width: 140px; }
 .kasse .fk-merke--fot { margin: 16px 0 8px; text-align: center; }
+
+/* Salg 20.11: short product line when /til/… or ads land on the buy page first. */
+.kasse .kjop-ingress { margin: 0 0 12px; font-size: 1rem; line-height: 1.45; color: var(--paper); text-wrap: pretty; }
+@media (max-width: 420px) {
+  .kasse .kjop-ingress { font-size: 0.9375rem; margin-bottom: 10px; }
+}
+/* Rabattkode på den norske siden (20.11): gammel pris overstreket ved siden av den nye. */
+.kasse .pris s { opacity: .7; font-weight: normal; margin-right: .25em; }

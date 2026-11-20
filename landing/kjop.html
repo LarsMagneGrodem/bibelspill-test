@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'" />
   <title>Kjøp kode – Reisen med Lukas</title>
   <meta name="robots" content="noindex" />
-  <meta name="description" content="Personlig kode 250 kr eller familiekode 500 kr. Betal med Vipps, og koden kommer med en gang. Gavekort som PDF. Luke 1 er gratis." />
+  <meta name="description" content="Kristen julekalender: 24 luker fra 1. desember. Personlig kode 250 kr eller familiekode 500 kr. Betal med Vipps. Luke 1 er gratis." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="nb_NO" />
   <meta property="og:site_name" content="Reisen med Lukas" />
@@ -27,7 +27,7 @@
   <meta name="theme-color" content="#1b1a17" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
   <link rel="stylesheet" href="styles.css?v=312580b4" />
-  <link rel="stylesheet" href="kjop.css?v=8296914a" />
+  <link rel="stylesheet" href="kjop.css?v=7c31df51" />
 </head>
 <body>
   <main id="innhold" class="kasse">
@@ -37,13 +37,14 @@
       <!-- Skifter med datoen på enheten (dato.mjs); novembers linje står her for den som ikke har skript. -->
       <p class="dato-linje" data-dato="kjop">Kalenderen starter tirsdag 1. desember.</p>
       <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
+      <p class="kjop-ingress">Kristen julekalender på nett: <strong>24 luker</strong>, <strong>24 kvelder sammen</strong>, fra 1. desember. Luke 1 er gratis. Betal med Vipps – koden kommer med en gang. Personlig kode 250&nbsp;kr, familiekode 500&nbsp;kr.</p>
       <p id="siste" hidden><button id="vis-siste" class="btn" type="button"><span>Vis siste kjøp (kode <span id="siste-kode" class="kode"></span>)</span></button></p>
       <p id="gammel-ios" class="melding" hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
       <form id="skjema" novalidate>
         <fieldset class="valg">
           <legend>Velg kode</legend>
-          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode – 250 kr</strong><br />Én person.</span></label>
-          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode – 500 kr</strong><br />Alle i samme hus.</span></label>
+          <label><input type="radio" name="product" value="personal" checked /> <span><strong>Personlig kode – <span class="pris" data-pris="personal">250 kr</span></strong><br />Én person.</span></label>
+          <label><input type="radio" name="product" value="family" /> <span><strong>Familiekode – <span class="pris" data-pris="family">500 kr</span></strong><br />Alle i samme hus.</span></label>
           <p class="small flere-hjem">Hvert hjem trenger sin egen kode.</p>
         </fieldset>
         <!-- «Dette er en gave» (natt 15.–16.11): endrer ingenting i bestillingen og sendes ikke til kassen. Den viser bare
@@ -59,6 +60,17 @@
             </figure>
           </details>
         </div>
+        <!-- Rabattkode (Lars 20.11 17:16 «rabattkode norsk side»): kassen sjekker koden og regner prisen, siden viser bare
+             svaret. ?rabatt=KODE i lenka fyller inn og sjekker koden. Tomt felt: full pris som før. -->
+        <details id="rabatt" class="gave-mer rabatt">
+          <summary>Har du rabattkode?</summary>
+          <div class="rabatt-rad">
+            <label for="rabattkode">Rabattkode</label>
+            <input id="rabattkode" name="rabattkode" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" />
+            <button type="button" id="rabatt-bruk" class="btn">Bruk</button>
+          </div>
+          <p id="rabatt-svar" class="small rabatt-svar" role="status" aria-live="polite"></p>
+        </details>
         <label for="epost">E-postadressen din (påkrevd, koden sendes hit)</label>
         <input id="epost" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="epost-hint" />
         <!-- Left empty by people; a robot that fills every field is turned away. -->
@@ -186,6 +198,6 @@
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lars.magne" data-d="outlook.com">lars.magne (krøllalfa) outlook.com</span></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
-  <script type="module" src="kjop.js?v=salgv2"></script>
+  <script type="module" src="kjop.js?v=rabatt-2011"></script>
 </body>
 </html>

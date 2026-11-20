@@ -2,6 +2,7 @@
 // calendar event made here, nothing stored or sent, no e-mail), and the place for quotes from grown-ups who tried door 1.
 // The quotes stand in sitater.json and are shown only when there are real ones; until then the place is not on the page.
 import { forStart } from './dato.mjs';
+import './kilde.mjs'; // utm/?fra= for the buy page (this tab's sessionStorage only)
 import { saveIcs, startGoogle, startIcs } from './kalender.mjs';
 
 const lang = typeof document !== 'undefined' && document.documentElement.lang.startsWith('en') ? 'en' : 'nb';

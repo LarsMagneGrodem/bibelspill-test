@@ -1,4 +1,4 @@
-/* global document, navigator, location, URLSearchParams */
+/* global document, navigator, location, URLSearchParams, sessionStorage */
 // «Have a discount code?» on the English buy page (Lars 18.11 19:03 «gi gass»). Stripe turns down promotion codes on
 // Payment Links with Managed Payments, so a known code sends the buyer to its own Payment Links instead, where the
 // discount is already in the price (kasse r50, STRIPE_CAMPAIGNS). Matching is here, in the page, and case-insensitive;
@@ -6,6 +6,7 @@
 // fills the field in and applies it. A code works here from its first moment (validFrom, if it has one) to its last
 // (validUntil), both in Oslo time; the Stripe links are switched on and off at those times as well.
 import { languagesOf, plainDollar, timeZoneOf, usLabel, visitorCurrency } from './valuta.js';
+import { readAttribution, saveAttribution, withClientReference } from '../landing/kilde.mjs';
 
 // More codes later: one more entry, with its own two Payment Links and the prices those links charge.
 export var KODER = {
@@ -75,11 +76,14 @@ if (typeof document !== 'undefined') {
     if (!box || !input || !apply || !answer || !pay) return;
     var full = { personal: pay.dataset.personal, family: pay.dataset.family };
     var currency = visitorCurrency(languagesOf(navigator), timeZoneOf());
+    var kilde = readAttribution(location.search, document.referrer, sessionStorage);
+    saveAttribution(kilde, sessionStorage);
     function links(personal, family) {
       pay.dataset.personal = personal;
       pay.dataset.family = family;
       var chosen = document.querySelector('input[name="product"]:checked');
-      pay.href = chosen && chosen.value === 'family' ? family : personal;
+      var base = chosen && chosen.value === 'family' ? family : personal;
+      pay.href = withClientReference(base, kilde);
     }
     function run() {
       var hit = lookUp(input.value, new Date());

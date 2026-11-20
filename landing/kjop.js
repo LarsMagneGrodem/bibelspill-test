@@ -10,9 +10,16 @@ import { PAGES, PAGES_24, cardPdf } from './gavekort-nett.mjs';
 import { qrCode } from './qr.mjs';
 // Natt 15.–16.11: the line that changes with the date (filled on import), and the calendar file on the receipt.
 import './dato.mjs';
+import { orderFields, readAttribution, saveAttribution } from './kilde.mjs';
 import { YEAR, clock, remindDoors, remindersIcs, saveIcs } from './kalender.mjs';
 
 const $ = (id) => document.getElementById(id);
+const KILDE = (() => {
+  const attr = readAttribution(location.search, document.referrer, sessionStorage);
+  saveAttribution(attr, sessionStorage);
+  return attr;
+})();
+
 const meta = (name) => document.querySelector(`meta[name="${name}"]`)?.content.trim() ?? '';
 // The worker's address, with or without /order; the sale is open only when kasse-apen says ja.
 const base = meta('kasse-api').replace(/\/+$/, '');
@@ -39,6 +46,10 @@ const ERRORS = {
   network: 'Fikk ikke kontakt. Sjekk at du er på nett, og prøv igjen.',
   // G12: the worker took more than 15 s. The order may have been made all the same, so: do not buy twice.
   timeout: 'Kassen svarer ikke nå. Har du fått en e-post med kode, ikke kjøp på nytt. Prøv igjen om litt, eller skriv til oss.',
+  // Rabattkode (20.11): kassen sier nei før noe er bestilt, så ingen betaler full pris uten å vite det.
+  rabattkode: 'Fant ikke rabattkoden. Sjekk at den er skrevet riktig, eller tøm feltet for å kjøpe til full pris.',
+  'rabattkode-tid': 'Rabattkoden gjelder ikke nå. Tøm feltet for å kjøpe til full pris.',
+  'rabattkode-brukt': 'Rabattkoden er brukt opp. Tøm feltet for å kjøpe til full pris.',
 };
 const ORDER_TIMEOUT_MS = 15000;
 
@@ -442,6 +453,72 @@ const placeError = (underEmail) => {
 };
 
 // Shared checks for the first step (product and e-mail).
+// Rabattkode (Lars 20.11 17:16 «rabattkode norsk side»). «Bruk» spør kassen (/rabatt/sjekk), som sier prosent og
+// priser; siden viser dem, men kassen regner prisen på nytt ved bestillingen. Det kunden skrev sendes med bestillingen
+// også uten «Bruk», så en kode som ikke gjelder stopper kjøpet med en melding i stedet for å gi full pris i stillhet.
+let discount = null;
+const typedCode = () => ($('rabattkode')?.value ?? '').replace(/\s+/g, '').toUpperCase();
+for (const el of document.querySelectorAll('[data-pris]')) el.dataset.full = el.textContent;
+function showPrices(d) {
+  for (const el of document.querySelectorAll('[data-pris]')) {
+    const p = d?.prices?.[el.dataset.pris];
+    el.textContent = '';
+    if (!p) { el.textContent = el.dataset.full; continue; }
+    const old = document.createElement('s');
+    old.textContent = `${p.listAmount} kr`;
+    el.append(old, `${p.amount} kr`);
+  }
+}
+function discountAnswer(text, ok) {
+  $('rabatt-svar').textContent = text;
+  $('rabatt-svar').classList.toggle('rabatt-svar--ok', Boolean(ok));
+  $('rabattkode').setAttribute('aria-invalid', String(!ok && Boolean(text)));
+}
+async function applyDiscount() {
+  const code = typedCode();
+  discount = null;
+  showPrices(null);
+  if (!code) return discountAnswer('', false);
+  if (!base || meta('kasse-apen') !== 'ja') return discountAnswer(ERRORS.misconfigured, false);
+  busy('rabatt-bruk', true);
+  try {
+    let res;
+    try {
+      res = await fetch(`${base}/rabatt/sjekk`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code }), signal: timeoutSignal(ORDER_TIMEOUT_MS) });
+    } catch {
+      return discountAnswer(ERRORS.network, false);
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!data.ok) return discountAnswer(ERRORS[data.error] ?? ERRORS.server, false);
+    if (typedCode() !== data.code) return; // the field changed while the worker answered
+    discount = data;
+    showPrices(data);
+    discountAnswer(`Rabattkoden ${data.code} gir ${data.percent} % rabatt: personlig kode ${data.prices.personal.amount} kr, familiekode ${data.prices.family.amount} kr.`, true);
+  } finally {
+    busy('rabatt-bruk', false);
+  }
+}
+$('rabatt-bruk').addEventListener('click', () => { void applyDiscount(); });
+$('rabattkode').addEventListener('keydown', (event) => {
+  // Enter in the code field applies the code; it must never submit the form (that starts Vipps).
+  if (event.key === 'Enter') { event.preventDefault(); void applyDiscount(); }
+});
+$('rabattkode').addEventListener('input', () => {
+  if (discount && typedCode() !== discount.code) { discount = null; showPrices(null); }
+  discountAnswer('', false);
+});
+// ?rabatt=KODE (en lenke fra en influenser, også via /til/…): fylt inn, åpnet og sjekket med en gang.
+{
+  const fromLink = new URLSearchParams(location.search).get('rabatt');
+  if (fromLink) {
+    $('rabattkode').value = fromLink.slice(0, 40);
+    $('rabatt').open = true;
+    setTimeout(() => { void applyDiscount(); }, 0); // after the whole module has run (busy is defined further down)
+  }
+}
+const discountField = () => (typedCode() ? { discountCode: typedCode() } : {});
+const discountFailed = (key) => { if (String(key).startsWith('rabattkode')) $('rabatt').open = true; };
+
 function readOrderFields(say) {
   const email = $('epost').value.trim();
   const bad = !$('epost').checkValidity() || !emailLooksSent(email);
@@ -502,7 +579,7 @@ $('skjema').addEventListener('submit', async (event) => {
       res = await fetch(`${base}/vipps/start`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email: fields.email, product: fields.product, website: fields.website, consent: true }),
+        body: JSON.stringify({ email: fields.email, product: fields.product, website: fields.website, consent: true, ...orderFields(KILDE), ...discountField() }),
         signal: timeoutSignal(ORDER_TIMEOUT_MS),
       });
     } catch (error) {
@@ -514,6 +591,7 @@ $('skjema').addEventListener('submit', async (event) => {
     if (!url.startsWith('https://')) throw new Error('server');
     location.href = url;
   } catch (error) {
+    discountFailed(error.message);
     say(error.message);
   } finally {
     busy('kjop-vipps', false);
@@ -527,7 +605,7 @@ $('kjop').addEventListener('click', async () => {
   if (!fields) return;
   if (!$('samtykke-bestill').checked) return consentMissing('samtykke-bestill', say);
   $('feil').textContent = '';
-  if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product) {
+  if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product && (backOrder.sentCode ?? '') === typedCode()) {
     backOrder = { ...backOrder, gave: $('gave-valg').checked };
     keep(PENDING, backOrder);
     showPay(backOrder);
@@ -535,12 +613,13 @@ $('kjop').addEventListener('click', async () => {
   }
   busy('kjop', true);
   try {
-    const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website, consent: true });
-    const next = { ...data, email: fields.email, gave: $('gave-valg').checked };
+    const data = await ask('/start', { email: fields.email, product: fields.product, website: fields.website, consent: true, ...orderFields(KILDE), ...discountField() });
+    const next = { ...data, email: fields.email, gave: $('gave-valg').checked, sentCode: typedCode() };
     backOrder = null;
     keep(PENDING, next);
     showPay(next);
   } catch (error) {
+    discountFailed(error.message);
     say(error.message);
   } finally {
     busy('kjop', false);
