@@ -127,6 +127,8 @@
 }
 /* Forslag 3 (Lars 16.11): e-postfeilen rett under feltet. */
 .kasse #epost + #feil { margin: 6px 0 0; }
+/* Rydd 20.11: tom feilmelding under bankknappen tar ikke plass (meldingen vises fortsatt når den får tekst). */
+.kasse .bank-alternativ + .melding:empty { min-height: 0; margin-bottom: 0; }
 /* Kjøpsvalgene som store kort (Codex N8, Lars 16.11): hele kortet kan trykkes, og det valgte kortet er markert med gull
    kant og lysere bakgrunn. Teksten og prisene er de samme. To kort side om side fra 600 px. */
 .kasse .valg { border: 0; padding: 0; }

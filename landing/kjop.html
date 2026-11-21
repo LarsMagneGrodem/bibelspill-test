@@ -27,7 +27,7 @@
   <meta name="theme-color" content="#1b1a17" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
   <link rel="stylesheet" href="styles.css?v=312580b4" />
-  <link rel="stylesheet" href="kjop.css?v=7c31df51" />
+  <link rel="stylesheet" href="kjop.css?v=7502129d" />
 </head>
 <body>
   <main id="innhold" class="kasse">
@@ -37,7 +37,7 @@
       <!-- Skifter med datoen på enheten (dato.mjs); novembers linje står her for den som ikke har skript. -->
       <p class="dato-linje" data-dato="kjop">Kalenderen starter tirsdag 1. desember.</p>
       <h1 id="bestill-tittel">Kjøp Reisen med Lukas</h1>
-      <p class="kjop-ingress">Kristen julekalender på nett: <strong>24 luker</strong>, <strong>24 kvelder sammen</strong>, fra 1. desember. Luke 1 er gratis. Betal med Vipps – koden kommer med en gang. Personlig kode 250&nbsp;kr, familiekode 500&nbsp;kr.</p>
+      <p class="kjop-ingress">Kristen julekalender på nett: <strong>24 luker</strong>, <strong>24 kvelder sammen</strong>.</p>
       <p id="siste" hidden><button id="vis-siste" class="btn" type="button"><span>Vis siste kjøp (kode <span id="siste-kode" class="kode"></span>)</span></button></p>
       <p id="gammel-ios" class="melding" hidden>Denne iPaden eller iPhonen kan ikke spille Reisen med Lukas (krever iOS 16.4 eller nyere). Kjøp bare hvis barnet skal spille på en annen enhet.</p>
       <form id="skjema" novalidate>
@@ -72,7 +72,7 @@
           <p id="rabatt-svar" class="small rabatt-svar" role="status" aria-live="polite"></p>
         </details>
         <label for="epost">E-postadressen din (påkrevd, koden sendes hit)</label>
-        <input id="epost" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="epost-hint" />
+        <input id="epost" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" />
         <!-- Left empty by people; a robot that fills every field is turned away. -->
         <div class="skjult" aria-hidden="true"><label for="nettsted">Nettsted</label><input id="nettsted" name="website" tabindex="-1" autocomplete="off" /></div>
         <!-- F04 (Lars 15.11): three short lines right above paying; nothing new about the right of withdrawal. -->
@@ -90,9 +90,7 @@
         </ul>
         <p class="bank-alternativ"><button id="kjop" class="lenke" type="button">Eller kjøp og betal med bankoverføring</button></p>
         <p id="feil" class="melding" role="alert"></p>
-        <p id="epost-hint" class="small">Ingen e-post fra kvittering@reisenmedlukas.no? Sjekk søppelpost.</p>
       </form>
-      <p class="small"><a href="../personvern.html">Personvern</a></p>
     </section>
 
     <!-- Bankoverføring på tillit (Lars 12.11 16:24): betalingsinformasjonen først, så «Jeg har betalt», så koden.
@@ -195,7 +193,7 @@
         <img src="assets/listed-on-faithful-kids.svg" width="140" height="39" alt="Listed on Faithful Kids" />
       </a>
     </p>
-    <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lars.magne" data-d="outlook.com">lars.magne (krøllalfa) outlook.com</span></p>
+    <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lars.magne" data-d="outlook.com">lars.magne (krøllalfa) outlook.com</span> · <a href="../personvern.html">Personvern</a></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
   <script type="module" src="kjop.js?v=rabatt-2011"></script>
