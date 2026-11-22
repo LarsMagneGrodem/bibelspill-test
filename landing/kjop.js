@@ -1,8 +1,8 @@
 /* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File, localStorage */
 // The buy page. Vipps is first (Lars 13.11 01:14). Bank transfer on trust (Lars 12.11 16:24) stays as the
-// less prominent choice: the consent on step 1, /order/start (r38, Lars 13.11 10:51: the code and the receipt come with
+// less prominent choice: /order/start (r38, Lars 13.11 10:51: the code and the receipt come with
 // the order), then the pay step. «Jeg har betalt» is still there, but never stops the code; /order/confirm writes it down.
-// An order started on an older page (no code yet) still asks the consent on the pay step. No deadline.
+// Lars 22.11 (t423u): no tick box for the right of withdrawal anywhere; the worker still gets consent: true as before. No deadline.
 // The bank step is one block (#bank). Vipps posts to /vipps/start and sends the buyer to Vipps.
 // The gift card is drawn here in the browser (gavekort-nett.mjs) after the purchase; the names on it never leave the page.
 // Lars 11.11: no card to download before buying, so no blank card here.
@@ -30,7 +30,6 @@ const PENDING = 'kasse:betal';
 const PRODUCT_LINE = { personal: 'Personlig kode, for én person.', family: 'Familiekode, for hele husstanden.' };
 const ERRORS = {
   email: 'Sjekk e-postadressen.',
-  consent: 'Kryss av i boksen før du kjøper.',
   paid: 'Kryss av for at du har betalt.',
   order: 'Fant ikke bestillingen. Trykk «Tilbake» og prøv igjen, eller skriv til oss.',
   product: 'Velg personlig kode eller familiekode.',
@@ -273,13 +272,6 @@ function showPay(pending) {
   $('konto').textContent = pending.account;
   $('ordre').textContent = pending.orderNo;
   $('betalt').checked = false;
-  $('samtykke').checked = false;
-  // r38: an order with its code gave the consent on step 1; only an older waiting order asks it here.
-  // (.samtykke has display: flex in kjop.css, which would win over hidden alone.)
-  const consentLabel = $('samtykke').closest('label');
-  consentLabel.hidden = Boolean(pending.code);
-  consentLabel.style.display = pending.code ? 'none' : '';
-  if ($('samtykke-bestill')) $('samtykke-bestill').checked = false;
   $('feil-betal').textContent = '';
   $('kopiert-betal').textContent = '';
   window.scrollTo({ top: 0, behavior: 'instant' });
@@ -397,7 +389,6 @@ function showForm(kept, gift) {
   $('feil').textContent = '';
   $('kopiert').textContent = '';
   $('kortfeil').textContent = '';
-  $('samtykke').checked = false;
   $('navn').value = '';
   $('fra').value = '';
   pickProduct();
@@ -533,24 +524,6 @@ function readOrderFields(say) {
 }
 
 $('epost').addEventListener('input', () => $('epost').removeAttribute('aria-invalid'));
-// Finpuss r3: an unticked consent box is marked as wrong for a screen reader and gets the focus, as the email field does;
-// ticking it clears the mark.
-function consentMissing(id, say) {
-  const box = $(id);
-  const label = box.closest('label') || box;
-  const message = id === 'samtykke' ? $('feil-betal') : $('feil');
-  box.setAttribute('aria-invalid', 'true');
-  label.classList.add('samtykke-mangler');
-  if (message) label.after(message);
-  box.focus();
-  const result = say('consent');
-  label.scrollIntoView({ block: 'center' });
-  return result;
-}
-for (const id of ['samtykke-bestill', 'samtykke']) $(id)?.addEventListener('change', () => {
-  $(id).removeAttribute('aria-invalid');
-  $(id).closest('label')?.classList.remove('samtykke-mangler');
-});
 
 // Del 13 L1: a button waiting for the worker says so to a screen reader too (the look is in kjop.css).
 const busy = (id, on) => {
@@ -563,13 +536,12 @@ const busy = (id, on) => {
 // same e-mail and product shows the same order instead of starting a new one (each counts against the daily limits).
 let backOrder = null;
 
-// Step 1, main: consent and «Betal med Vipps»; the worker answers with Vipps's page.
+// Step 1, main: «Betal med Vipps»; the worker answers with Vipps's page.
 $('skjema').addEventListener('submit', async (event) => {
   event.preventDefault();
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
-  if (!$('samtykke-bestill').checked) return consentMissing('samtykke-bestill', say);
   if (!api) return say('misconfigured');
   $('feil').textContent = '';
   busy('kjop-vipps', true);
@@ -603,7 +575,6 @@ $('kjop').addEventListener('click', async () => {
   const say = (key) => { $('feil').textContent = ERRORS[key] ?? ERRORS.network; };
   const fields = readOrderFields(say);
   if (!fields) return;
-  if (!$('samtykke-bestill').checked) return consentMissing('samtykke-bestill', say);
   $('feil').textContent = '';
   if (backOrder && backOrder.email === fields.email && backOrder.product === fields.product && (backOrder.sentCode ?? '') === typedCode()) {
     backOrder = { ...backOrder, gave: $('gave-valg').checked };
@@ -627,12 +598,11 @@ $('kjop').addEventListener('click', async () => {
 });
 
 // Step 2: «Få koden», ticked «Jeg har betalt» or not (r38). The worker writes the tick down. An order with its code
-// shows it even if that call fails; an older waiting order (no code yet) needs the consent and the worker's answer.
+// shows it even if that call fails; an older waiting order (no code yet) needs the worker's answer.
 $('fa-kode').addEventListener('click', async () => {
   const say = (key) => { $('feil-betal').textContent = ERRORS[key] ?? ERRORS.network; };
   const order = readPending();
   if (!order) return say('order');
-  if (!order.code && !$('samtykke').checked) return consentMissing('samtykke', say);
   $('feil-betal').textContent = '';
   busy('fa-kode', true);
   try {

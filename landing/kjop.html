@@ -27,7 +27,7 @@
   <meta name="theme-color" content="#1b1a17" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
   <link rel="stylesheet" href="styles.css?v=312580b4" />
-  <link rel="stylesheet" href="kjop.css?v=7502129d" />
+  <link rel="stylesheet" href="kjop.css?v=3c736be3" />
 </head>
 <body>
   <main id="innhold" class="kasse">
@@ -79,7 +79,6 @@
         <ul id="foer-betal" class="foer-betal">
           <li>Luke 1 er gratis: <a href="../spill/?lang=nb">prøv den først</a>. Selges av Rygard Holding AS (<a href="kontakt.html">kontakt</a>).</li>
         </ul>
-        <label class="samtykke"><input id="samtykke-bestill" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
         <button id="kjop-vipps" class="btn vipps" type="submit">Betal med Vipps</button>
         <p class="trygg-linje">Koden kommer her og på e-post med en gang.</p>
         <!-- Salg 18.11 (Lars 14:55 «Ja til trygghetspunktene»). -->
@@ -95,7 +94,7 @@
 
     <!-- Bankoverføring på tillit (Lars 12.11 16:24): betalingsinformasjonen først, så «Jeg har betalt», så koden.
          r38 (Lars 13.11 10:51): koden og kvitteringen kommer med bestillingen; avkryssingen står, men stopper ingenting.
-         Samtykket er gitt i steg 1; boksen her vises bare for en eldre ventende bestilling.
+         Lars 22.11 (t423u): ingen avhuking for angrerett, verken her eller i steg 1.
          Én boks for seg (betalingsmate), så Vipps kan stå først og banken under, mindre synlig. -->
     <section id="betal" aria-labelledby="betal-tittel" hidden tabindex="-1">
       <div id="bank" class="betalingsmate">
@@ -108,7 +107,6 @@
         </ul>
         <p id="kopiert-betal" class="small" role="status"></p>
         <label class="samtykke betalt"><input id="betalt" type="checkbox" /> <span>Jeg har betalt.</span></label>
-        <label class="samtykke"><input id="samtykke" type="checkbox" required /> <span>Jeg ønsker å få koden med en gang, og vet at angreretten da går tapt når koden er tatt i bruk. Jeg har sett <a href="../angreskjema/" target="_blank" rel="noopener">angreskjemaet</a> og <a href="../vilkar.html" target="_blank" rel="noopener">kjøpsvilkårene</a>.</span></label>
         <button id="fa-kode" class="btn primary" type="button">Bekreft kjøpet og få koden</button>
         <p id="feil-betal" class="melding" role="alert"></p>
         <p><button id="tilbake" class="btn" type="button">Tilbake</button></p>
@@ -196,6 +194,6 @@
     <p class="small"><a href="kontakt.html">Kontakt</a>: <span class="epost" data-u="lars.magne" data-d="outlook.com">lars.magne (krøllalfa) outlook.com</span> · <a href="../personvern.html">Personvern</a></p>
   </main>
   <!-- ?v=: a new buy page never runs with an old kjop.js from the cache (the steps changed 12.11). -->
-  <script type="module" src="kjop.js?v=rabatt-2011"></script>
+  <script type="module" src="kjop.js?v=angrerett-2211"></script>
 </body>
 </html>

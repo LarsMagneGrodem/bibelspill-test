@@ -13,9 +13,6 @@
 .kasse .kode { display: inline-block; font-family: 'Courier New', monospace; letter-spacing: 0.08em; color: var(--gold); white-space: nowrap; }
 /* NS-11: what went wrong stands out from the gold body text under the buttons (10:1 on the dark page). */
 .kasse .melding { color: #ffb4a3; font-weight: 600; min-height: 1.5em; }
-/* Livesjekk 17.11: the consent error sits next to the box and is scrolled into view, not under the button off the screen. */
-.kasse .samtykke.samtykke-mangler { outline: 3px solid #ffb4a3; outline-offset: 4px; border-radius: 8px; background: rgba(255, 180, 163, 0.12); }
-.kasse .samtykke + .melding { margin: 8px 0 4px; min-height: 0; }
 .kasse .skjult { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .kasse .betaling li { margin-bottom: 10px; }
 .kasse .btn.kopier { margin: 4px 0 0 4px; min-height: 44px; padding: 6px 14px; font-size: 1rem; vertical-align: middle; }
