@@ -120,7 +120,7 @@ figcaption { margin-top: 10px; font-size: 15px; color: var(--muted); text-align:
 }
 .del-rad { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .lenke-felt {
-  flex: 1 1 220px; min-height: 48px; padding: 10px 14px;
+  flex: 1 1 220px; min-width: 0; max-width: 100%; min-height: 48px; padding: 10px 14px;
   border-radius: 10px; border: 1px solid var(--line);
   background: #ffffff0d; color: var(--paper); font: inherit;
 }
