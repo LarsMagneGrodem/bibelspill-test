@@ -8,6 +8,8 @@
 
 export const YEAR = 2026;
 export const GAME = 'https://reisenmedlukas.no/spill/';
+// 24.11 (Lars 00:12, punkt C): the English reminder shows .com; thejourneywithluke.com/spill/ sends on to the game (301).
+export const GAME_EN = 'https://thejourneywithluke.com/spill/';
 
 const pad = (n, width = 2) => String(n).padStart(width, '0');
 const utc = (d) => `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`;
@@ -94,7 +96,7 @@ const START = {
   en: {
     title: 'The Journey with Luke: the calendar starts',
     about: 'The Advent calendar The Journey with Luke starts today. Door 1 is free:',
-    url: `${GAME}?kapittel=lukas-oppdrag&lang=en`,
+    url: `${GAME_EN}?kapittel=lukas-oppdrag&lang=en`,
     // Abroad: 6 pm by the calendar's own clock, as the doors open by the device's clock.
     start: `${YEAR}1201T180000`,
   },

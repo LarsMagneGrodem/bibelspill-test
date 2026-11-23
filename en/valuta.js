@@ -41,18 +41,26 @@ var UK_ZONES = {
   'Europe/Isle_of_Man': 1,
 };
 
+// 24.11 (Lars 00:12, punkt A): a zone that says nothing about the country (UTC, Etc/…, GMT, as some private browsers
+// report) is treated as missing, so the browser's language decides there (en-US $, en-GB £, else €).
+var NO_COUNTRY = /^(UTC|UCT|GMT|Etc\/.*|Universal|Zulu|Greenwich|Factory)$/;
+
 export function currencyFromTimeZone(tz) {
   var zone = String(tz || '');
-  if (!zone) return '';
+  if (!zone || NO_COUNTRY.test(zone)) return '';
   if (UK_ZONES[zone]) return 'gbp';
   if (zone.indexOf('America/') === 0 || US_ZONES.test(zone)) return 'usd';
   return 'eur';
 }
 
+/** The currency shown first. navigator.language (en-US $, en-GB £) decides when the time zone agrees or says nothing
+ *  about the country. When the two disagree (an en-US browser in Norway), the zone wins: Stripe picks the currency it
+ *  charges from where the buyer is, so the button never shows $ to someone Stripe will charge in €. */
 export function visitorCurrency(langs, tz) {
-  var zone = String(tz || '');
-  if (zone) return currencyFromTimeZone(zone);
-  return currencyFromLanguages(langs) || 'eur';
+  var byZone = currencyFromTimeZone(tz);
+  var byLang = currencyFromLanguages(langs);
+  if (!byZone) return byLang || 'eur';
+  return byLang === byZone ? byLang : byZone;
 }
 
 export function formatRekke(parts, first) {
@@ -66,7 +74,7 @@ export function formatRekke(parts, first) {
 
 export function plainDollar(langs, tz) {
   var zone = String(tz || '');
-  if (zone) return US_ZONES.test(zone);
+  if (zone && !NO_COUNTRY.test(zone)) return US_ZONES.test(zone);
   return currencyFromLanguages(langs) === 'usd';
 }
 
@@ -115,10 +123,11 @@ export function applyButtons(root, currency, plain) {
 
 export function languagesOf(nav) {
   var list = [];
+  // navigator.language first (the browser's own language), then the rest of the list.
+  if (nav && nav.language) list.push(nav.language);
   if (nav && nav.languages && nav.languages.length) {
     for (var i = 0; i < nav.languages.length; i++) list.push(nav.languages[i]);
   }
-  if (nav && nav.language) list.push(nav.language);
   return list;
 }
 
