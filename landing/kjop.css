@@ -123,6 +123,8 @@
   }
   /* Salg 23.11: kassens svar hentes fram (kjop.js showAnswer) over den faste betalknappen, ikke bak den. */
   .kasse .melding { scroll-margin-bottom: 96px; }
+  /* Salg 23.11 kveld: med tastatur (Tab) havner ikke fokus bak den faste betalknappen; siden ruller så feltet eller lenka kommer over knappen. */
+  html:has(.kasse #kjop-vipps), html:has(.kasse a#betal) { scroll-padding-bottom: 96px; }
 }
 /* Forslag 3 (Lars 16.11): e-postfeilen rett under feltet. */
 .kasse #epost + #feil { margin: 6px 0 0; }

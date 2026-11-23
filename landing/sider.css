@@ -17,4 +17,6 @@
 .side .luker .ls a { color: var(--gold); }
 .side .luker { margin-bottom: 18px; }
 .side .slutt .cta-row .btn { flex: 1 1 220px; }
-.side .slutt .small a { white-space: nowrap; }
+/* Lenkene i «More:»-linja holdes hele (en lenke brytes ikke midt i når den får plass). Salg 23.11 kveld: er en lenke bredere
+   enn skjermen (stor tekst på smal telefon), brytes den inne i lenka i stedet for å gi sideveis rulling. */
+.side .slutt .small a { display: inline-block; max-width: 100%; white-space: normal; }
