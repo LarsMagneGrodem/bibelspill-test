@@ -121,6 +121,8 @@
     z-index: 6;
     box-shadow: 0 -10px 24px #1b1a17, 0 4px 16px #0006;
   }
+  /* Salg 23.11: kassens svar hentes fram (kjop.js showAnswer) over den faste betalknappen, ikke bak den. */
+  .kasse .melding { scroll-margin-bottom: 96px; }
 }
 /* Forslag 3 (Lars 16.11): e-postfeilen rett under feltet. */
 .kasse #epost + #feil { margin: 6px 0 0; }

@@ -517,7 +517,9 @@ function readOrderFields(say) {
   // Del 13 L9: a screen reader hears that the field is wrong, not only the message under it.
   $('epost').setAttribute('aria-invalid', String(bad));
   // Round 2 (keyboard): the field that is wrong gets the focus, so a keyboard or screen-reader user lands on it.
-  if (bad) { say('email'); $('epost').focus(); return null; }
+  // Salg 23.11: the field and the message right under it are brought to the middle together (Safari's own smooth scroll
+  // to the focused field stopped showAnswer, and sideways the message stayed under the screen's edge).
+  if (bad) { say('email'); $('epost').focus({ preventScroll: true }); showAnswer('feil'); return null; }
   const product = document.querySelector('input[name="product"]:checked')?.value;
   if (!product) { say('product'); return null; }
   return { email, product, website: $('nettsted').value };
@@ -530,6 +532,17 @@ const busy = (id, on) => {
   $(id).disabled = on;
   if (on) $(id).setAttribute('aria-busy', 'true');
   else $(id).removeAttribute('aria-busy');
+};
+
+// Salg 23.11: the worker's answer stands under the buttons, and on a phone (also sideways) and at 1366×768 it was below
+// the screen's edge, so a refused discount code or «Kassen svarer ikke nå … ikke kjøp på nytt» looked like nothing had
+// happened, and the buyer could press again. The answer is brought to the middle of the screen (clear of the fixed pay
+// button sideways and the menu on top), and the keyboard focus goes back to the button that was pressed: it was turned
+// off while it waited, which dropped the focus to the page.
+const showAnswer = (id, button) => {
+  if (!$(id).textContent) return;
+  if (button) $(button).focus({ preventScroll: true });
+  $(id).scrollIntoView?.({ block: 'center' });
 };
 
 // Del 13 L2: «Tilbake» on the bank step keeps the waiting order for this page, so going back and on again with the
@@ -568,6 +581,7 @@ $('skjema').addEventListener('submit', async (event) => {
   } finally {
     busy('kjop-vipps', false);
   }
+  showAnswer('feil', 'kjop-vipps');
 });
 
 // The less prominent choice: bank transfer on trust, same as before.
@@ -595,6 +609,7 @@ $('kjop').addEventListener('click', async () => {
   } finally {
     busy('kjop', false);
   }
+  showAnswer('feil', 'kjop');
 });
 
 // Step 2: «Få koden», ticked «Jeg har betalt» or not (r38). The worker writes the tick down. An order with its code
@@ -602,7 +617,7 @@ $('kjop').addEventListener('click', async () => {
 $('fa-kode').addEventListener('click', async () => {
   const say = (key) => { $('feil-betal').textContent = ERRORS[key] ?? ERRORS.network; };
   const order = readPending();
-  if (!order) return say('order');
+  if (!order) { say('order'); showAnswer('feil-betal'); return; }
   $('feil-betal').textContent = '';
   busy('fa-kode', true);
   try {
@@ -622,6 +637,7 @@ $('fa-kode').addEventListener('click', async () => {
   } finally {
     busy('fa-kode', false);
   }
+  showAnswer('feil-betal', 'fa-kode');
 });
 
 $('tilbake').addEventListener('click', () => {

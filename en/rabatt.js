@@ -60,6 +60,12 @@ export function lookUp(code, now, list) {
   return { ok: true, code: key, offer: offer };
 }
 
+/** True when the field holds a code that has not been applied yet (typed, but «Apply» or Enter was not pressed). */
+export function typedButNotApplied(typed, applied) {
+  var key = normalise(typed);
+  return !!key && key !== (applied || '');
+}
+
 export function appliedText(offer, currency) {
   var cur = offer.prices.personal[currency] ? currency : 'eur';
   return TEKST.applied.replace('{percent}', String(offer.percent)).replace('{personal}', offer.prices.personal[cur]).replace('{family}', offer.prices.family[cur]);
@@ -108,7 +114,20 @@ if (typeof document !== 'undefined') {
     if (form) form.addEventListener('submit', function (e) { e.preventDefault(); });
     // A Stripe link that is opened before a code expires still works; after the last moment the page goes back to the
     // full price the next time the button is pressed.
-    pay.addEventListener('click', function () {
+    // A code that is typed but not applied is applied here, before the link opens (Stripe has no code field on these
+    // links, so the discount would be lost). A typed code that does not work stops the button and shows why, as on
+    // the Norwegian page; the buyer can empty the field and go on at the full price.
+    pay.addEventListener('click', function (e) {
+      if (typedButNotApplied(input.value, box.dataset.code)) {
+        run();
+        if (!box.dataset.code) {
+          e.preventDefault();
+          box.open = true;
+          input.focus({ preventScroll: true });
+          if (answer.scrollIntoView) answer.scrollIntoView({ block: 'center' });
+        }
+        return;
+      }
       if (box.dataset.code && !lookUp(box.dataset.code, new Date()).ok) run();
     });
     var given = new URLSearchParams(location.search).get('code');
