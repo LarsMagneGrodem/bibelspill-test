@@ -259,7 +259,9 @@ function show(order) {
     pictures[variant] = null;
     void fetchPictures(order, variant).catch(() => {});
   }
-  $('kvittering').focus();
+  // Salg 24.11: the receipt starts at the top, so the code is in view also after «Få koden» far down the pay step.
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  $('kvittering').focus({ preventScroll: true });
 }
 
 // The bank step: what goes into the bank app, then the two tick boxes.
