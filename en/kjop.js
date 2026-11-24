@@ -2,7 +2,8 @@
 // The English checkout: the chosen code picks its Stripe Payment Link (Managed Payments; Stripe sells, the worker's
 // /stripe/webhook books the code). ?valg=familie picks the family code, as on the Norwegian page.
 // Salg 20.11: first-party utm/?fra=/referrer ride on Stripe's client_reference_id (no cookies).
-import { readAttribution, saveAttribution, withClientReference } from '../landing/kilde.mjs';
+import { readAttribution, saveAttribution } from '../landing/kilde.mjs';
+import { payHref } from './stripe-via.mjs';
 
 const attr = readAttribution(location.search, document.referrer, sessionStorage);
 saveAttribution(attr, sessionStorage);
@@ -18,7 +19,7 @@ if (params.get('gave') === '1' && gift) gift.open = true;
 function pick() {
   const chosen = document.querySelector('input[name="product"]:checked');
   const base = chosen && chosen.value === 'family' ? pay.dataset.family : pay.dataset.personal;
-  pay.href = withClientReference(base, attr);
+  pay.href = payHref(base, attr);
 }
 
 document.querySelectorAll('input[name="product"]').forEach((r) => { r.addEventListener('change', pick); });

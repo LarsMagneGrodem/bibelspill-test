@@ -6,7 +6,8 @@
 // fills the field in and applies it. A code works here from its first moment (validFrom, if it has one) to its last
 // (validUntil), both in Oslo time; the Stripe links are switched on and off at those times as well.
 import { languagesOf, plainDollar, timeZoneOf, usLabel, visitorCurrency } from './valuta.js';
-import { readAttribution, saveAttribution, withClientReference } from '../landing/kilde.mjs';
+import { readAttribution, saveAttribution } from '../landing/kilde.mjs';
+import { payHref } from './stripe-via.mjs';
 
 // More codes later: one more entry, with its own two Payment Links and the prices those links charge.
 export var KODER = {
@@ -89,7 +90,7 @@ if (typeof document !== 'undefined') {
       pay.dataset.family = family;
       var chosen = document.querySelector('input[name="product"]:checked');
       var base = chosen && chosen.value === 'family' ? family : personal;
-      pay.href = withClientReference(base, kilde);
+      pay.href = payHref(base, kilde);
     }
     function run() {
       var hit = lookUp(input.value, new Date());
