@@ -217,6 +217,14 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
 @media (max-width: 360px) {
   header.top .brand { font-size: 0.8125rem; letter-spacing: .02em; }
 }
+/* Salg 24.11 natt: med stor tekst på telefon (150–200 %) ble navnet presset til én bokstav per linje ved siden av
+   Meny, English og Kjøp, og toppfeltet (som står fast) fylte nesten hele skjermen. Nå flytter menyen ned på egen rad
+   når navnet ikke får plass med hele ord. Med vanlig tekst er toppfeltet som før, på én rad. */
+@media (max-width: 719px) {
+  .top { flex-wrap: wrap; }
+  .brand { flex: 1 1 0; min-width: min-content; overflow-wrap: normal; }
+  nav { flex: 0 1 auto; min-width: 0; flex-wrap: wrap; }
+}
 /* «Du ser, spør og prøver selv» (Codex N6, Lars 16.11): tre trinn med hele skjermbildet, som i Codex
    (Lars 16.11 kl. 10:58). Ingen utsnitt. Maksbredde som en telefon, så bildet ikke blir svært høyt liggende. */
 .tre-steg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
