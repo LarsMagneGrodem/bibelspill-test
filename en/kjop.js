@@ -1,4 +1,4 @@
-/* global document, location, sessionStorage, URLSearchParams */
+/* global document, location, sessionStorage, URLSearchParams, window */
 // The English checkout: the chosen code picks its Stripe Payment Link (Managed Payments; Stripe sells, the worker's
 // /stripe/webhook books the code). ?valg=familie picks the family code, as on the Norwegian page.
 // Salg 20.11: first-party utm/?fra=/referrer ride on Stripe's client_reference_id (no cookies).
@@ -23,6 +23,11 @@ function pick() {
 
 document.querySelectorAll('input[name="product"]').forEach((r) => { r.addEventListener('change', pick); });
 pick();
+// Salg 24.11: back from Stripe the browser puts the chosen code back after the page has loaded, with no change event,
+// so «Family code» stood ticked while the button went to the personal link. The link is picked again when the page
+// shows, and once more when the button is pressed (before rabatt.js's own check of the code).
+window.addEventListener('pageshow', pick);
+pay.addEventListener('click', pick);
 
 document.querySelectorAll('.epost').forEach((s) => {
   const e = s.dataset.u + '\u0040' + s.dataset.d;
