@@ -1,4 +1,4 @@
-/* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File, localStorage */
+/* global URLSearchParams, location, window, performance, AbortSignal, AbortController, DOMException, File, localStorage, clearTimeout */
 // The buy page. Vipps is first (Lars 13.11 01:14). Bank transfer on trust (Lars 12.11 16:24) stays as the
 // less prominent choice: /order/start (r38, Lars 13.11 10:51: the code and the receipt come with
 // the order), then the pay step. «Jeg har betalt» is still there, but never stops the code; /order/confirm writes it down.
@@ -551,6 +551,21 @@ const showAnswer = (id, button) => {
 // same e-mail and product shows the same order instead of starting a new one (each counts against the daily limits).
 let backOrder = null;
 
+// Salg 24.11: after «Betal med Vipps» the browser takes a moment to open Vipps' page. Safari turned the button on again
+// during that wait, so a second tap started a second Vipps order. The button stays off while the page leaves, and is
+// turned on again when the buyer comes back (back button, or back from the Vipps app), or if nothing happened in 10 s.
+let leaving = 0;
+const backAgain = () => {
+  if (!leaving) return;
+  clearTimeout(leaving);
+  leaving = 0;
+  busy('kjop-vipps', false);
+};
+window.addEventListener('pageshow', backAgain);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') backAgain();
+});
+
 // Step 1, main: «Betal med Vipps»; the worker answers with Vipps's page.
 $('skjema').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -576,14 +591,15 @@ $('skjema').addEventListener('submit', async (event) => {
     if (!res.ok || !data.ok) throw new Error(Object.hasOwn(ERRORS, data.error ?? '') ? data.error : 'server');
     const url = typeof data.redirectUrl === 'string' ? data.redirectUrl : '';
     if (!url.startsWith('https://')) throw new Error('server');
+    leaving = setTimeout(backAgain, 10000);
     location.href = url;
   } catch (error) {
     discountFailed(error.message);
     say(error.message);
   } finally {
-    busy('kjop-vipps', false);
+    if (!leaving) busy('kjop-vipps', false);
   }
-  showAnswer('feil', 'kjop-vipps');
+  if (!leaving) showAnswer('feil', 'kjop-vipps');
 });
 
 // The less prominent choice: bank transfer on trust, same as before.

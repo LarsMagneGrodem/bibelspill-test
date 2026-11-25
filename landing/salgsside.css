@@ -225,6 +225,13 @@ nav a.topp-kjop:hover, nav a.topp-kjop:focus-visible { text-decoration: none; }
   .brand { flex: 1 1 0; min-width: min-content; overflow-wrap: normal; }
   nav { flex: 0 1 auto; min-width: 0; flex-wrap: wrap; }
 }
+/* Salg 24.11 kveld (Lars 18:21): på lav, liggende skjerm (høyde inntil 430 px) skjules delenkene i
+   toppfeltet slik som på stående telefon, så bare navnet, språket og «Kjøp» står igjen. Med stor
+   tekst blir ikke det faste feltet tre rader høyt. Også med vanlig tekst forsvinner delenkene der.
+   Stående telefon og PC er uendret. Ingen ny tekst. */
+@media (orientation: landscape) and (max-height: 430px) {
+  nav .nav-bred { display: none; }
+}
 /* «Du ser, spør og prøver selv» (Codex N6, Lars 16.11): tre trinn med hele skjermbildet, som i Codex
    (Lars 16.11 kl. 10:58). Ingen utsnitt. Maksbredde som en telefon, så bildet ikke blir svært høyt liggende. */
 .tre-steg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
