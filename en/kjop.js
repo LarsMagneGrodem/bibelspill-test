@@ -1,12 +1,12 @@
-/* global document, location, sessionStorage, URLSearchParams, window */
+/* global document, location, URLSearchParams, window */
 // The English checkout: the chosen code picks its Stripe Payment Link (Managed Payments; Stripe sells, the worker's
 // /stripe/webhook books the code). ?valg=familie picks the family code, as on the Norwegian page.
 // Salg 20.11: first-party utm/?fra=/referrer ride on Stripe's client_reference_id (no cookies).
-import { readAttribution, saveAttribution } from '../landing/kilde.mjs';
+import { readAttribution, saveAttribution, tabStorage } from '../landing/kilde.mjs';
 import { payHref } from './stripe-via.mjs';
 
-const attr = readAttribution(location.search, document.referrer, sessionStorage);
-saveAttribution(attr, sessionStorage);
+const attr = readAttribution(location.search, document.referrer, tabStorage());
+saveAttribution(attr, tabStorage());
 
 const pay = document.getElementById('betal');
 const family = document.querySelector('input[name="product"][value="family"]');

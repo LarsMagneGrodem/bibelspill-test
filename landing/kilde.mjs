@@ -133,7 +133,19 @@ export function withClientReference(url, attr) {
   }
 }
 
-if (typeof document !== 'undefined' && typeof sessionStorage !== 'undefined' && typeof location !== 'undefined') {
-  const attr = readAttribution(location.search, document.referrer, sessionStorage);
-  saveAttribution(attr, sessionStorage);
+/** This tab's sessionStorage, or null. Where the browser blocks site data («block all cookies»), even reading
+ * `sessionStorage` throws (SecurityError), and an error here stopped every script that imports this file: the buy
+ * buttons did nothing (salg 25.11). */
+export function tabStorage() {
+  try {
+    return typeof sessionStorage === 'undefined' ? null : sessionStorage;
+  } catch {
+    return null;
+  }
+}
+
+if (typeof document !== 'undefined' && typeof location !== 'undefined') {
+  const storage = tabStorage();
+  const attr = readAttribution(location.search, document.referrer, storage);
+  saveAttribution(attr, storage);
 }

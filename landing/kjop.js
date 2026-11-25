@@ -10,13 +10,13 @@ import { PAGES, PAGES_24, cardPdf } from './gavekort-nett.mjs';
 import { qrCode } from './qr.mjs';
 // Natt 15.–16.11: the line that changes with the date (filled on import), and the calendar file on the receipt.
 import './dato.mjs';
-import { orderFields, readAttribution, saveAttribution } from './kilde.mjs';
+import { orderFields, readAttribution, saveAttribution, tabStorage } from './kilde.mjs';
 import { YEAR, clock, remindDoors, remindersIcs, saveIcs } from './kalender.mjs';
 
 const $ = (id) => document.getElementById(id);
 const KILDE = (() => {
-  const attr = readAttribution(location.search, document.referrer, sessionStorage);
-  saveAttribution(attr, sessionStorage);
+  const attr = readAttribution(location.search, document.referrer, tabStorage());
+  saveAttribution(attr, tabStorage());
   return attr;
 })();
 
