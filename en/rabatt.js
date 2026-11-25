@@ -49,6 +49,19 @@ export var KODER = {
       family: { eur: '€24.99', gbp: '£19.99', usd: '$24.99' },
     },
   },
+  // Lars 25.11 22:23 and 22:28 (via Markedsføring): partner code for Poet Prints Teaching, 20 %, from now to Thursday
+  // 24 December 23:59 Oslo, kasse r65. Its own two links and prices (not ADVENT20's), so its sales are counted apart.
+  // Not combined with any other code: one code in the field, and the links have no code field.
+  POETPRINTS20: {
+    percent: 20,
+    validUntil: '2026-12-24T23:59:59.999+01:00',
+    personal: 'https://buy.stripe.com/6oU4gB6aB4gN4yGcv5gnK08',
+    family: 'https://buy.stripe.com/9B6dRbcyZdRn5CK8ePgnK09',
+    prices: {
+      personal: { eur: '€19.99', gbp: '£15.99', usd: '$19.99' },
+      family: { eur: '€39.99', gbp: '£31.99', usd: '$39.99' },
+    },
+  },
 };
 
 export var TEKST = {
