@@ -416,3 +416,7 @@ header.top {
   .meny-lenker[data-open='true'] { max-height: calc(100vh - 100%); max-height: calc(100dvh - 100%); overflow-y: auto; overscroll-behavior: contain; }
   .meny-lenker[data-open='true'] > a { flex-shrink: 0; }
 }
+/* Salg 25.11 (Lars 11:45 «Jeg følger dine anbefalinger»): på PC ble svarene i «Spørsmål og svar», punktlistene og noen
+   avsnitt 145–167 tegn per linje fra ca. 1100 px bredde. De stopper nå ved 70 tegn, som ingressen over. Telefon er
+   uendret (der er linjene kortere enn dette fra før). Ingen ny tekst. */
+.faq details > p, section > ul.list > li, main.side > section > p, .betaling > p.small, footer.foot > p { max-width: 70ch; }
