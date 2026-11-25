@@ -409,3 +409,10 @@ header.top {
 .fk-merke img { width: 200px; max-width: 100%; height: auto; }
 .fk-merke--fot { margin: 12px 0 8px; opacity: 0.92; }
 .fk-merke--fot img { width: 140px; }
+/* Salg 25.11 natt: på lav, liggende telefon (568×320) med stor tekst gikk den åpne menyen under skjermkanten, og den
+   siste lenken kunne ikke nås, fordi toppfeltet står fast. Lista ruller nå inni seg selv når den ikke får plass.
+   Gjelder bare den åpne telefonmenyen på liggende skjerm inntil 430 px høy. Ingen ny tekst. */
+@media (orientation: landscape) and (max-height: 430px) {
+  .meny-lenker[data-open='true'] { max-height: calc(100vh - 100%); max-height: calc(100dvh - 100%); overflow-y: auto; overscroll-behavior: contain; }
+  .meny-lenker[data-open='true'] > a { flex-shrink: 0; }
+}
