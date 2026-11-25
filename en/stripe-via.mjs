@@ -10,6 +10,8 @@ export var STRIPE_VIA = {
   'https://buy.stripe.com/4gM5kF0QhbJffdkamXgnK03': 'til/stripe-family-chessluke/',
   'https://buy.stripe.com/9B628taqR3cJgho66HgnK04': 'til/stripe-person-advent20/',
   'https://buy.stripe.com/28EaEZ56x28FaX42UvgnK05': 'til/stripe-family-advent20/',
+  'https://buy.stripe.com/00w9AVeH73cJ8OW2UvgnK06': 'til/stripe-person-lukas50/',
+  'https://buy.stripe.com/00wfZjeH76oVd5c2UvgnK07': 'til/stripe-family-lukas50/',
 };
 
 /** The button's href: the counted way, with Stripe's client_reference_id in the query so til.js can pass it on. */

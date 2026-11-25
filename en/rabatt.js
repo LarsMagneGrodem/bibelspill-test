@@ -21,18 +21,32 @@ export var KODER = {
       family: { eur: '€37.49', gbp: '£29.99', usd: '$37.49' },
     },
   },
-  // Lars 19.11 01:24 «ADVENT20 og TRY1 hvis den første virker»: public, 20 %, Friday 28 to Sunday 30 November (Oslo).
+  // Lars 19.11 01:24 «ADVENT20 og TRY1 hvis den første virker»: public, 20 %. Moved (Lars 25.11 via Markedsføring) to
+  // Tuesday 1 to Saturday 5 December (Oslo), so it never overlaps LUKAS50.
   // Not combined with CHESSLUKE: one code in the field, and each code has its own links with no code field.
   ADVENT20: {
     percent: 20,
-    validFrom: '2026-11-28T00:00:00.000+01:00',
-    validUntil: '2026-11-30T23:59:59.999+01:00',
-    notYet: 'This code works 28–30 November.',
+    validFrom: '2026-12-01T00:00:00.000+01:00',
+    validUntil: '2026-12-05T23:59:59.999+01:00',
+    notYet: 'This code works 1–5 December.',
     personal: 'https://buy.stripe.com/9B628taqR3cJgho66HgnK04',
     family: 'https://buy.stripe.com/28EaEZ56x28FaX42UvgnK05',
     prices: {
       personal: { eur: '€19.99', gbp: '£15.99', usd: '$19.99' },
       family: { eur: '€39.99', gbp: '£31.99', usd: '$39.99' },
+    },
+  },
+  // Lars 25.11 12:17 and 12:23 «begge steder»: public, 50 %, Friday 27 to Monday 30 November (Oslo), kasse r64.
+  LUKAS50: {
+    percent: 50,
+    validFrom: '2026-11-27T00:00:00.000+01:00',
+    validUntil: '2026-11-30T23:59:59.999+01:00',
+    notYet: 'This code works 27–30 November.',
+    personal: 'https://buy.stripe.com/00w9AVeH73cJ8OW2UvgnK06',
+    family: 'https://buy.stripe.com/00wfZjeH76oVd5c2UvgnK07',
+    prices: {
+      personal: { eur: '€12.49', gbp: '£9.99', usd: '$12.49' },
+      family: { eur: '€24.99', gbp: '£19.99', usd: '$24.99' },
     },
   },
 };
