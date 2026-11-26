@@ -45,18 +45,18 @@
       }
     </script>
     <style>#loading #loading-card{box-sizing:border-box;color:#3a2410;letter-spacing:0;text-align:center;background:#f3e4c2;border:1px solid #5a3414b3;border-radius:4px 10px 5px 9px;width:min(320px,100vw - 32px);padding:14px 16px;font:1.125rem/1.35 Georgia,Times New Roman,serif;box-shadow:0 12px 34px #000000a6}#loading-place{aspect-ratio:3/2;object-fit:cover;background:#d9c493;border:3px solid #fff6df;border-radius:3px;width:180px;max-width:100%;height:auto;margin:0 auto 10px;display:block;box-shadow:0 1px 4px #28140573}#loading-door{color:#8b1a1a;font-variant:small-caps;letter-spacing:.04em;font-size:1rem;font-weight:700}#loading-ask{margin:4px 0 8px;font-size:1.1875rem;font-style:italic}#loading-text{letter-spacing:.06em;opacity:.8;font-size:.9375rem}#loading #loading-bar{background:#5a341440;border-radius:2px;height:3px;margin-top:12px;overflow:hidden}#loading #loading-fill{background:#8b1a1a;width:6%;height:100%;transition:width .3s}#loading [hidden]{display:none}#loading.warm #loading-card{animation:.25s ease-out .45s both loading-in}@keyframes loading-in{0%{opacity:0}}@media (prefers-reduced-motion:reduce){#loading.warm #loading-card{animation-duration:10ms}}</style>
-    <script type="module" crossorigin src="./assets/index-BAEpprVL.js"></script>
+    <script type="module" crossorigin src="./assets/index-91RlmLr1.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-XKyaHtl9.js">
     <link rel="modulepreload" crossorigin href="./assets/game-BjEV2j7v.js">
-    <link rel="modulepreload" crossorigin href="./assets/theme-PkD5rn1u.js">
-    <link rel="modulepreload" crossorigin href="./assets/focus-BlbiKO2k.js">
-    <link rel="modulepreload" crossorigin href="./assets/ui-CgCb9n_4.js">
+    <link rel="modulepreload" crossorigin href="./assets/theme-CecGt2Sg.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-CwAm-WaL.js">
+    <link rel="modulepreload" crossorigin href="./assets/ui-DkIsT1OJ.js">
     <link rel="modulepreload" crossorigin href="./assets/schema-DkcvxztZ.js">
-    <link rel="modulepreload" crossorigin href="./assets/gains-Cu3iisNz.js">
-    <link rel="modulepreload" crossorigin href="./assets/report-Bn5Fgvj3.js">
-    <link rel="preload" as="style" crossorigin href="./assets/ui-BToQ2TJu.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/ui-BToQ2TJu.css"></noscript>
+    <link rel="modulepreload" crossorigin href="./assets/gains-De3urpLB.js">
+    <link rel="modulepreload" crossorigin href="./assets/report-BI1CmXt4.js">
+    <link rel="preload" as="style" crossorigin href="./assets/ui-WkZ1c_16.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/ui-WkZ1c_16.css"></noscript>
     <link rel="preload" as="style" crossorigin href="./assets/report-D0Byommf.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/report-D0Byommf.css"></noscript>
-    <link rel="preload" as="style" crossorigin href="./assets/index-BG4h0OR2.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/index-BG4h0OR2.css"></noscript>
+    <link rel="preload" as="style" crossorigin href="./assets/index-Db2yyde8.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/index-Db2yyde8.css"></noscript>
   </head>
   <body>
     <div id="game">
@@ -339,6 +339,18 @@
           <button id="ending-whole" data-ui="unlockTitle" type="button" hidden></button>
           <button id="ending-door" data-ui="adultDoorOpen" type="button" hidden></button>
         </section>
+        <!-- 26.11 (Lars «De fire viktigste nå»): for grown-ups after door 1, once; install-card.ts. No price, nothing for the child. -->
+        <section id="ending-install" aria-labelledby="ending-install-title" hidden>
+          <h3 id="ending-install-title" data-ui="installTitle"></h3>
+          <p data-ui="installText"></p>
+          <div class="button-row">
+            <button id="ending-install-home" data-ui="installHome" type="button"></button>
+            <button id="ending-install-calendar" data-ui="installCalendar" type="button"></button>
+            <button id="ending-install-no" data-ui="installNo" type="button" class="plain"></button>
+          </div>
+          <p id="ending-install-status" role="status"></p>
+          <div id="ending-install-steps" class="steps" hidden></div>
+        </section>
       </div>
     </div>
 
@@ -394,6 +406,7 @@
           </div>
         <!-- r207: «Dagens spørsmål» nearer Start (above the map) so 200% is packed, not top-heavy. -->
         <p id="atlas-ask"></p>
+        <button id="atlas-incode" class="plain" type="button" hidden></button>
         <div id="atlas-frame"></div>
         <div id="atlas-chosen"></div>
         <div id="atlas-score"></div>
