@@ -438,3 +438,15 @@ header.top {
   .hero2:has(.hero2-film) .cta-row .btn { flex: 1 1 0; min-width: 0; }
   .hero2:has(.hero2-film) .cta-row .btn.stor { min-height: 44px; padding: 6px 8px; font-size: 0.875rem; }
 }
+
+/* 26.11: on the gift and topic pages (gave, gift, grandchildren and the others
+   with main.side) the footer links were 16 px tall, with a 23 px line-height,
+   under the 24 px WCAG minimum on a desktop. Give the links a 24 px target.
+   Same words. The front page (main without .side) is unchanged. */
+body:has(main.side) footer.foot a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+  padding: 0 4px;
+  vertical-align: middle;
+}
