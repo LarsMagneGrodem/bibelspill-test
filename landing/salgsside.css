@@ -443,10 +443,12 @@ header.top {
    with main.side) the footer links were 16 px tall, with a 23 px line-height,
    under the 24 px WCAG minimum on a desktop. Give the links a 24 px target.
    Same words. The front page (main without .side) is unchanged. */
+/* 26.11 (later): the first version made the links inline blocks with a 24 px line-height and
+   side padding. That moved the phone and e-mail links away from their sentences, left a space
+   before the full stop, and with large text on a narrow phone two wrapped links ran into each
+   other («Accessibility» and «Films from BibleProject»). The links now stay inline in the text
+   and get the 24 px target from padding above and below, which moves no text. Same words. */
 body:has(main.side) footer.foot a {
-  display: inline-block;
-  min-height: 24px;
-  line-height: 24px;
-  padding: 0 4px;
-  vertical-align: middle;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
