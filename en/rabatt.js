@@ -114,12 +114,26 @@ if (typeof document !== 'undefined') {
     function revealPayFields() {
       var pay = document.getElementById('betal');
       var svar = document.getElementById('rabatt-svar');
+      var felt = document.getElementById('rabattkode');
+      var bruk = document.getElementById('rabatt-bruk');
       if (!svar || !svar.textContent) return;
       var go = function () {
-        var t = svar.getBoundingClientRect();
-        var p = pay && pay.getBoundingClientRect();
-        var floor = p && p.height ? p.top : (window.innerHeight || 0);
-        var overlap = t.bottom - floor + 8;
+        var p = pay && typeof pay.getBoundingClientRect === 'function' ? pay.getBoundingClientRect() : null;
+        var s = typeof svar.getBoundingClientRect === 'function' ? svar.getBoundingClientRect() : null;
+        var svarPinned = !!(s && s.height && typeof window.getComputedStyle === 'function' && window.getComputedStyle(svar).position === 'fixed');
+        // The code field and Apply must clear the pinned answer, not only the pay button.
+        var floor = svarPinned ? s.top : (p && p.height ? p.top : (window.innerHeight || 0));
+        var bottom = 0;
+        if (felt && typeof felt.getBoundingClientRect === 'function') {
+          var f = felt.getBoundingClientRect();
+          if (f.bottom > bottom) bottom = f.bottom;
+        }
+        if (bruk && typeof bruk.getBoundingClientRect === 'function') {
+          var b = bruk.getBoundingClientRect();
+          if (b.bottom > bottom) bottom = b.bottom;
+        }
+        if (!bottom && s) bottom = s.bottom;
+        var overlap = bottom - floor + 8;
         if (overlap > 1 && typeof window.scrollBy === 'function') window.scrollBy(0, overlap);
       };
       if (typeof window.requestAnimationFrame === 'function') window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
