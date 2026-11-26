@@ -54,7 +54,8 @@ a { color: #ffe7a3; }
 
     <h2>In short</h2>
     <ul>
-      <li><strong>The game does not collect information</strong> about you or about anyone who plays. It has no account, no log-in, no advertising, no statistics or analytics tools, and no cookies.</li>
+      <li><strong>The game does not collect information</strong> about you or about anyone who plays. It has no account, no log-in, no advertising, no analytics tools from others, and no cookies.</li>
+      <li><strong>The game only counts anonymous totals</strong> per day: how many times something happens, for example that door 1 is finished. No ID, no stored IP address and no link to a person or a device. See the section “Anonymous counting in the game”.</li>
       <li><strong>When you buy,</strong> we keep an order book with, among other things, the email address you give, the order number and the code, so we can send the code and help you. We never see your card number.</li>
       <li><strong>When you pay on this English site,</strong> Stripe is the seller of the payment (“Sold through Link”) and processes the payment details under its own terms. Stripe sends the payment receipt. We send the code.</li>
       <li><strong>When the code is checked,</strong> the game sends only the code. We do not store which device was used.</li>
@@ -68,6 +69,9 @@ a { color: #ffe7a3; }
 
     <h2>When the game fetches files</h2>
     <p>The game is loaded from the website where it lives. As with all websites, the host provider sees the IP address and which files are fetched, and may keep ordinary technical logs. We do not use such logs to follow who is playing.</p>
+
+    <h2>Anonymous counting in the game</h2>
+    <p>The game sends two words, what happened and the language, to our own counting service at Cloudflare (our processor) when door 1 is started or finished, the game is added to the home screen, a calendar file is downloaded, “Buy a code” is tapped, a locked door 2 is shown, a code is taken into use, or the game is opened on a later day. The service stores only one total per day, event and language, for example “27 Nov, door 1 finished, English: 12”. We do not read or store the IP address, no ID is sent and no cookies are used. To be able to count that someone comes back, the device only remembers the date of the last visit and whether the game has been opened from the home screen. That is not sent. The figures are for our own use. If the counting does not work, the game does not notice.</p>
 
     <h2>Visits to the website</h2>
     <p>On the sales and information pages (not in the game itself) we use Cloudflare Web Analytics to count how many people visit, which pages are read, and which sites send someone here. The count uses no cookies and does not store your name, email address or other identifiers with us. Cloudflare, which is already our processor, receives the technical information needed to make these figures, including a short-lived processing of IP address to show country. We use the figures only to run and improve the website, for example to see whether a link we have shared is being used. The legal basis is our legitimate interest in understanding how the website is used, without following individuals over time. The game itself still has no statistics, no analytics tools and no cookies.</p>

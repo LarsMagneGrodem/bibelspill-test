@@ -2,7 +2,7 @@
 <html lang="nb">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qMXzA6n5LEzlgpcSeRbzhG+w73qM4XcoUw/uuBFAX3c=' 'sha256-JC1dyes6sJzLaS3gmO0EPZAMsPfyeNFX3QANhofgV8g=' 'sha256-I5T1mL9F769bwWONVUNHAcZdntXaeX8vmfrvQd2rqWc='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev; object-src 'none'; frame-src 'self'; base-uri 'self'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qMXzA6n5LEzlgpcSeRbzhG+w73qM4XcoUw/uuBFAX3c=' 'sha256-JC1dyes6sJzLaS3gmO0EPZAMsPfyeNFX3QANhofgV8g=' 'sha256-I5T1mL9F769bwWONVUNHAcZdntXaeX8vmfrvQd2rqWc='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src 'self' https://reisen-med-lukas-unlock.reisenmedlukas.workers.dev https://reisen-med-lukas-teller.reisenmedlukas.workers.dev; object-src 'none'; frame-src 'self'; base-uri 'self'; form-action 'none'" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -45,16 +45,16 @@
       }
     </script>
     <style>#loading #loading-card{box-sizing:border-box;color:#3a2410;letter-spacing:0;text-align:center;background:#f3e4c2;border:1px solid #5a3414b3;border-radius:4px 10px 5px 9px;width:min(320px,100vw - 32px);padding:14px 16px;font:1.125rem/1.35 Georgia,Times New Roman,serif;box-shadow:0 12px 34px #000000a6}#loading-place{aspect-ratio:3/2;object-fit:cover;background:#d9c493;border:3px solid #fff6df;border-radius:3px;width:180px;max-width:100%;height:auto;margin:0 auto 10px;display:block;box-shadow:0 1px 4px #28140573}#loading-door{color:#8b1a1a;font-variant:small-caps;letter-spacing:.04em;font-size:1rem;font-weight:700}#loading-ask{margin:4px 0 8px;font-size:1.1875rem;font-style:italic}#loading-text{letter-spacing:.06em;opacity:.8;font-size:.9375rem}#loading #loading-bar{background:#5a341440;border-radius:2px;height:3px;margin-top:12px;overflow:hidden}#loading #loading-fill{background:#8b1a1a;width:6%;height:100%;transition:width .3s}#loading [hidden]{display:none}#loading.warm #loading-card{animation:.25s ease-out .45s both loading-in}@keyframes loading-in{0%{opacity:0}}@media (prefers-reduced-motion:reduce){#loading.warm #loading-card{animation-duration:10ms}}</style>
-    <script type="module" crossorigin src="./assets/index-BT5mEU3B.js"></script>
+    <script type="module" crossorigin src="./assets/index-6DEXjJug.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-XKyaHtl9.js">
     <link rel="modulepreload" crossorigin href="./assets/game-BjEV2j7v.js">
-    <link rel="modulepreload" crossorigin href="./assets/theme-CecGt2Sg.js">
-    <link rel="modulepreload" crossorigin href="./assets/focus-DpDt_ciD.js">
-    <link rel="modulepreload" crossorigin href="./assets/ui-F47TvuJO.js">
+    <link rel="modulepreload" crossorigin href="./assets/theme-Ci-LS06k.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-CxkmzbQ-.js">
+    <link rel="modulepreload" crossorigin href="./assets/ui-Bd5XT2jq.js">
     <link rel="modulepreload" crossorigin href="./assets/schema-DkcvxztZ.js">
-    <link rel="modulepreload" crossorigin href="./assets/gains-6N7v9bjw.js">
-    <link rel="modulepreload" crossorigin href="./assets/report-doP6p5EO.js">
-    <link rel="preload" as="style" crossorigin href="./assets/ui-WkZ1c_16.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/ui-WkZ1c_16.css"></noscript>
+    <link rel="modulepreload" crossorigin href="./assets/gains-DhgCJtAE.js">
+    <link rel="modulepreload" crossorigin href="./assets/report-fWQm8uee.js">
+    <link rel="preload" as="style" crossorigin href="./assets/ui-nwjX88Z4.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/ui-nwjX88Z4.css"></noscript>
     <link rel="preload" as="style" crossorigin href="./assets/report-D0Byommf.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/report-D0Byommf.css"></noscript>
     <link rel="preload" as="style" crossorigin href="./assets/index-40TkyQR0.css"><script>document.currentScript.previousElementSibling.rel='stylesheet'</script><noscript><link rel="stylesheet" crossorigin href="./assets/index-40TkyQR0.css"></noscript>
   </head>
@@ -473,8 +473,15 @@
         <h2 id="unlock-title" data-ui="unlockTitle"></h2>
         <p id="unlock-child"></p>
         <div id="unlock-gate"></div>
+        <!-- Lars 26.11: the locked door's part for grown-ups, marked as such (markedsføringsloven § 20): how the journey is
+             bought, a QR code for their own phone, and «Kjøp kode». Nothing here is aimed at the child. -->
         <div id="unlock-nocode" hidden>
-          <p data-ui="unlockNoCode"></p>
+          <h3 id="unlock-nocode-label" data-ui="forAdultsLabel"></h3>
+          <p data-ui="lockedAdultText"></p>
+          <div id="unlock-qr-box">
+            <canvas id="unlock-qr" width="240" height="240"></canvas>
+            <div><strong data-ui="adultDoorPhone"></strong><p data-ui="adultDoorScan"></p></div>
+          </div>
           <button id="unlock-buy-code" type="button" class="plain" data-ui="unlockBuyCode"></button>
         </div>
         <section id="unlock-adult" hidden>
