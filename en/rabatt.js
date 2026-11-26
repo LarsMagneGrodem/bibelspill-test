@@ -132,6 +132,8 @@ if (typeof document !== 'undefined') {
           var b = bruk.getBoundingClientRect();
           if (b.bottom > bottom) bottom = b.bottom;
         }
+        // 26.11 kveld: with large text the answer itself can sit under the pinned button on a taller phone too.
+        if (!svarPinned && s && s.height && s.bottom > bottom) bottom = s.bottom;
         if (!bottom && s) bottom = s.bottom;
         var overlap = bottom - floor + 8;
         if (overlap > 1 && typeof window.scrollBy === 'function') window.scrollBy(0, overlap);

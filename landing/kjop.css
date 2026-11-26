@@ -413,3 +413,20 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
     box-shadow: 0 0 0 8px #0d1b40, 0 -8px 20px #0d1b40;
   }
 }
+
+/* 26.11 kveld: med stor tekst (nettleserens tekststørrelse 200 %) blir «Continue to payment» to linjer og
+   134 px høy på en kort telefon. Luft og rulling under knappen var faste 88/96 px, så siste linje nederst,
+   felt som får fokus og rabattsvaret ble liggende bak knappen. Her vokser lufta med teksten (rem). På html
+   brukes em, fordi Safari regner rem på rotelementet fra 16 px. Vanlig tekst gir samme verdier som før
+   (max med de gamle px-tallene). «Betal med Vipps» har fast skrift og er uendret.
+   Samme ord, samme priser, samme knapper. */
+@media (max-width: 420px) and (max-height: 700px) {
+  .kasse:has(a#betal) { padding-bottom: max(88px, 4.75rem); }
+  html:has(.kasse a#betal) { scroll-padding-bottom: max(96px, 4.75em); }
+  .kasse:has(a#betal):has(#rabatt-svar:not(:empty)) { padding-bottom: max(168px, 11rem); }
+  .kasse:has(a#betal) #rabatt-svar:not(:empty) { bottom: max(68px, 4.75rem); }
+}
+@media (max-width: 420px) and (min-height: 701px) and (max-height: 900px) {
+  .kasse:has(#rabatt[open]):has(a#betal) { padding-bottom: max(88px, 4.75rem); }
+  html:has(.kasse:has(#rabatt[open]) a#betal) { scroll-padding-bottom: max(96px, 4.75em); }
+}
