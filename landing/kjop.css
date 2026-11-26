@@ -41,7 +41,7 @@
 .kasse .qr-boks figcaption { margin-top: 6px; }
 
 /* Vipps's orange, stored here (no third-party script). Official button colour #FF5B24. */
-.kasse .btn.vipps { margin-top: 16px; width: 100%; background: #FF5B24; color: #fff; border: 0; }
+.kasse .btn.vipps { margin-top: 16px; width: 100%; background: #FF5B24; color: #fff; border: 0; font-size: 19px; }
 .kasse .btn.vipps:hover, .kasse .btn.vipps:focus { background: #e85220; }
 /* Del 13 L1: a button waiting for the worker looks switched off. */
 .kasse .btn:disabled { opacity: 0.55; cursor: progress; }
