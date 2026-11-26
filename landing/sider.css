@@ -20,3 +20,14 @@
 /* Lenkene i «More:»-linja holdes hele (en lenke brytes ikke midt i når den får plass). Salg 23.11 kveld: er en lenke bredere
    enn skjermen (stor tekst på smal telefon), brytes den inne i lenka i stedet for å gi sideveis rulling. */
 .side .slutt .small a { display: inline-block; max-width: 100%; white-space: normal; }
+
+/* 26.11: på en kort, smal telefon (målt 320×568, engelsk door 1) lå «Buy a code for doors 2–24»
+   under kanten. Overskrift, ingress og luft i toppen sitter tettere, så begge knappene er med
+   i første vindu. Samme tekst og knapper (minst 48 px). Norsk luke 1, høyere telefoner og de
+   andre landingssidene er uendret, eller mister bare litt ubrukt luft. */
+@media (max-width: 340px) and (max-height: 600px) {
+  .side-hero { padding-top: 2px; }
+  .side-hero .eyebrow { margin-bottom: 4px; }
+  .side-hero h1 { margin-bottom: 8px; }
+  .side-hero .lead { margin-bottom: 8px; }
+}
