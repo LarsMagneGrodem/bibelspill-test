@@ -462,10 +462,31 @@ function showPrices(d) {
     el.append(old, `${p.amount} kr`);
   }
 }
+
+// 26.11: on a short phone the pinned pay button covered the answer and the e-mail
+// field when the discount box opened (a ?rabatt= link opens it on its own). Scroll
+// them just above the button when they would otherwise sit under it or below the fold.
+function revealPayFields() {
+  const pay = $('kjop-vipps') || document.querySelector('a#betal');
+  const email = $('epost');
+  const svar = $('rabatt-svar');
+  const target = email || (svar && svar.textContent ? svar : null);
+  if (!target) return;
+  const go = () => {
+    const t = target.getBoundingClientRect();
+    const p = pay && typeof pay.getBoundingClientRect === 'function' ? pay.getBoundingClientRect() : null;
+    const floor = p && p.height ? p.top : (window.innerHeight || 0);
+    const overlap = t.bottom - floor + 8;
+    if (overlap > 1 && typeof window.scrollBy === 'function') window.scrollBy(0, overlap);
+  };
+  if (typeof window.requestAnimationFrame === 'function') window.requestAnimationFrame(() => window.requestAnimationFrame(go));
+  else go();
+}
 function discountAnswer(text, ok) {
   $('rabatt-svar').textContent = text;
   $('rabatt-svar').classList.toggle('rabatt-svar--ok', Boolean(ok));
   $('rabattkode').setAttribute('aria-invalid', String(!ok && Boolean(text)));
+  if (text) revealPayFields();
 }
 async function applyDiscount() {
   const code = typedCode();
@@ -509,6 +530,9 @@ $('rabattkode').addEventListener('input', () => {
     setTimeout(() => { void applyDiscount(); }, 0); // after the whole module has run (busy is defined further down)
   }
 }
+$('rabatt')?.addEventListener('toggle', () => {
+  if ($('rabatt').open) revealPayFields();
+});
 const discountField = () => (typedCode() ? { discountCode: typedCode() } : {});
 const discountFailed = (key) => { if (String(key).startsWith('rabattkode')) $('rabatt').open = true; };
 

@@ -374,3 +374,42 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
   .kasse label[for='epost'] { margin-top: 2px; }
   .kasse input[type='email'], .kasse input[type='text'] { margin-top: 2px; padding: 8px 10px; }
 }
+
+/* 26.11: a discount link (?rabatt= / ?code=) opens this box and writes the answer.
+   On a short phone the pinned pay button covered the answer; on 390×844 (taller than
+   the existing 700 px pin) the button itself sat under the fold. While the box is
+   open on those taller phones, pin the button as on the shorter ones. On the shorter
+   ones, park the answer just above the button so it is not covered. Same words,
+   same prices, same buttons. */
+@media (max-width: 420px) and (min-height: 701px) and (max-height: 900px) {
+  .kasse:has(#rabatt[open]) { padding-bottom: 88px; }
+  .kasse:has(#rabatt[open]) #kjop-vipps,
+  .kasse:has(#rabatt[open]) a#betal {
+    position: fixed;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    width: min(40rem, calc(100% - 32px));
+    z-index: 6;
+    box-shadow: 0 -10px 24px #0f2150, 0 4px 16px #0006;
+  }
+  html:has(.kasse:has(#rabatt[open]) #kjop-vipps),
+  html:has(.kasse:has(#rabatt[open]) a#betal) { scroll-padding-bottom: 96px; }
+}
+@media (max-width: 420px) and (max-height: 700px) {
+  .kasse:has(#rabatt-svar:not(:empty)) { padding-bottom: 168px; }
+  .kasse #rabatt-svar:not(:empty) {
+    position: fixed;
+    left: 50%;
+    bottom: 68px;
+    transform: translateX(-50%);
+    width: min(40rem, calc(100% - 32px));
+    z-index: 6;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #0d1b40;
+    box-shadow: 0 0 0 8px #0d1b40, 0 -8px 20px #0d1b40;
+  }
+}

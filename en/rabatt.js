@@ -1,4 +1,4 @@
-/* global document, navigator, location, URLSearchParams */
+/* global document, navigator, location, URLSearchParams, window */
 // «Have a discount code?» on the English buy page (Lars 18.11 19:03 «gi gass»). Stripe turns down promotion codes on
 // Payment Links with Managed Payments, so a known code sends the buyer to its own Payment Links instead, where the
 // discount is already in the price (kasse r50, STRIPE_CAMPAIGNS). Matching is here, in the page, and case-insensitive;
@@ -108,6 +108,23 @@ if (typeof document !== 'undefined') {
     var pay = document.getElementById('betal');
     var form = document.getElementById('skjema');
     if (!box || !input || !apply || !answer || !pay) return;
+
+    // 26.11: on a short phone the pinned pay button covered the answer when a code
+    // was applied. Scroll it just above the button when it would sit under it or below the fold.
+    function revealPayFields() {
+      var pay = document.getElementById('betal');
+      var svar = document.getElementById('rabatt-svar');
+      if (!svar || !svar.textContent) return;
+      var go = function () {
+        var t = svar.getBoundingClientRect();
+        var p = pay && pay.getBoundingClientRect();
+        var floor = p && p.height ? p.top : (window.innerHeight || 0);
+        var overlap = t.bottom - floor + 8;
+        if (overlap > 1 && typeof window.scrollBy === 'function') window.scrollBy(0, overlap);
+      };
+      if (typeof window.requestAnimationFrame === 'function') window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
+      else go();
+    }
     var full = { personal: pay.dataset.personal, family: pay.dataset.family };
     var currency = visitorCurrency(languagesOf(navigator), timeZoneOf());
     var kilde = readAttribution(location.search, document.referrer, tabStorage());
@@ -128,12 +145,13 @@ if (typeof document !== 'undefined') {
         answer.textContent = plainDollar(languagesOf(navigator), timeZoneOf()) ? said : usLabel(said);
         answer.className = 'small rabatt-svar rabatt-svar--ok';
         box.dataset.code = hit.code;
-        return;
+      } else {
+        links(full.personal, full.family);
+        delete box.dataset.code;
+        answer.textContent = hit.why === 'empty' ? '' : hit.why === 'notYet' ? hit.offer.notYet || TEKST.unknown : TEKST[hit.why];
+        answer.className = 'small rabatt-svar';
       }
-      links(full.personal, full.family);
-      delete box.dataset.code;
-      answer.textContent = hit.why === 'empty' ? '' : hit.why === 'notYet' ? hit.offer.notYet || TEKST.unknown : TEKST[hit.why];
-      answer.className = 'small rabatt-svar';
+      if (answer.textContent) revealPayFields();
     }
     apply.addEventListener('click', run);
     input.addEventListener('keydown', function (e) {
