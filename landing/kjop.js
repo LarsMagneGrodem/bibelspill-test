@@ -466,6 +466,8 @@ function showPrices(d) {
 // 26.11: on a short phone the pinned pay button covered the answer and the e-mail
 // field when the discount box opened (a ?rabatt= link opens it on its own). Scroll
 // them just above the button when they would otherwise sit under it or below the fold.
+// The answer is itself pinned just above the button, so scrolling the field only
+// above the button left it under the answer. Clear the pinned answer too.
 function revealPayFields() {
   const pay = $('kjop-vipps') || document.querySelector('a#betal');
   const email = $('epost');
@@ -475,7 +477,12 @@ function revealPayFields() {
   const go = () => {
     const t = target.getBoundingClientRect();
     const p = pay && typeof pay.getBoundingClientRect === 'function' ? pay.getBoundingClientRect() : null;
-    const floor = p && p.height ? p.top : (window.innerHeight || 0);
+    const s = svar && svar.textContent && typeof svar.getBoundingClientRect === 'function' ? svar.getBoundingClientRect() : null;
+    const svarPinned = !!(s && s.height && typeof window.getComputedStyle === 'function' && window.getComputedStyle(svar).position === 'fixed');
+    // The required e-mail field must clear the pinned answer, not only the pay button.
+    const floor = (email && target === email && svarPinned)
+      ? s.top
+      : (p && p.height ? p.top : (window.innerHeight || 0));
     const overlap = t.bottom - floor + 8;
     if (overlap > 1 && typeof window.scrollBy === 'function') window.scrollBy(0, overlap);
   };
