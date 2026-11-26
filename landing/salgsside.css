@@ -420,3 +420,21 @@ header.top {
    avsnitt 145–167 tegn per linje fra ca. 1100 px bredde. De stopper nå ved 70 tegn, som ingressen over. Telefon er
    uendret (der er linjene kortere enn dette fra før). Ingen ny tekst. */
 .faq details > p, section > ul.list > li, section > ol.steps > li, main.side > section > p, .betaling > p, footer.foot > p { max-width: 70ch; }
+
+/* 26.11: on the shortest upright phones (320×568) the two hero buttons did not both
+   fit in the first view (measured live: on .no «Kjøp kode – 250 kr» began 19 px under
+   the edge; on .com both «Play door 1 free» and «Buy a code» were under the fold).
+   Tighten the air above the buttons and put them on one row, so both are in the first
+   view. Same words, same prices, same buttons. 375×667 and 390×844 are unchanged. */
+@media (max-width: 420px) and (orientation: portrait) and (max-height: 600px) {
+  main { padding-top: 4px; padding-bottom: 8px; }
+  .hero2:has(.hero2-film) { gap: 4px 8px; padding: 0 0 8px; }
+  .hero2:has(.hero2-film) h1 { font-size: clamp(1.15rem, 5vw, 1.4rem); line-height: 1.12; }
+  .hero2:has(.hero2-film) .dato-linje { margin: 0; font-size: 0.8125rem; line-height: 1.2; }
+  .hero2:has(.hero2-film) .eyebrow { margin-bottom: 0; font-size: 0.8125rem; line-height: 1.2; }
+  .hero2:has(.hero2-film) .lead,
+  .hero2:has(.hero2-film) .alder { font-size: 0.8125rem; line-height: 1.25; }
+  .hero2:has(.hero2-film) .cta-row { margin-top: 4px; gap: 6px; flex-wrap: nowrap; }
+  .hero2:has(.hero2-film) .cta-row .btn { flex: 1 1 0; min-width: 0; }
+  .hero2:has(.hero2-film) .cta-row .btn.stor { min-height: 44px; padding: 6px 8px; font-size: 0.875rem; }
+}
