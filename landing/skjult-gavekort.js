@@ -28,7 +28,7 @@
   function css() {
     var l = document.createElement('link');
     l.rel = 'stylesheet';
-    l.href = new URL('skjult-gavekort.css', BASE).href;
+    l.href = new URL('skjult-gavekort.css?v=kopier-lenka-2611', BASE).href;
     document.head.appendChild(l);
   }
   // Den faste linjen i informasjonsdelen (delekampanje 5.1 punkt 5).
@@ -90,12 +90,29 @@
     row.appendChild(status);
     ticket.appendChild(row);
     inner.appendChild(ticket);
-    var lp = el('p', 'skjult-lenke', 'Ta vare på koden. Lukker du siden, kan du hente den igjen med denne lenken i 24 timer: ');
+    inner.appendChild(el('p', 'skjult-viktig', 'Koden vises bare her. Ta vare på den nå.'));
+    var lp = el('p', 'skjult-lenke', 'Lenka henter koden igjen i 24 timer:');
     var la = el('a', '', link);
     la.href = link;
     la.rel = 'noreferrer';
     lp.appendChild(la);
     inner.appendChild(lp);
+    var lrow = el('p', 'skjult-kopirad skjult-lenkerad');
+    var lcopy = el('button', 'skjult-kopier-lenka', 'Kopier lenka');
+    lcopy.type = 'button';
+    var lstatus = el('span', 'skjult-kopiert-lenka');
+    lstatus.setAttribute('role', 'status');
+    lcopy.addEventListener('click', function () {
+      var shown = function () { lstatus.textContent = 'Kopiert!'; };
+      var select = function () {
+        try { var r = document.createRange(); r.selectNodeContents(la); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); lstatus.textContent = 'Trykk og hold for å kopiere'; } catch (e) { /* ingenting */ }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(shown, select);
+      else select();
+    });
+    lrow.appendChild(lcopy);
+    lrow.appendChild(lstatus);
+    inner.appendChild(lrow);
     var fot = el('div', 'skjult-fot');
     fot.appendChild(el('p', 'skjult-frivillig', 'Har du lyst, kan du fortelle at du fant den i kommentarfeltet under innlegget om det skjulte gavekortet på Facebook. Det er helt frivillig.'));
     var rp = el('p', 'skjult-regler');
