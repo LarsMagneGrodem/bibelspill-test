@@ -31,3 +31,20 @@
   .side-hero h1 { margin-bottom: 8px; }
   .side-hero .lead { margin-bottom: 8px; }
 }
+
+/* 26.11: på liggende, lav telefon (målt 568×320, 667×375 og 844×390) lå «Åpne luke 1 i
+   spillet» / «Open door 1 in the game» og den gylne kjøpsknappen under kanten på luke 1,
+   door 1, gave og gift. Knappene står nå rett under tittelen, slik som på forsiden, så
+   begge er med i første vindu. Ingressen kommer under. Samme tekst og knapper (minst
+   48 px). Stående skjerm og høyere liggende skjermer er uendret. */
+@media (orientation: landscape) and (max-height: 430px) {
+  .side-hero { padding: 0 0 16px; }
+  .side-hero-tekst { display: flex; flex-direction: column; }
+  .side-hero-tekst > * { order: 10; }
+  .side-hero-tekst .eyebrow { order: 0; margin-bottom: 2px; }
+  .side-hero-tekst h1 { order: 1; margin-bottom: 8px; }
+  .side-hero-tekst .cta-row { order: 2; margin: 8px 0 10px; }
+  .side-hero-tekst .lead { order: 3; }
+  .side-hero-tekst .cta-under { order: 4; }
+  .side-hero .cta-row .btn { min-height: 48px; padding: 6px 16px; flex-basis: 180px; }
+}
