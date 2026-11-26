@@ -452,3 +452,13 @@ body:has(main.side) footer.foot a {
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+/* 27.11: standing phone with large text (320–375 px wide). The label «Trailer 46 sek» /
+   «Trailer 48 sec» in the small poster grew wider than the poster and was cut at its edge.
+   The label now shrinks only as much as it needs to fit inside the poster. With normal text
+   nothing changes (the label is already smaller than the limit). Same words. */
+@media (max-width: 879px) and (orientation: portrait) {
+  .hero2:has(.hero2-film) .film--staaende { container-type: inline-size; }
+  .hero2:has(.hero2-film) .film-knapp > span:last-child { font-size: min(1em, calc((100cqw - 58px) / 3.7)); }
+  .hero2:has(.hero2-film) .film-knapp small { font-size: min(0.8125rem, 1.084em); }
+}
