@@ -462,3 +462,26 @@ body:has(main.side) footer.foot a {
   .hero2:has(.hero2-film) .film-knapp > span:last-child { font-size: min(1em, calc((100cqw - 58px) / 3.7)); }
   .hero2:has(.hero2-film) .film-knapp small { font-size: min(0.8125rem, 1.084em); }
 }
+
+/* 27.11: low landscape phone (height up to 430 px). With large text the label «Trailer 46 sek» /
+   «Trailer 48 sec» in the small poster ran 16–65 px past the poster edge, and on the narrowest poster
+   (568×320) it ran 5 px past it with normal text in Safari. With large text the play circle and the air
+   around it now shrink first (down to the size used on the upright phone), then the label only as much as
+   it needs. With normal text the button is as before, except on the narrowest poster, where the circle and
+   the air get the upright-phone size so the label fits. Same words. */
+@media (orientation: landscape) and (max-height: 430px) {
+  .hero2-film .film--staaende { container-type: inline-size; }
+  .hero2-film .film-knapp {
+    padding: clamp(6px, calc(10px - (1rem - 16px) / 4), 10px) clamp(10px, calc(22px - (1rem - 16px) * 3 / 4), 22px)
+      clamp(6px, calc(10px - (1rem - 16px) / 4), 10px) clamp(6px, calc(12px - (1rem - 16px) * 3 / 8), 12px);
+    gap: clamp(6px, calc(12px - (1rem - 16px) * 3 / 8), 12px);
+  }
+  .hero2-film .film-ikon { width: clamp(28px, calc(40px - (1rem - 16px) * 3 / 4), 40px);
+    height: clamp(28px, calc(40px - (1rem - 16px) * 3 / 4), 40px); font-size: min(1.125rem, 18px); }
+  .hero2-film .film-knapp > span:last-child { font-size: min(1em, calc((100cqw - 68px) / 3.5)); }
+  .hero2-film .film-knapp small { font-size: min(0.8125rem, 0.775em); }
+  @container (max-width: 140px) {
+    .hero2-film .film-knapp { padding: 6px 10px 6px 6px; gap: 6px; }
+    .hero2-film .film-ikon { width: 28px; height: 28px; font-size: min(0.9375rem, 15px); }
+  }
+}
