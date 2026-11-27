@@ -44,11 +44,6 @@
           <label><input type="radio" name="product" value="family" /> <span><strong>Family code – €49.99 / £39.99 / $49.99</strong><br />Everyone in the same home.</span></label>
           <p class="small flere-hjem">Each home needs its own code.</p>
         </fieldset>
-        <!-- ?gave=1 (the gift's own way from the front page) opens this. Nothing about the gift is sent anywhere. -->
-        <details id="gave-mer" class="gave-mer gave-mer--en">
-          <summary>Buying it as a gift?</summary>
-          <p>The email with the code has a printable gift card (PDF) with the code filled in. Print it or send it on. Or <a href="/en/gift-card.pdf">download a blank card</a>.</p>
-        </details>
         <!-- Lars 18.11 19:03 «gi gass»: a known code points the button at its own Stripe links (rabatt.js). -->
         <details id="rabatt" class="gave-mer gave-mer--en rabatt">
           <summary>Have a discount code?</summary>
@@ -59,7 +54,6 @@
           </div>
           <p id="rabatt-svar" class="small rabatt-svar" role="status" aria-live="polite"></p>
         </details>
-        <p class="small">Sold through Stripe (“Link”). Euro and pound prices include VAT; US sales tax is added where it applies.</p>
         <ul id="foer-betal" class="foer-betal">
           <li>Made by Rygard Holding AS in Norway (<a href="kontakt.html">contact</a>).</li>
         </ul>
@@ -69,6 +63,12 @@
           <a id="betal" class="btn primary stor" href="til/stripe-person/" data-personal="https://buy.stripe.com/bJe14p0QhdRnfdkdz9gnK00" data-family="https://buy.stripe.com/cNi7sNeH7aFb7KS0MngnK01">Continue to payment</a>
         </p>
         <p class="trygg-linje">Stripe asks for your email (required, we send the code there). The code is also shown after payment.</p>
+        <!-- ?gave=1 (the gift's own way from the front page) opens this. Nothing about the gift is sent anywhere. -->
+        <details id="gave-mer" class="gave-mer gave-mer--en">
+          <summary>Buying it as a gift?</summary>
+          <p>The email with the code has a printable gift card (PDF) with the code filled in. Print it or send it on. Or <a href="/en/gift-card.pdf">download a blank card</a>.</p>
+        </details>
+        <p class="small">Sold through Stripe (“Link”). Euro and pound prices include VAT; US sales tax is added where it applies.</p>
         <!-- Salg 18.11 (Lars 14:55 «Ja til trygghetspunktene»). -->
         <ul class="trygt-under" aria-label="Safe to buy">
           <li>One-time purchase, no subscription</li>
