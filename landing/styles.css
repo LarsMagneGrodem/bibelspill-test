@@ -10,7 +10,7 @@
   font-family: Georgia, "Times New Roman", serif;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: max(96px, 4.5em); scroll-padding-bottom: max(16px, 1em); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
@@ -21,6 +21,7 @@ body {
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--gold); }
+a[href^="tel:"] { white-space: nowrap; }
 :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .skip {
   position: absolute; left: -999px; top: 0;
