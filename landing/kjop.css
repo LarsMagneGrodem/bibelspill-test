@@ -438,5 +438,5 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
 
 /* 27.11: «Til forsiden» / «Back to the front page» øverst på kjøpssiden var bare 17–20 px høy å trykke på
    (WCAG 2.2 anbefaler minst 24 px). Som inline-blokk fyller lenka hele linjehøyden (24,8 px), uten å stikke
-   over skjermkanten på kort telefon: samme ord, samme plass, betalknappen står der den sto. */
-.kasse .til-forsiden a { display: inline-block; }
+   over skjermkanten på kort telefon: samme ord, samme plass, betalknappen står der den sto. Kontaktsidene (.tilbake) likedan. */
+.kasse .til-forsiden a, .kasse .tilbake a { display: inline-block; }
