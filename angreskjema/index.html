@@ -34,10 +34,12 @@
     .pdf { text-align: center; margin: 0 0 12pt; }
   }
   @media print { .pdf { display: none; } }
+  /* 27.11: PDF-lenka får 24 px trykkflate uten at noe flytter seg. */
+  @media screen { .pdf a { display: inline-block; padding-block: 4px; margin-block: -4px; } }
 </style>
 </head>
 <body>
-  <p class="pdf"><a href="angreskjema.pdf">Angreskjema (PDF)</a></p>
+  <header><p class="pdf"><a href="angreskjema.pdf">Angreskjema (PDF)</a></p></header>
   <main>
   <h1>Angreskjema</h1>
   <p class="sub">ved kjøp av varer og tjenester som ikke er finansielle tjenester</p>
@@ -77,7 +79,7 @@
 
   </main>
 
-  <p class="foot">Q-0319B 06.2014 (utfylt for Reisen med Lukas / Rygard Holding AS).</p>
+  <footer><p class="foot">Q-0319B 06.2014 (utfylt for Reisen med Lukas / Rygard Holding AS).</p></footer>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"d5b09c79325d4c4abc9d2dac1d627fce"}'></script>
 </body>
 </html>

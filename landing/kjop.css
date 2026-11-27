@@ -435,3 +435,8 @@ html:lang(nb) .kasse .valg .per-luke { white-space: nowrap; }
   .kasse:has(#rabatt[open]):has(a#betal) { padding-bottom: max(88px, 4.75rem); }
   html:has(.kasse:has(#rabatt[open]) a#betal) { scroll-padding-bottom: max(96px, 4.75em); }
 }
+
+/* 27.11: «Til forsiden» / «Back to the front page» øverst på kjøpssiden var bare 17–20 px høy å trykke på
+   (WCAG 2.2 anbefaler minst 24 px). Lenka får 4 px trykkflate over og under, og like mye negativ marg,
+   så ingenting flytter seg: samme ord, samme plass, betalknappen står der den sto. */
+.kasse .til-forsiden a { display: inline-block; padding-block: 4px; margin-block: -4px; }
