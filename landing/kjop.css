@@ -95,6 +95,11 @@
 .kasse .gave-mer summary { font-size: 0.9375rem; }
 /* Forslag 2 (Lars 16.11): «Continue to payment» på den engelske siden fyller bredden, som «Betal med Vipps» på norsk. */
 .kasse a#betal { display: flex; width: 100%; box-sizing: border-box; text-align: center; }
+/* Salg 27.11: med tastatur (Tab) og stor tekst stoppet Safari med e-postfeltet 16 px under skjermkanten på en
+   stående telefon (390×844), fordi den ruller fram selve skrivelinja, ikke hele feltet. Litt rulleluft nederst gjør at
+   hele feltet kommer fram. Der betalknappen står fast (kort eller liggende telefon) gjelder 96 px-lufta lenger ned.
+   Ingen tekstendring. */
+html:has(.kasse #kjop-vipps) { scroll-padding-bottom: max(16px, 1em); }
 /* Forslag 10 (Lars 16.11): betalingsknappen synlig på kort liggende telefon.
    Gjelder bare liggende skjerm med høyde inntil 430 px. Stående og nettbrett
    er uendret. Ingen tekstendring. */
